@@ -1,0 +1,480 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2FF002A01493E23400BF3668 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF0029F1493E23400BF3668 /* UIKit.framework */; };
+		2FF002A21493E23400BF3668 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A11493E23400BF3668 /* Foundation.framework */; };
+		2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A31493E23400BF3668 /* CoreGraphics.framework */; };
+		2FF002AA1493E23400BF3668 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002A81493E23400BF3668 /* InfoPlist.strings */; };
+		2FF002AC1493E23400BF3668 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002AB1493E23400BF3668 /* main.m */; };
+		2FF002B01493E23400BF3668 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002AF1493E23400BF3668 /* AppDelegate.m */; };
+		2FF002B31493E23400BF3668 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002B11493E23400BF3668 /* MainStoryboard_iPhone.storyboard */; };
+		2FF002B61493E23400BF3668 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002B41493E23400BF3668 /* MainStoryboard_iPad.storyboard */; };
+		2FF002B91493E23400BF3668 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002B81493E23400BF3668 /* FirstViewController.m */; };
+		2FF002BB1493E23400BF3668 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002BA1493E23400BF3668 /* first.png */; };
+		2FF002BD1493E23400BF3668 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002BC1493E23400BF3668 /* first@2x.png */; };
+		2FF002C01493E23400BF3668 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002BF1493E23400BF3668 /* SecondViewController.m */; };
+		2FF002C21493E23400BF3668 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002C11493E23400BF3668 /* second.png */; };
+		2FF002C41493E23400BF3668 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002C31493E23400BF3668 /* second@2x.png */; };
+		2FF002CC1493E23500BF3668 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002CB1493E23500BF3668 /* SenTestingKit.framework */; };
+		2FF002CD1493E23500BF3668 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF0029F1493E23400BF3668 /* UIKit.framework */; };
+		2FF002CE1493E23500BF3668 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A11493E23400BF3668 /* Foundation.framework */; };
+		2FF002D61493E23500BF3668 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002D41493E23500BF3668 /* InfoPlist.strings */; };
+		2FF002D91493E23500BF3668 /* SmartTrailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002D81493E23500BF3668 /* SmartTrailTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2FF002CF1493E23500BF3668 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FF002921493E23400BF3668 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FF0029A1493E23400BF3668;
+			remoteInfo = SmartTrail;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2FF0029B1493E23400BF3668 /* SmartTrail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartTrail.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FF0029F1493E23400BF3668 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2FF002A11493E23400BF3668 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2FF002A31493E23400BF3668 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2FF002A71493E23400BF3668 /* SmartTrail-Info.plist */ = {isa = PBXFileReference; path = "SmartTrail-Info.plist"; sourceTree = "<group>"; };
+		2FF002A91493E23400BF3668 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2FF002AB1493E23400BF3668 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2FF002AD1493E23400BF3668 /* SmartTrail-Prefix.pch */ = {isa = PBXFileReference; path = "SmartTrail-Prefix.pch"; sourceTree = "<group>"; };
+		2FF002AE1493E23400BF3668 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		2FF002AF1493E23400BF3668 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2FF002B21493E23400BF3668 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		2FF002B51493E23400BF3668 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		2FF002B71493E23400BF3668 /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
+		2FF002B81493E23400BF3668 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		2FF002BA1493E23400BF3668 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		2FF002BC1493E23400BF3668 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		2FF002BE1493E23400BF3668 /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
+		2FF002BF1493E23400BF3668 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		2FF002C11493E23400BF3668 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		2FF002C31493E23400BF3668 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		2FF002CA1493E23500BF3668 /* SmartTrailTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartTrailTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FF002CB1493E23500BF3668 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		2FF002D31493E23500BF3668 /* SmartTrailTests-Info.plist */ = {isa = PBXFileReference; path = "SmartTrailTests-Info.plist"; sourceTree = "<group>"; };
+		2FF002D51493E23500BF3668 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2FF002D71493E23500BF3668 /* SmartTrailTests.h */ = {isa = PBXFileReference; path = SmartTrailTests.h; sourceTree = "<group>"; };
+		2FF002D81493E23500BF3668 /* SmartTrailTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartTrailTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2FF002981493E23400BF3668 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FF002A01493E23400BF3668 /* UIKit.framework in Frameworks */,
+				2FF002A21493E23400BF3668 /* Foundation.framework in Frameworks */,
+				2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FF002C61493E23500BF3668 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FF002CC1493E23500BF3668 /* SenTestingKit.framework in Frameworks */,
+				2FF002CD1493E23500BF3668 /* UIKit.framework in Frameworks */,
+				2FF002CE1493E23500BF3668 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2FF002901493E23400BF3668 = {
+			isa = PBXGroup;
+			children = (
+				2FF002A51493E23400BF3668 /* SmartTrail */,
+				2FF002D11493E23500BF3668 /* SmartTrailTests */,
+				2FF0029E1493E23400BF3668 /* Frameworks */,
+				2FF0029C1493E23400BF3668 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2FF0029C1493E23400BF3668 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2FF0029B1493E23400BF3668 /* SmartTrail.app */,
+				2FF002CA1493E23500BF3668 /* SmartTrailTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2FF0029E1493E23400BF3668 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2FF0029F1493E23400BF3668 /* UIKit.framework */,
+				2FF002A11493E23400BF3668 /* Foundation.framework */,
+				2FF002A31493E23400BF3668 /* CoreGraphics.framework */,
+				2FF002CB1493E23500BF3668 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2FF002A51493E23400BF3668 /* SmartTrail */ = {
+			isa = PBXGroup;
+			children = (
+				2FF002AE1493E23400BF3668 /* AppDelegate.h */,
+				2FF002AF1493E23400BF3668 /* AppDelegate.m */,
+				2FF002B11493E23400BF3668 /* MainStoryboard_iPhone.storyboard */,
+				2FF002B41493E23400BF3668 /* MainStoryboard_iPad.storyboard */,
+				2FF002B71493E23400BF3668 /* FirstViewController.h */,
+				2FF002B81493E23400BF3668 /* FirstViewController.m */,
+				2FF002BA1493E23400BF3668 /* first.png */,
+				2FF002BC1493E23400BF3668 /* first@2x.png */,
+				2FF002BE1493E23400BF3668 /* SecondViewController.h */,
+				2FF002BF1493E23400BF3668 /* SecondViewController.m */,
+				2FF002C11493E23400BF3668 /* second.png */,
+				2FF002C31493E23400BF3668 /* second@2x.png */,
+				2FF002A61493E23400BF3668 /* Supporting Files */,
+			);
+			path = SmartTrail;
+			sourceTree = "<group>";
+		};
+		2FF002A61493E23400BF3668 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2FF002A71493E23400BF3668 /* SmartTrail-Info.plist */,
+				2FF002A81493E23400BF3668 /* InfoPlist.strings */,
+				2FF002AB1493E23400BF3668 /* main.m */,
+				2FF002AD1493E23400BF3668 /* SmartTrail-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2FF002D11493E23500BF3668 /* SmartTrailTests */ = {
+			isa = PBXGroup;
+			children = (
+				2FF002D71493E23500BF3668 /* SmartTrailTests.h */,
+				2FF002D81493E23500BF3668 /* SmartTrailTests.m */,
+				2FF002D21493E23500BF3668 /* Supporting Files */,
+			);
+			path = SmartTrailTests;
+			sourceTree = "<group>";
+		};
+		2FF002D21493E23500BF3668 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2FF002D31493E23500BF3668 /* SmartTrailTests-Info.plist */,
+				2FF002D41493E23500BF3668 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2FF0029A1493E23400BF3668 /* SmartTrail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FF002DC1493E23500BF3668 /* Build configuration list for PBXNativeTarget "SmartTrail" */;
+			buildPhases = (
+				2FF002971493E23400BF3668 /* Sources */,
+				2FF002981493E23400BF3668 /* Frameworks */,
+				2FF002991493E23400BF3668 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartTrail;
+			productName = SmartTrail;
+			productReference = 2FF0029B1493E23400BF3668 /* SmartTrail.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2FF002C91493E23500BF3668 /* SmartTrailTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FF002DF1493E23500BF3668 /* Build configuration list for PBXNativeTarget "SmartTrailTests" */;
+			buildPhases = (
+				2FF002C51493E23500BF3668 /* Sources */,
+				2FF002C61493E23500BF3668 /* Frameworks */,
+				2FF002C71493E23500BF3668 /* Resources */,
+				2FF002C81493E23500BF3668 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2FF002D01493E23500BF3668 /* PBXTargetDependency */,
+			);
+			name = SmartTrailTests;
+			productName = SmartTrailTests;
+			productReference = 2FF002CA1493E23500BF3668 /* SmartTrailTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2FF002921493E23400BF3668 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 2FF002951493E23400BF3668 /* Build configuration list for PBXProject "SmartTrail" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2FF002901493E23400BF3668;
+			productRefGroup = 2FF0029C1493E23400BF3668 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2FF0029A1493E23400BF3668 /* SmartTrail */,
+				2FF002C91493E23500BF3668 /* SmartTrailTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2FF002991493E23400BF3668 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FF002AA1493E23400BF3668 /* InfoPlist.strings in Resources */,
+				2FF002B31493E23400BF3668 /* MainStoryboard_iPhone.storyboard in Resources */,
+				2FF002B61493E23400BF3668 /* MainStoryboard_iPad.storyboard in Resources */,
+				2FF002BB1493E23400BF3668 /* first.png in Resources */,
+				2FF002BD1493E23400BF3668 /* first@2x.png in Resources */,
+				2FF002C21493E23400BF3668 /* second.png in Resources */,
+				2FF002C41493E23400BF3668 /* second@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FF002C71493E23500BF3668 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FF002D61493E23500BF3668 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2FF002C81493E23500BF3668 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2FF002971493E23400BF3668 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FF002AC1493E23400BF3668 /* main.m in Sources */,
+				2FF002B01493E23400BF3668 /* AppDelegate.m in Sources */,
+				2FF002B91493E23400BF3668 /* FirstViewController.m in Sources */,
+				2FF002C01493E23400BF3668 /* SecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FF002C51493E23500BF3668 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FF002D91493E23500BF3668 /* SmartTrailTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2FF002D01493E23500BF3668 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FF0029A1493E23400BF3668 /* SmartTrail */;
+			targetProxy = 2FF002CF1493E23500BF3668 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2FF002A81493E23400BF3668 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FF002A91493E23400BF3668 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2FF002B11493E23400BF3668 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FF002B21493E23400BF3668 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		2FF002B41493E23400BF3668 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FF002B51493E23400BF3668 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		2FF002D41493E23500BF3668 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FF002D51493E23500BF3668 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2FF002DA1493E23500BF3668 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2FF002DB1493E23500BF3668 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2FF002DD1493E23500BF3668 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
+				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2FF002DE1493E23500BF3668 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
+				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		2FF002E01493E23500BF3668 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SmartTrail.app/SmartTrail";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
+				INFOPLIST_FILE = "SmartTrailTests/SmartTrailTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		2FF002E11493E23500BF3668 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SmartTrail.app/SmartTrail";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
+				INFOPLIST_FILE = "SmartTrailTests/SmartTrailTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2FF002951493E23400BF3668 /* Build configuration list for PBXProject "SmartTrail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FF002DA1493E23500BF3668 /* Debug */,
+				2FF002DB1493E23500BF3668 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2FF002DC1493E23500BF3668 /* Build configuration list for PBXNativeTarget "SmartTrail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FF002DD1493E23500BF3668 /* Debug */,
+				2FF002DE1493E23500BF3668 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2FF002DF1493E23500BF3668 /* Build configuration list for PBXNativeTarget "SmartTrailTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FF002E01493E23500BF3668 /* Debug */,
+				2FF002E11493E23500BF3668 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2FF002921493E23400BF3668 /* Project object */;
+}
