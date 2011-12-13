@@ -12,8 +12,6 @@ This repository is for the development of the iOS version of the SmartTrail app.
 
 [This might be a good spot for TODO items.]
 
-Add teams and users.
-
 *** License (MIT)
 
 *Copyright (C) 2011 by Boulder Mountainbike Alliance. All rights reserved*
