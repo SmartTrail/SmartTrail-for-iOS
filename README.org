@@ -10,7 +10,7 @@ This repository is for the development of the iOS version of the SmartTrail app.
 
 *** To Do
 
-Create iOS and Android repositories.
+[This might be a good spot for TODO items.]
 
 Add teams and users.
 
