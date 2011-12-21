@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0356470D14A1065100208A47 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356470C14A1065100208A47 /* SystemConfiguration.framework */; };
+		0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356470F14A106DA00208A47 /* BMANetworkUtilities.m */; };
+		0356471314A108E500208A47 /* BMAWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356471214A108E500208A47 /* BMAWebClient.m */; };
 		2FF002A01493E23400BF3668 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF0029F1493E23400BF3668 /* UIKit.framework */; };
 		2FF002A21493E23400BF3668 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A11493E23400BF3668 /* Foundation.framework */; };
 		2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A31493E23400BF3668 /* CoreGraphics.framework */; };
 		2FF002AA1493E23400BF3668 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002A81493E23400BF3668 /* InfoPlist.strings */; };
 		2FF002AC1493E23400BF3668 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002AB1493E23400BF3668 /* main.m */; };
 		2FF002B01493E23400BF3668 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002AF1493E23400BF3668 /* AppDelegate.m */; };
-		2FF002B31493E23400BF3668 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002B11493E23400BF3668 /* MainStoryboard_iPhone.storyboard */; };
-		2FF002B61493E23400BF3668 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002B41493E23400BF3668 /* MainStoryboard_iPad.storyboard */; };
 		2FF002B91493E23400BF3668 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF002B81493E23400BF3668 /* FirstViewController.m */; };
 		2FF002BB1493E23400BF3668 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002BA1493E23400BF3668 /* first.png */; };
 		2FF002BD1493E23400BF3668 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF002BC1493E23400BF3668 /* first@2x.png */; };
@@ -39,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0356470C14A1065100208A47 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0356470E14A106DA00208A47 /* BMANetworkUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMANetworkUtilities.h; sourceTree = "<group>"; };
+		0356470F14A106DA00208A47 /* BMANetworkUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMANetworkUtilities.m; sourceTree = "<group>"; };
+		0356471114A108E500208A47 /* BMAWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAWebClient.h; sourceTree = "<group>"; };
+		0356471214A108E500208A47 /* BMAWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAWebClient.m; sourceTree = "<group>"; };
 		2FF0029B1493E23400BF3668 /* SmartTrail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartTrail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF0029F1493E23400BF3668 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2FF002A11493E23400BF3668 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -49,8 +55,6 @@
 		2FF002AD1493E23400BF3668 /* SmartTrail-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SmartTrail-Prefix.pch"; sourceTree = "<group>"; };
 		2FF002AE1493E23400BF3668 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2FF002AF1493E23400BF3668 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2FF002B21493E23400BF3668 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		2FF002B51493E23400BF3668 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		2FF002B71493E23400BF3668 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		2FF002B81493E23400BF3668 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		2FF002BA1493E23400BF3668 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
@@ -72,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0356470D14A1065100208A47 /* SystemConfiguration.framework in Frameworks */,
 				2FF002A01493E23400BF3668 /* UIKit.framework in Frameworks */,
 				2FF002A21493E23400BF3668 /* Foundation.framework in Frameworks */,
 				2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */,
@@ -113,6 +118,7 @@
 		2FF0029E1493E23400BF3668 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0356470C14A1065100208A47 /* SystemConfiguration.framework */,
 				2FF0029F1493E23400BF3668 /* UIKit.framework */,
 				2FF002A11493E23400BF3668 /* Foundation.framework */,
 				2FF002A31493E23400BF3668 /* CoreGraphics.framework */,
@@ -126,8 +132,6 @@
 			children = (
 				2FF002AE1493E23400BF3668 /* AppDelegate.h */,
 				2FF002AF1493E23400BF3668 /* AppDelegate.m */,
-				2FF002B11493E23400BF3668 /* MainStoryboard_iPhone.storyboard */,
-				2FF002B41493E23400BF3668 /* MainStoryboard_iPad.storyboard */,
 				2FF002B71493E23400BF3668 /* FirstViewController.h */,
 				2FF002B81493E23400BF3668 /* FirstViewController.m */,
 				2FF002BA1493E23400BF3668 /* first.png */,
@@ -137,6 +141,10 @@
 				2FF002C11493E23400BF3668 /* second.png */,
 				2FF002C31493E23400BF3668 /* second@2x.png */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
+				0356470E14A106DA00208A47 /* BMANetworkUtilities.h */,
+				0356470F14A106DA00208A47 /* BMANetworkUtilities.m */,
+				0356471114A108E500208A47 /* BMAWebClient.h */,
+				0356471214A108E500208A47 /* BMAWebClient.m */,
 			);
 			path = SmartTrail;
 			sourceTree = "<group>";
@@ -242,8 +250,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FF002AA1493E23400BF3668 /* InfoPlist.strings in Resources */,
-				2FF002B31493E23400BF3668 /* MainStoryboard_iPhone.storyboard in Resources */,
-				2FF002B61493E23400BF3668 /* MainStoryboard_iPad.storyboard in Resources */,
 				2FF002BB1493E23400BF3668 /* first.png in Resources */,
 				2FF002BD1493E23400BF3668 /* first@2x.png in Resources */,
 				2FF002C21493E23400BF3668 /* second.png in Resources */,
@@ -286,6 +292,8 @@
 				2FF002B01493E23400BF3668 /* AppDelegate.m in Sources */,
 				2FF002B91493E23400BF3668 /* FirstViewController.m in Sources */,
 				2FF002C01493E23400BF3668 /* SecondViewController.m in Sources */,
+				0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */,
+				0356471314A108E500208A47 /* BMAWebClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,22 +324,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		2FF002B11493E23400BF3668 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2FF002B21493E23400BF3668 /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		2FF002B41493E23400BF3668 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2FF002B51493E23400BF3668 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 		2FF002D41493E23500BF3668 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -348,7 +340,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -374,7 +366,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -396,6 +388,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
 				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -407,6 +400,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
 				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -465,6 +459,7 @@
 				2FF002DE1493E23500BF3668 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2FF002DF1493E23500BF3668 /* Build configuration list for PBXNativeTarget "SmartTrailTests" */ = {
 			isa = XCConfigurationList;
@@ -473,6 +468,7 @@
 				2FF002E11493E23500BF3668 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

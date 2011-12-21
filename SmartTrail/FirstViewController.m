@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "BMAWebClient.h"
 
 @implementation FirstViewController
 
@@ -34,6 +35,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    BMAWebClient *webClient = [[[BMAWebClient alloc] init] autorelease];
+    [webClient logIntoBmaWebSiteAsync:@"doomer" andPassword:@"pass4John"];
+    NSString *sessionCookie = [webClient sessionCookie];
+    
+    NSLog(@"%@", sessionCookie);
 }
 
 - (void)viewDidAppear:(BOOL)animated
