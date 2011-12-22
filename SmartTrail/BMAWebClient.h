@@ -53,14 +53,18 @@
 - (void) dealloc;
 
 /**
- This is an asynchronous method.  The intended use is to run this in a separate thread, then
- wait for a non-nil session cookie.
+ This is an asynchronous method.  The intended use is to call this method from a client
+ class that implements one or more of the BMAWebClientNotifications event notification protocol 
+ methods.  A client knows a web request has completed when one of the delegate methods gets
+ called.
  */
 - (void) logIntoBmaWebSiteAsync : (NSString*) withUserName andPassword : (NSString*) passWord;
 
 /**
- This is an asynchronous method.  The intended use is to run this method in a separate thread,
- then wait for the session cookie to become nil.
+ This is an asynchronous method.  The intended use is to call this method from a client
+ class that implements one or more of the BMAWebClientNotifications event notification protocol 
+ methods.  A client knows a web request has completed when one of the delegate methods gets
+ called.
  */
 - (void) logOutOfBmaWebSiteAsync;
 
