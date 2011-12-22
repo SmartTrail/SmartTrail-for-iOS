@@ -20,12 +20,25 @@
     urlConnection = nil;
 }
 
+- (id) init
+{
+    self = [super init];
+    
+    if(self)
+    {
+        eventListeners = [[NSMutableSet alloc] init];
+    }
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [sessionCookie release];
     [sessionUserName release];
     [sessionPassword release];
     [self closeConnection];
+    [eventListeners release];
     
     [super dealloc];
 }
@@ -102,14 +115,36 @@
     NSLog(@"didReceiveData");
 } 
 
+/**
+ !!! FIXME
+ 
+ This event notification system needs to be factored into its own set of classes, but,
+ since we only have one web client method, it will do for now.
+ */
+- (void) notifyEventListenersOfLoginCompletion : (BOOL) completionSuccessful
+{
+    for(id eventListener in eventListeners)
+    {
+        if([eventListener respondsToSelector:@selector(bmaWebClient:didCompleteLogin:)])
+        {
+            [eventListener bmaWebClient:self didCompleteLogin:completionSuccessful];
+        }
+    }
+}
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection 
 { 
+    BOOL loginSuccessful = YES;
+    [self notifyEventListenersOfLoginCompletion:loginSuccessful];
     [self closeConnection];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error 
 { 
     NSLog(@"%@", error);
+    
+    BOOL loginFailed = NO;
+    [self notifyEventListenersOfLoginCompletion:loginFailed];
     [self closeConnection];
 }    
 
@@ -117,6 +152,16 @@
 - (void) logOutOfBmaWebSiteAsync
 {
     
+}
+
+- (void) addEventNotificationDelegate : (id) instanceToBeNotified
+{
+    [eventListeners addObject:instanceToBeNotified];
+}
+
+- (void) removeEventNotificationDelegate : (id) instanceToBeRemoved
+{
+    [eventListeners removeObject:instanceToBeRemoved];
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "FirstViewController.h"
-#import "BMAWebClient.h"
 
 @implementation FirstViewController
 
@@ -32,14 +31,21 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void) bmaWebClient : (BMAWebClient*) webClient didCompleteLogin : (BOOL) successfully
+{
+    NSLog(@"Got %@ login completion event.", successfully ? @"successful" : @"unsuccessful");
+    [webClient removeEventNotificationDelegate:self];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
     BMAWebClient *webClient = [[[BMAWebClient alloc] init] autorelease];
+    [webClient addEventNotificationDelegate:self];
     [webClient logIntoBmaWebSiteAsync:@"doomer" andPassword:@"pass4John"];
     NSString *sessionCookie = [webClient sessionCookie];
-    
+
     NSLog(@"%@", sessionCookie);
 }
 

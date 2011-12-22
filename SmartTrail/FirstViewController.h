@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BMAWebClient.h"
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UIViewController <BMAWebClientNotifications>
 
 @end
