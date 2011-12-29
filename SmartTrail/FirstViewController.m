@@ -34,6 +34,7 @@
 - (void) bmaWebClient : (BMAWebClient*) webClient didCompleteLogin : (BOOL) successfully
 {
     NSLog(@"Got %@ login completion event.", successfully ? @"successful" : @"unsuccessful");
+    [webClient logOutOfBmaWebSiteAsync];
     [webClient removeEventNotificationDelegate:self];
 }
 

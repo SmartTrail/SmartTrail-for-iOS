@@ -151,7 +151,21 @@
 
 - (void) logOutOfBmaWebSiteAsync
 {
-    
+    if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
+    {
+        NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+        [request setURL:[NSURL URLWithString:@"https://bouldermountainbike.org/logout"]];  
+        [request setHTTPMethod:@"POST"];  
+        
+        [self closeConnection];
+        
+        urlConnection =[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    }
+    else
+    {
+        NSLog(@"No available network connections");
+    }
+
 }
 
 - (void) addEventNotificationDelegate : (id) instanceToBeNotified
