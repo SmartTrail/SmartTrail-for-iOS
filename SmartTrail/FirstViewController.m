@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "BMAAreaDescriptorWebClient.h"
 
 @implementation FirstViewController
 
@@ -38,16 +39,30 @@
     [webClient removeEventNotificationDelegate:self];
 }
 
+- (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
+{
+    [webClient setEventNotificationDelegate:nil];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
+#if 0
+    /*
+     Turns out that this web site is not the one we should be using for clients other than
+     a browser.
+     */
     BMAWebClient *webClient = [[[BMAWebClient alloc] init] autorelease];
     [webClient addEventNotificationDelegate:self];
     [webClient logIntoBmaWebSiteAsync:@"doomer" andPassword:@"pass4John"];
     NSString *sessionCookie = [webClient sessionCookie];
-
     NSLog(@"%@", sessionCookie);
+#endif
+    
+    BMAAreaDescriptorWebClient *areaDescriptorWebClient = [[[BMAAreaDescriptorWebClient alloc] init] autorelease];
+    [areaDescriptorWebClient setEventNotificationDelegate:self];
+    [areaDescriptorWebClient getAreaDescriptorsForRegion:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0351099414B212F600487B8B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351099314B212F600487B8B /* JSONKit.m */; };
+		0351099A14B21C9700487B8B /* BMAAreaDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351099914B21C9700487B8B /* BMAAreaDescriptorWebClient.m */; };
+		035109A114B2B1E900487B8B /* BMAAreaDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */; };
 		0356470D14A1065100208A47 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356470C14A1065100208A47 /* SystemConfiguration.framework */; };
 		0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356470F14A106DA00208A47 /* BMANetworkUtilities.m */; };
 		0356471314A108E500208A47 /* BMAWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356471214A108E500208A47 /* BMAWebClient.m */; };
@@ -40,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0351099214B212F600487B8B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = SmartTrail/JSONKit.h; sourceTree = "<group>"; };
+		0351099314B212F600487B8B /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = SmartTrail/JSONKit.m; sourceTree = "<group>"; };
+		0351099814B21C9700487B8B /* BMAAreaDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAAreaDescriptorWebClient.h; sourceTree = "<group>"; };
+		0351099914B21C9700487B8B /* BMAAreaDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAAreaDescriptorWebClient.m; sourceTree = "<group>"; };
+		0351099F14B2B1E900487B8B /* BMAAreaDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAAreaDescriptor.h; sourceTree = "<group>"; };
+		035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAAreaDescriptor.m; sourceTree = "<group>"; };
 		0356470C14A1065100208A47 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0356470E14A106DA00208A47 /* BMANetworkUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMANetworkUtilities.h; sourceTree = "<group>"; };
 		0356470F14A106DA00208A47 /* BMANetworkUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMANetworkUtilities.m; sourceTree = "<group>"; };
@@ -96,9 +105,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0351098D14B211F200487B8B /* JSONParser */ = {
+			isa = PBXGroup;
+			children = (
+				0351099214B212F600487B8B /* JSONKit.h */,
+				0351099314B212F600487B8B /* JSONKit.m */,
+			);
+			name = JSONParser;
+			sourceTree = "<group>";
+		};
 		2FF002901493E23400BF3668 = {
 			isa = PBXGroup;
 			children = (
+				0351098D14B211F200487B8B /* JSONParser */,
 				2FF002A51493E23400BF3668 /* SmartTrail */,
 				2FF002D11493E23500BF3668 /* SmartTrailTests */,
 				2FF0029E1493E23400BF3668 /* Frameworks */,
@@ -145,6 +164,10 @@
 				0356470F14A106DA00208A47 /* BMANetworkUtilities.m */,
 				0356471114A108E500208A47 /* BMAWebClient.h */,
 				0356471214A108E500208A47 /* BMAWebClient.m */,
+				0351099814B21C9700487B8B /* BMAAreaDescriptorWebClient.h */,
+				0351099914B21C9700487B8B /* BMAAreaDescriptorWebClient.m */,
+				0351099F14B2B1E900487B8B /* BMAAreaDescriptor.h */,
+				035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */,
 			);
 			path = SmartTrail;
 			sourceTree = "<group>";
@@ -294,6 +317,9 @@
 				2FF002C01493E23400BF3668 /* SecondViewController.m in Sources */,
 				0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */,
 				0356471314A108E500208A47 /* BMAWebClient.m in Sources */,
+				0351099414B212F600487B8B /* JSONKit.m in Sources */,
+				0351099A14B21C9700487B8B /* BMAAreaDescriptorWebClient.m in Sources */,
+				035109A114B2B1E900487B8B /* BMAAreaDescriptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
