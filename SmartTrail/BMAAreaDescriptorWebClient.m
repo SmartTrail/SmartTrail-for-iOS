@@ -27,6 +27,7 @@
     [areaData release];
     [eventNotificationDelegate release];
     [self closeConnection];
+    [super dealloc];
 }
 
 - (id) getAreaDescriptorsForRegion : (NSInteger) region

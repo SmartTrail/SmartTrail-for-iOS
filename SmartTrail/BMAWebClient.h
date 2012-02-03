@@ -44,10 +44,10 @@
     NSString *sessionUserName;
     NSString *sessionPassword;
     NSURLConnection *urlConnection;
-    NSMutableSet *eventListeners;
 }
 
 @property (nonatomic, retain) NSString *sessionCookie;
+@property (nonatomic, retain) id eventListener;
 
 - (id) init;
 - (void) dealloc;
@@ -67,34 +67,5 @@
  called.
  */
 - (void) logOutOfBmaWebSiteAsync;
-
-/**
- @method addEventNotificationDelegate
- 
- @abstract
- Call this method to register to receive web client event notifications.
- 
- @discussion
- We will call the registering class' event delegate methos conforming to the BMAWebClientNotifications
- protocol if the the delegate implements the protocol methods.
- 
- @param
-     instanceToBeNotified
-         An object instance implementing the BMAWebClientNotifications protocol.
- */
-- (void) addEventNotificationDelegate : (id) instanceToBeNotified;
-
-/**
- @method removeEventNotificationDelegate
- 
- @abstract
- Call this method when you want to stop receiving web client event notifications.
- 
- @param
-     instanceToBeRemoved
-         The object instance implementing the BMAWebClientNotifications protocol you
-         wish to stop receiving web client events.
- */
-- (void) removeEventNotificationDelegate : (id) instanceToBeRemoved;
 
 @end

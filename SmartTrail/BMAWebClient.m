@@ -12,6 +12,12 @@
 @implementation BMAWebClient
 
 @synthesize sessionCookie;
+@synthesize eventListener;
+
+- (id) init
+{
+    return [super init];
+}
 
 - (void) closeConnection
 {
@@ -20,25 +26,13 @@
     urlConnection = nil;
 }
 
-- (id) init
-{
-    self = [super init];
-    
-    if(self)
-    {
-        eventListeners = [[NSMutableSet alloc] init];
-    }
-    
-    return self;
-}
-
 - (void)dealloc
 {
     [sessionCookie release];
     [sessionUserName release];
     [sessionPassword release];
     [self closeConnection];
-    [eventListeners release];
+    [eventListener release];
     
     [super dealloc];
 }
@@ -121,21 +115,18 @@
  This event notification system needs to be factored into its own set of classes, but,
  since we only have one web client method, it will do for now.
  */
-- (void) notifyEventListenersOfLoginCompletion : (BOOL) completionSuccessful
+- (void) notifyEventListenerOfLoginCompletion : (BOOL) completionSuccessful
 {
-    for(id eventListener in eventListeners)
+    if([eventListener respondsToSelector:@selector(bmaWebClient:didCompleteLogin:)])
     {
-        if([eventListener respondsToSelector:@selector(bmaWebClient:didCompleteLogin:)])
-        {
-            [eventListener bmaWebClient:self didCompleteLogin:completionSuccessful];
-        }
+        [eventListener bmaWebClient:self didCompleteLogin:completionSuccessful];
     }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection 
 { 
     BOOL loginSuccessful = YES;
-    [self notifyEventListenersOfLoginCompletion:loginSuccessful];
+    [self notifyEventListenerOfLoginCompletion:loginSuccessful];
     [self closeConnection];
 }
 
@@ -144,7 +135,7 @@
     NSLog(@"%@", error);
     
     BOOL loginFailed = NO;
-    [self notifyEventListenersOfLoginCompletion:loginFailed];
+    [self notifyEventListenerOfLoginCompletion:loginFailed];
     [self closeConnection];
 }    
 
@@ -165,17 +156,6 @@
     {
         NSLog(@"No available network connections");
     }
-
-}
-
-- (void) addEventNotificationDelegate : (id) instanceToBeNotified
-{
-    [eventListeners addObject:instanceToBeNotified];
-}
-
-- (void) removeEventNotificationDelegate : (id) instanceToBeRemoved
-{
-    [eventListeners removeObject:instanceToBeRemoved];
 }
 
 @end

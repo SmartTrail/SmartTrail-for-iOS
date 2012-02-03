@@ -36,7 +36,6 @@
 {
     NSLog(@"Got %@ login completion event.", successfully ? @"successful" : @"unsuccessful");
     [webClient logOutOfBmaWebSiteAsync];
-    [webClient removeEventNotificationDelegate:self];
 }
 
 - (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
@@ -48,16 +47,17 @@
 {
     [super viewWillAppear:animated];
 
-#if 0
+#if 1
     /*
      Turns out that this web site is not the one we should be using for clients other than
      a browser.
      */
     BMAWebClient *webClient = [[[BMAWebClient alloc] init] autorelease];
-    [webClient addEventNotificationDelegate:self];
+    [webClient setEventListener:self];
     [webClient logIntoBmaWebSiteAsync:@"doomer" andPassword:@"pass4John"];
     NSString *sessionCookie = [webClient sessionCookie];
     NSLog(@"%@", sessionCookie);
+    [webClient logOutOfBmaWebSiteAsync];
 #endif
     
     BMAAreaDescriptorWebClient *areaDescriptorWebClient = [[[BMAAreaDescriptorWebClient alloc] init] autorelease];
