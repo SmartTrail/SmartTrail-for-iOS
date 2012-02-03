@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@class BMAAreaDescriptorWebClient;
+@class BMAAreaDescriptorsWebClient;
 
-@protocol BMAAreaDescriptorWebClientEventNotifications <NSObject>
+@protocol BMAAreaDescriptorsWebClientEventNotifications <NSObject>
 
 @optional
 
-- (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
+- (void) bmaAreaDescriptorsWebClient : (BMAAreaDescriptorsWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
 
 @end
 
-@interface BMAAreaDescriptorWebClient : NSObject
+@interface BMAAreaDescriptorsWebClient : NSObject
 {
     NSURLConnection *urlConnection;
     NSMutableData *areaData;

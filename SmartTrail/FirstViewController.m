@@ -7,7 +7,7 @@
 //
 
 #import "FirstViewController.h"
-#import "BMAAreaDescriptorWebClient.h"
+#import "BMAAreaDescriptorsWebClient.h"
 #import "BMAAreaDescriptor.h"
 
 @implementation FirstViewController
@@ -39,7 +39,7 @@
     [webClient logOutOfBmaWebSiteAsync];
 }
 
-- (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
+- (void) bmaAreaDescriptorsWebClient : (BMAAreaDescriptorsWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
 {
     for(BMAAreaDescriptor *bmaAreaDescriptor in resultArray)
     {
@@ -66,7 +66,7 @@
     [webClient logOutOfBmaWebSiteAsync];
 #endif
     
-    BMAAreaDescriptorWebClient *areaDescriptorWebClient = [[[BMAAreaDescriptorWebClient alloc] init] autorelease];
+    BMAAreaDescriptorsWebClient *areaDescriptorWebClient = [[[BMAAreaDescriptorsWebClient alloc] init] autorelease];
     [areaDescriptorWebClient setEventNotificationDelegate:self];
     [areaDescriptorWebClient getAreaDescriptorsForRegion:1];
 }

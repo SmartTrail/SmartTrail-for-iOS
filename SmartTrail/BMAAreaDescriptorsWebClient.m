@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "BMAAreaDescriptorWebClient.h"
+#import "BMAAreaDescriptorsWebClient.h"
 #import "BMANetworkUtilities.h"
 #import "JSONKit.h"
 #import "BMAAreaDescriptor.h"
 
-@implementation BMAAreaDescriptorWebClient
+@implementation BMAAreaDescriptorsWebClient
 
 @synthesize eventNotificationDelegate;
 
@@ -66,9 +66,9 @@
 
 - (void) notifyEventListenerOfAreaRetrievalCompletion : (BOOL) completionSuccessful withResultData : (NSArray*) resultData
 {
-    if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaAreaDescriptorWebClient:didCompleteAreaRetrieval:withResultArray:)])
+    if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaAreaDescriptorsWebClient:didCompleteAreaRetrieval:withResultArray:)])
     {
-        [[self eventNotificationDelegate] bmaAreaDescriptorWebClient:self didCompleteAreaRetrieval:completionSuccessful withResultArray:resultData];
+        [[self eventNotificationDelegate] bmaAreaDescriptorsWebClient:self didCompleteAreaRetrieval:completionSuccessful withResultArray:resultData];
     }
 }
 
