@@ -41,7 +41,7 @@
     
     if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
     {
-        NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/regions/%d/areas", region];
+        NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/regions/%d/areas",region];
         NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
         [request setURL:[NSURL URLWithString:url]];  
         [request setHTTPMethod:@"GET"];  

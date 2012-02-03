@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "BMAAreaDescriptorWebClient.h"
+#import "BMAAreaDescriptor.h"
 
 @implementation FirstViewController
 
@@ -40,6 +41,11 @@
 
 - (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
 {
+    for(BMAAreaDescriptor *bmaAreaDescriptor in resultArray)
+    {
+        NSLog(@"%@", [bmaAreaDescriptor areaName]);
+    }
+    
     [webClient setEventNotificationDelegate:nil];
 }
 
@@ -47,7 +53,7 @@
 {
     [super viewWillAppear:animated];
 
-#if 1
+#if 0
     /*
      Turns out that this web site is not the one we should be using for clients other than
      a browser.
