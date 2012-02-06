@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "BMAAreaDescriptorsWebClient.h"
+#import "BMAAreaDescriptorWebClient.h"
 #import "BMAAreaDescriptor.h"
 
 @implementation FirstViewController
@@ -49,6 +50,12 @@
     [webClient setEventNotificationDelegate:nil];
 }
 
+- (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withAreaDescriptor : (BMAAreaDescriptor*) areaDescriptor
+{
+    NSLog(@"%@", [areaDescriptor areaName]);
+    [webClient setEventNotificationDelegate:nil];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -64,11 +71,15 @@
     NSString *sessionCookie = [webClient sessionCookie];
     NSLog(@"%@", sessionCookie);
     [webClient logOutOfBmaWebSiteAsync];
+    
+    BMAAreaDescriptorsWebClient *areaDescriptorsWebClient = [[[BMAAreaDescriptorsWebClient alloc] init] autorelease];
+    [areaDescriptorsWebClient setEventNotificationDelegate:self];
+    [areaDescriptorsWebClient getAreaDescriptorsForRegion:1];
 #endif
     
-    BMAAreaDescriptorsWebClient *areaDescriptorWebClient = [[[BMAAreaDescriptorsWebClient alloc] init] autorelease];
+    BMAAreaDescriptorWebClient *areaDescriptorWebClient = [[[BMAAreaDescriptorWebClient alloc] init] autorelease];
     [areaDescriptorWebClient setEventNotificationDelegate:self];
-    [areaDescriptorWebClient getAreaDescriptorsForRegion:1];
+    [areaDescriptorWebClient getAreaDescriptorForArea:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated
