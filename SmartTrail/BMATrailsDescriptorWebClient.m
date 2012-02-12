@@ -61,46 +61,6 @@
     [trailData appendData:data];
 } 
 
-- (NSUInteger) intValForString : (NSString*) str
-{
-    if((NSNull*)str == [NSNull null])
-    {
-        return 0;
-    }
-    
-    return [str intValue];
-}
-
-- (NSString*) stringValueForString : (NSString*) str
-{
-    if( ! str)
-    {
-        return @"0";
-    }
-    
-    return str;
-}
-
-- (double) doubleValueForString : (NSString*) str
-{
-    if((NSNull*)str == [NSNull null])
-    {
-        return 0;
-    }
-    
-    return [str doubleValue];
-}
-
-- (Float32) floatValueForString : (NSString*) str
-{
-    if((NSNull*)str == [NSNull null])
-    {
-        return 0;
-    }
-    
-    return [str floatValue];
-}
-
 - (void) notifyEventListenerOfTrailsRetrievalCompletion : (BOOL) completionSuccessful withResultData : (NSArray*) resultData
 {
     if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaTrailDescriptorsWebClient:didCompleteTrailRetrieval:withResultArray:)])
@@ -125,19 +85,19 @@
     for (NSDictionary *trailDictionary in trails)
     {
         BMATrailDescriptor *trailDescriptor = [[BMATrailDescriptor alloc] init];
-        [trailDescriptor setAerobicRating:[self intValForString:[trailDictionary objectForKey:@"aerobicRating"]]];
-        [trailDescriptor setArea:[self intValForString:[trailDictionary objectForKey:@"area"]]];
-        [trailDescriptor setCondition:[self intValForString:[trailDictionary objectForKey:@"condition"]]];
-        [trailDescriptor setCoolRating:[self intValForString:[trailDictionary objectForKey:@"coolRating"]]];
-        [trailDescriptor setDescription:[self stringValueForString:[trailDictionary objectForKey:@"description"]]];
-        [trailDescriptor setElevationGain:[self intValForString:[trailDictionary objectForKey:@"elevationGain"]]];
-        [trailDescriptor setFullDescription:[self stringValueForString:[trailDictionary objectForKey:@"descriptionFull"]]];
-        [trailDescriptor setLastUpdated:[NSDate dateWithTimeIntervalSince1970:[self doubleValueForString:[trailDictionary objectForKey:@"updatedAt"]]]];
-        [trailDescriptor setLength:[self floatValueForString:[trailDictionary objectForKey:@"length"]]];
-        [trailDescriptor setName:[self stringValueForString:[trailDictionary objectForKey:@"name"]]];
-        [trailDescriptor setTechRating:[self intValForString:[trailDictionary objectForKey:@"techRating"]]];
-        [trailDescriptor setTrailId:[self intValForString:[trailDictionary objectForKey:@"id"]]];
-        [trailDescriptor setUrl:[self stringValueForString:[trailDictionary objectForKey:@"url"]]];
+        [trailDescriptor setAerobicRating:[[trailDictionary objectForKey:@"aerobicRating"] intValue]];
+        [trailDescriptor setArea:[[trailDictionary objectForKey:@"area"] intValue]];
+        [trailDescriptor setCondition:[[trailDictionary objectForKey:@"condition"] intValue]];
+        [trailDescriptor setCoolRating:[[trailDictionary objectForKey:@"coolRating"] intValue]];
+        [trailDescriptor setDescription:[trailDictionary objectForKey:@"description"]];
+        [trailDescriptor setElevationGain:[[trailDictionary objectForKey:@"elevationGain"] intValue]];
+        [trailDescriptor setFullDescription:[trailDictionary objectForKey:@"descriptionFull"]];
+        [trailDescriptor setLastUpdated:[NSDate dateWithTimeIntervalSince1970:[[trailDictionary objectForKey:@"updatedAt"] doubleValue]]];
+        [trailDescriptor setLength:[[trailDictionary objectForKey:@"length"] floatValue]];
+        [trailDescriptor setName:[trailDictionary objectForKey:@"name"]];
+        [trailDescriptor setTechRating:[[trailDictionary objectForKey:@"techRating"] intValue]];
+        [trailDescriptor setTrailId:[[trailDictionary objectForKey:@"id"] intValue]];
+        [trailDescriptor setUrl:[trailDictionary objectForKey:@"url"]];
 
         [resultArray addObject:trailDescriptor];
         
