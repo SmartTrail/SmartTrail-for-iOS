@@ -32,10 +32,7 @@
 
 - (id) getAreaDescriptorsForRegion : (NSInteger) region
 {
-    if(areaData != nil)
-    {
-        [areaData release];
-    }
+    [areaData release];
     
     areaData = [[NSMutableData alloc] init];
     

@@ -24,7 +24,7 @@
     NSMutableData *areaData;
 }
 
-@property(nonatomic, retain) id eventNotificationDelegate;
+@property(nonatomic, retain) id<BMAAreaDescriptorsWebClientEventNotifications> eventNotificationDelegate;
 
 - (void) dealloc;
 - (id) getAreaDescriptorsForRegion : (NSInteger) region;

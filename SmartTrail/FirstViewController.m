@@ -10,6 +10,7 @@
 #import "BMAAreaDescriptorsWebClient.h"
 #import "BMAAreaDescriptorWebClient.h"
 #import "BMAAreaDescriptor.h"
+#import "BMATrailDescriptor.h"
 
 @implementation FirstViewController
 
@@ -56,6 +57,17 @@
     [webClient setEventNotificationDelegate:nil];
 }
 
+
+- (void) bmaTrailDescriptorsWebClient : (BMATrailsDescriptorWebClient*) webClient didCompleteTrailRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray
+{
+    for(BMATrailDescriptor *trailDescriptor in resultArray)
+    {
+        NSLog(@"%@", trailDescriptor);
+    }
+    
+    [webClient setEventNotificationDelegate:nil];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -75,11 +87,15 @@
     BMAAreaDescriptorsWebClient *areaDescriptorsWebClient = [[[BMAAreaDescriptorsWebClient alloc] init] autorelease];
     [areaDescriptorsWebClient setEventNotificationDelegate:self];
     [areaDescriptorsWebClient getAreaDescriptorsForRegion:1];
-#endif
     
     BMAAreaDescriptorWebClient *areaDescriptorWebClient = [[[BMAAreaDescriptorWebClient alloc] init] autorelease];
     [areaDescriptorWebClient setEventNotificationDelegate:self];
     [areaDescriptorWebClient getAreaDescriptorForArea:1];
+#endif
+    
+    BMATrailsDescriptorWebClient *trailsDescriptorWebClient = [[[BMATrailsDescriptorWebClient alloc] init] autorelease];
+    [trailsDescriptorWebClient setEventNotificationDelegate:self];
+    [trailsDescriptorWebClient getTrailsDescriptorForArea:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated

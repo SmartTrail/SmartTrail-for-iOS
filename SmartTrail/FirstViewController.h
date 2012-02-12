@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "BMAWebClient.h"
 #import "BMAAreaDescriptorsWebClient.h"
+#import "BMATrailsDescriptorWebClient.h"
 
-@interface FirstViewController : UIViewController <BMAWebClientNotifications, BMAAreaDescriptorsWebClientEventNotifications>
+@interface FirstViewController : UIViewController
+<
+    BMAWebClientNotifications,
+    BMAAreaDescriptorsWebClientEventNotifications,
+    BMATrailsDescriptorWebClientEventNotifications
+>
 
 @end
