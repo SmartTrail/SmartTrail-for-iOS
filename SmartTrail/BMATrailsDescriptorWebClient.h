@@ -28,5 +28,6 @@
 
 - (void) dealloc;
 - (id) getTrailsDescriptorForArea : (NSInteger) area;
+- (id) getTrailsDescriptorForRegion : (NSInteger) region;
 
 @end

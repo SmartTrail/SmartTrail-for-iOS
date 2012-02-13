@@ -30,6 +30,31 @@
     [super dealloc];
 }
 
+- (id) getTrailsDescriptorForRegion : (NSInteger) region
+{
+    [trailData release];
+    
+    trailData = [[NSMutableData alloc] init];
+    
+    if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
+    {
+        NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/regions/%d/trails", region];
+        NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+        [request setURL:[NSURL URLWithString:url]];  
+        [request setHTTPMethod:@"GET"];  
+        
+        [self closeConnection];
+        
+        urlConnection =[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    }
+    else
+    {
+        NSLog(@"No network available");
+    }
+    
+    return self;
+}
+
 - (id) getTrailsDescriptorForArea : (NSInteger) area
 {
     [trailData release];
@@ -38,7 +63,7 @@
     
     if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
     {
-        NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/areas/%d/trails",area];
+        NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/areas/%d/trails", area];
         NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
         [request setURL:[NSURL URLWithString:url]];  
         [request setHTTPMethod:@"GET"];  
@@ -100,8 +125,6 @@
         [trailDescriptor setUrl:[trailDictionary objectForKey:@"url"]];
 
         [resultArray addObject:trailDescriptor];
-        
-        NSLog(@"%@", trailDescriptor);
         [trailDescriptor release];
     }
     

@@ -99,11 +99,16 @@
     BMATrailsDescriptorWebClient *trailsDescriptorWebClient = [[[BMATrailsDescriptorWebClient alloc] init] autorelease];
     [trailsDescriptorWebClient setEventNotificationDelegate:self];
     [trailsDescriptorWebClient getTrailsDescriptorForArea:1];
-#endif
     
     BMATrailDescriptorWebClient *trailDescriptorWebClient = [[[BMATrailDescriptorWebClient alloc] init] autorelease];
     [trailDescriptorWebClient setEventNotificationDelegate:self];
     [trailDescriptorWebClient getTrailDescriptorForTrail:217];
+#endif
+ 
+    BMATrailsDescriptorWebClient *trailsDescriptorWebClient = [[[BMATrailsDescriptorWebClient alloc] init] autorelease];
+    [trailsDescriptorWebClient setEventNotificationDelegate:self];
+    [trailsDescriptorWebClient getTrailsDescriptorForRegion:1];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
