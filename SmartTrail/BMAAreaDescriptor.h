@@ -11,7 +11,7 @@
 @interface BMAAreaDescriptor : NSObject
 
 @property(nonatomic, assign) NSUInteger id;
-@property(nonatomic, retain) NSString *areaName;
+@property(nonatomic, copy) NSString *areaName;
 
 - (void) dealloc;
 
