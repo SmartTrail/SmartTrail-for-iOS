@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0343F2D514E886F400B292E9 /* BMATrailDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343F2D414E886F400B292E9 /* BMATrailDescriptorWebClient.m */; };
 		0347C6C014E2321D001ECC2B /* BMATrailsDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */; };
 		0351099414B212F600487B8B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351099314B212F600487B8B /* JSONKit.m */; };
 		035109A114B2B1E900487B8B /* BMAAreaDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */; };
@@ -46,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0343F2D314E886F400B292E9 /* BMATrailDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMATrailDescriptorWebClient.h; sourceTree = "<group>"; };
+		0343F2D414E886F400B292E9 /* BMATrailDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMATrailDescriptorWebClient.m; sourceTree = "<group>"; };
 		0347C6BE14E2321D001ECC2B /* BMATrailsDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMATrailsDescriptorWebClient.h; sourceTree = "<group>"; };
 		0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMATrailsDescriptorWebClient.m; sourceTree = "<group>"; };
 		0351099214B212F600487B8B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = SmartTrail/JSONKit.h; sourceTree = "<group>"; };
@@ -181,6 +184,8 @@
 				035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */,
 				03566E0D14E7697D009B7EC5 /* BMATrailDescriptor.h */,
 				03566E0E14E7697D009B7EC5 /* BMATrailDescriptor.m */,
+				0343F2D314E886F400B292E9 /* BMATrailDescriptorWebClient.h */,
+				0343F2D414E886F400B292E9 /* BMATrailDescriptorWebClient.m */,
 				0347C6BE14E2321D001ECC2B /* BMATrailsDescriptorWebClient.h */,
 				0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */,
 			);
@@ -338,6 +343,7 @@
 				035D946B14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m in Sources */,
 				0347C6C014E2321D001ECC2B /* BMATrailsDescriptorWebClient.m in Sources */,
 				03566E0F14E7697D009B7EC5 /* BMATrailDescriptor.m in Sources */,
+				0343F2D514E886F400B292E9 /* BMATrailDescriptorWebClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

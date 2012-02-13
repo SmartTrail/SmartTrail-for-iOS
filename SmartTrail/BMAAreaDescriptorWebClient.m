@@ -83,7 +83,7 @@
     NSDictionary *response = [responseData objectForKey:@"response"];
     NSArray *area = [response objectForKey:@"area"];
     NSDictionary *areaDictionary = [area objectAtIndex:0];
-    BMAAreaDescriptor *areaDescriptor = [[BMAAreaDescriptor alloc] init];
+    BMAAreaDescriptor *areaDescriptor = [[[BMAAreaDescriptor alloc] init] autorelease];
     [areaDescriptor setId:[[areaDictionary objectForKey:@"id"] intValue]];
     [areaDescriptor setAreaName:[areaDictionary objectForKey:@"name"]];
     
