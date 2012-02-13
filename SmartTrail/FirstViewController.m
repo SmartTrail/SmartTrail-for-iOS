@@ -10,6 +10,7 @@
 #import "BMAAreaDescriptor.h"
 #import "BMATrailDescriptor.h"
 #import "BMAConditionDescriptor.h"
+#import "BMAEventDescriptor.h"
 
 @implementation FirstViewController
 
@@ -83,6 +84,16 @@
     [webClient setEventNotificationDelegate:nil];
 }
 
+- (void) bmaEventsDescriptionWebClient : (BMAEventsDescriptorWebClient*) webClient didCompleteEventRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray
+{
+    for(BMAEventDescriptor *eventDescriptor in resultArray)
+    {
+        NSLog(@"%@", eventDescriptor);
+    }
+    
+    [webClient setEventNotificationDelegate:nil];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -118,13 +129,17 @@
     BMATrailsDescriptorWebClient *trailsDescriptorWebClient = [[[BMATrailsDescriptorWebClient alloc] init] autorelease];
     [trailsDescriptorWebClient setEventNotificationDelegate:self];
     [trailsDescriptorWebClient getTrailsDescriptorForRegion:1];
-#endif
     
     BMAConditionsDescriptorWebClient *conditionsDescriptorWebClient = [[[BMAConditionsDescriptorWebClient alloc] init] autorelease];
     [conditionsDescriptorWebClient setEventNotificationDelegate:self];
     // [conditionsDescriptorWebClient getTrailConditionsForRegion:1];
     // [conditionsDescriptorWebClient getTrailConditionsForArea:1];
     [conditionsDescriptorWebClient getTrailConditionsForTrail:219];
+#endif
+    
+    BMAEventsDescriptorWebClient *eventsDescriptorWebClient = [[[BMAEventsDescriptorWebClient alloc] init] autorelease];
+    [eventsDescriptorWebClient setEventNotificationDelegate:self];
+    [eventsDescriptorWebClient getEventsForRegion:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated

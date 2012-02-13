@@ -10,7 +10,7 @@
 
 @class BMAConditionsDescriptorWebClient;
 
-@protocol BMAConditionsDescriptorWebClient <NSObject>
+@protocol BMAConditionsDescriptorWebClientEventNotifications <NSObject>
 
 @optional
 
@@ -24,7 +24,7 @@
     NSMutableData *conditionData;
 }
 
-@property (nonatomic, retain) id<BMAConditionsDescriptorWebClient> eventNotificationDelegate;
+@property (nonatomic, retain) id<BMAConditionsDescriptorWebClientEventNotifications> eventNotificationDelegate;
 
 - (void) dealloc;
 - (id) getTrailConditionsForRegion : (NSInteger) region;

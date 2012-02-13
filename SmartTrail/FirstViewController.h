@@ -13,6 +13,7 @@
 #import "BMATrailsDescriptorWebClient.h"
 #import "BMATrailDescriptorWebClient.h"
 #import "BMAConditionsDescriptorWebClient.h"
+#import "BMAEventsDescriptorWebClient.h"
 
 @interface FirstViewController : UIViewController
 <
@@ -20,7 +21,8 @@
     BMAAreaDescriptorsWebClientEventNotifications,
     BMATrailsDescriptorWebClientEventNotifications,
     BMATrailDescriptorWebClientEventNotifications,
-    BMAConditionsDescriptorWebClient
+    BMAConditionsDescriptorWebClientEventNotifications,
+    BMAEventsDescriptorEventNotifications
 >
 
 @end
