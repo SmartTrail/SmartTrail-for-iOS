@@ -122,7 +122,8 @@
     
     BMAConditionsDescriptorWebClient *conditionsDescriptorWebClient = [[[BMAConditionsDescriptorWebClient alloc] init] autorelease];
     [conditionsDescriptorWebClient setEventNotificationDelegate:self];
-    [conditionsDescriptorWebClient getTrailConditionsForRegion:1];
+    // [conditionsDescriptorWebClient getTrailConditionsForRegion:1];
+    [conditionsDescriptorWebClient getTrailConditionsForArea:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated

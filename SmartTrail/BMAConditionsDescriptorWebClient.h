@@ -28,5 +28,6 @@
 
 - (void) dealloc;
 - (id) getTrailConditionsForRegion : (NSInteger) region;
+- (id) getTrailConditionsForArea : (NSInteger) area;
 
 @end

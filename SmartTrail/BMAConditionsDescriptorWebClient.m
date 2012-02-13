@@ -30,6 +30,31 @@
     [super dealloc];
 }
 
+- (id) getTrailConditionsForArea:(NSInteger)area
+{
+    [conditionData release];
+    
+    conditionData = [[NSMutableData alloc] init];
+    
+    if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
+    {
+        NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/areas/%d/conditions", area];
+        NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
+        [request setURL:[NSURL URLWithString:url]];  
+        [request setHTTPMethod:@"GET"];  
+        
+        [self closeConnection];
+        
+        urlConnection =[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    }
+    else
+    {
+        NSLog(@"No network available");
+    }
+    
+    return self;
+}
+
 - (id) getTrailConditionsForRegion : (NSInteger) region
 {
     
