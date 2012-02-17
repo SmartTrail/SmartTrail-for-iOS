@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Area" representedClassName="Area" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="trails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trail" inverseName="area" inverseEntity="Trail" syncable="YES"/>
+    </entity>
+    <entity name="Trail" representedClassName="Trail" syncable="YES">
+        <attribute name="aerobicRating" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="condition" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="coolRating" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="descriptionFull" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptionPartial" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="elevationGain" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="length" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="techRating" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="area" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Area" inverseName="trails" inverseEntity="Area" syncable="YES"/>
+    </entity>
+    <fetchRequest name="allAreas" entity="Area"/>
+    <fetchRequest name="allTrails" entity="Trail"/>
+    <fetchRequest name="areaForId" entity="Area" predicateString="id == $ID"/>
+    <fetchRequest name="trailForId" entity="Trail" predicateString="id == $ID"/>
+    <elements>
+        <element name="Trail" positionX="160" positionY="192" width="128" height="240"/>
+        <element name="Area" positionX="358" positionY="189" width="128" height="90"/>
+    </elements>
+</model>

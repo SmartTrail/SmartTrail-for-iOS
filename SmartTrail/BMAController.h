@@ -1,12 +1,12 @@
 //
-//  FirstViewController.h
+//  BMAController.h
 //  SmartTrail
 //
-//  Created by Tyler Perkins on 2011-12-10.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Created by Tyler Perkins on 2012-02-17.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "BMAWebClient.h"
 #import "BMAAreaDescriptorsWebClient.h"
 #import "BMAAreaDescriptorWebClient.h"
@@ -15,7 +15,7 @@
 #import "BMAConditionsDescriptorWebClient.h"
 #import "BMAEventsDescriptorWebClient.h"
 
-@interface FirstViewController : UIViewController
+@interface BMAController : NSObject
 <
     BMAWebClientNotifications,
     BMAAreaDescriptorsWebClientEventNotifications,
@@ -24,5 +24,7 @@
     BMAConditionsDescriptorWebClientEventNotifications,
     BMAEventsDescriptorEventNotifications
 >
+
+- (void) downloadAreasAndTrails;
 
 @end

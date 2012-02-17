@@ -1,0 +1,7 @@
+** Utilities
+
+This directory is intended to hold files for use in *any* iOS application.
+Classes here can depend on one another, but there should be no dependencies on
+anything not in iOS. /Please/ do not put any code in here that refers to a
+class, method, comment, or even a name that makes sense only in the context of
+a particular app.

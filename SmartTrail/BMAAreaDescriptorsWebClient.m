@@ -10,6 +10,7 @@
 #import "BMANetworkUtilities.h"
 #import "JSONKit.h"
 #import "BMAAreaDescriptor.h"
+#import APP_DELEGATE_H
 
 @implementation BMAAreaDescriptorsWebClient
 
@@ -33,33 +34,33 @@
 - (id) getAreaDescriptorsForRegion : (NSInteger) region
 {
     [areaData release];
-    
+
     areaData = [[NSMutableData alloc] init];
-    
+
     if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
     {
         NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/regions/%d/areas",region];
         NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
-        [request setURL:[NSURL URLWithString:url]];  
-        [request setHTTPMethod:@"GET"];  
-        
+        [request setURL:[NSURL URLWithString:url]];
+        [request setHTTPMethod:@"GET"];
+
         [self closeConnection];
-        
+
         urlConnection =[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     }
     else
     {
         NSLog(@"No available network connections");
     }
-    
+
     return self;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
-{ 
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
     NSLog(@"didReceiveData");
     [areaData appendData:data];
-} 
+}
 
 - (void) notifyEventListenerOfAreaRetrievalCompletion : (BOOL) completionSuccessful withResultData : (NSArray*) resultData
 {
@@ -69,36 +70,52 @@
     }
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection 
-{ 
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
     NSLog(@"didFinishLoading");
-    
+
     [self closeConnection];
 
     JSONDecoder *decoder = [JSONDecoder decoder];
     NSDictionary *responseData = [decoder objectWithData:areaData];
     NSDictionary *response = [responseData objectForKey:@"response"];
     NSArray *areas = [response objectForKey:@"areas"];
-    
+
     NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
-    
-    for (NSDictionary *areaDictionary in areas)
-    {
+
+    NSMutableDictionary* dict = [NSMutableDictionary new];
+
+    for ( NSDictionary *areaDictionary in areas ) {
+        [dict removeAllObjects];
+        [dict setObject:[areaDictionary objectForKey:@"id"] forKey:@"id"];
+        [dict setObject:[areaDictionary objectForKey:@"name"] forKey:@"name"];
+        ERR_ASSERT(
+            [THE(dataUtils)
+                updateOrInsertThe:@"areaForId"
+                               at:[dict objectForKey:@"id"]
+                   withAttributes:dict
+                            error:&ERR
+            ]
+        );
+
         BMAAreaDescriptor *areaDescriptor = [[BMAAreaDescriptor alloc] init];
         [areaDescriptor setId:[[areaDictionary objectForKey:@"id"] intValue]];
         [areaDescriptor setAreaName:[areaDictionary objectForKey:@"name"]];
         [resultArray addObject:areaDescriptor];
         [areaDescriptor release];
     }
-    
+
+    [dict release];
+    [APP_DELEGATE saveContext];
+
     [self notifyEventListenerOfAreaRetrievalCompletion:YES withResultData:resultArray];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error 
-{ 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
     NSLog(@"%@", error);
     [self notifyEventListenerOfAreaRetrievalCompletion:NO withResultData:nil];
     [self closeConnection];
-}    
+}
 
 @end

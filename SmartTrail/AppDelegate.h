@@ -7,9 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BMAController.h"
+#import "CoreDataUtils.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate :
+    NSObject<UIApplicationDelegate,CoreDataProvisions>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong,nonatomic)   UIWindow*      window;
+@property (readonly,nonatomic) BMAController* bmaController;
+@property (readonly,nonatomic) CoreDataUtils* dataUtils;
+
+- (void) saveContext;
+- (NSURL*) applicationDocumentsDirectory;
 
 @end
+
+#define APP_DELEGATE   ((AppDelegate*)[[UIApplication sharedApplication] \
+                                          delegate                       \
+                                      ]                                  \
+                       )
+#define THE(propName)  [APP_DELEGATE propName]

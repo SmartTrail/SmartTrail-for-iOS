@@ -9,6 +9,17 @@
 #endif
 
 #ifdef __OBJC__
+
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+
+    #define APP_DELEGATE_H  "AppDelegate.h"
+
+    #define ERR_ASSERT( expr )                                          \
+        {   NSError* ERR = nil;                                         \
+            expr;                                                       \
+            NSAssert1( ! ERR, @"Error description: %@", &ERR );    \
+        }
+
 #endif
