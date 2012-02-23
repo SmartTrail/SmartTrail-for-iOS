@@ -10,18 +10,20 @@
 #import "BMANetworkUtilities.h"
 #import "BMATrailDescriptor.h"
 #import "JSONKit.h"
-#import APP_DELEGATE_H
+#import "AppDelegate.h"
+
+@interface BMATrailsDescriptorWebClient ()
+@property (readonly,nonatomic) PropConverter converterFunc;
+- (void) closeConnection;
+@end
+
 
 @implementation BMATrailsDescriptorWebClient
 
-@synthesize eventNotificationDelegate;
 
-- (void) closeConnection
-{
-    [urlConnection cancel];
-    [urlConnection release];
-    urlConnection = nil;
-}
+@synthesize eventNotificationDelegate;
+@synthesize converterFunc = __converterFunc;
+
 
 - (void) dealloc
 {
@@ -30,6 +32,57 @@
     [self closeConnection];
     [super dealloc];
 }
+
+
+- (id) init {
+    self = [super init];
+    if ( self ) {
+        __converterFunc = [[THE(dataUtils)
+            dataDictToPropDictConverterForEntityName:@"Trail"
+                                usingFuncsByPropName:[NSDictionary
+                dictionaryWithObjectsAndKeys:
+
+                    //  This calculation using               goes into property
+                    //    the data dictionary                  having this name.
+
+                    fnIntForDataKey(@"aerobicRating"),       @"aerobicRating",
+                    fnIntForDataKey(@"condition"),           @"condition",
+                    fnIntForDataKey(@"coolRating"),          @"coolRating",
+                    fnRawForDataKey(@"description"),         @"descriptionPartial",
+                    fnIntForDataKey(@"elevationGain"),       @"elevationGain",
+                    fnFloatForDataKey(@"length"),            @"length",
+                    fnIntForDataKey(@"techRating"),          @"techRating",
+                    fnDateSince1970ForDataKey(@"updatedAt"), @"updatedAt",
+
+                    //  Note that data for each remaining property key, by
+                    //  default, is looked up in the data dictionary at that
+                    //  key.
+
+                    //  All that remains is to populate the "area" relationship.
+                    //  For this to work, The Area entities must already have
+                    //  been loaded.
+                    //
+                    [[^( NSDictionary* dataDict, id _ ){
+                        return  [THE(dataUtils)
+                            findThe:@"areaForId"
+                                 at:[dataDict objectForKey:@"area"]
+                        ];
+                    } copy] autorelease],                    @"area",
+
+                    nil                              ]
+        ] retain];
+    }
+    return  self;
+}
+
+
+- (void) closeConnection
+{
+    [urlConnection cancel];
+    [urlConnection release];
+    urlConnection = nil;
+}
+
 
 - (id) getTrailsDescriptorForRegion : (NSInteger) region
 {
@@ -108,88 +161,14 @@
 
     NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
 
-    //  TODO: The following transformation of trails to Trail managed objects
-    //  needs to be abstracted into a utility.
-    //  Note that area and descriptionPartial are handled specially below.
-
-    NSSet* keysOfStrings = [NSSet
-        setWithObjects:@"descriptionFull", @"name", @"url", nil
-    ];
-    NSSet* keysOfInts = [NSSet
-        setWithObjects:@"aerobicRating", @"condition", @"coolRating",
-                       @"elevationGain", @"techRating",
-                       nil
-    ];
-    NSSet* keysOfFloats = [NSSet setWithObjects:@"length", nil];
-    NSSet* keysOfDates = [NSSet setWithObjects:@"updatedAt", nil];
-
-    NSMutableDictionary* dict = [NSMutableDictionary new];
-
     for ( NSDictionary *trailDictionary in trails ) {
-        [dict removeAllObjects];
-
-        [trailDictionary
-            enumerateKeysAndObjectsUsingBlock:^(id key, NSString* val, BOOL* stop) {
-                if ( [keysOfStrings containsObject:key] ) {
-                    [dict setObject:val forKey:key];
-                } else if ( [keysOfInts containsObject:key] ) {
-                    [dict
-                        setObject:[NSNumber numberWithInt:[val intValue]]
-                           forKey:key
-                    ];
-                } else if ( [keysOfFloats containsObject:key] ) {
-                    [dict
-                        setObject:[NSNumber numberWithFloat:[val floatValue]]
-                           forKey:key
-                    ];
-                } else if ( [keysOfDates containsObject:key] ) {
-                    [dict
-                        setObject:[NSDate dateWithTimeIntervalSince1970:[
-                                      [trailDictionary
-                                          objectForKey:key
-                                      ] doubleValue
-                                  ]]
-                           forKey:key
-                    ];
-                }
-            }
-        ];
-
-        //  Use key "descriptionPartial" instead of "description". The former
-        //  conflicts with NSObjects -description method.
-        //
-        [dict
-            setObject:[trailDictionary objectForKey:@"description"]
-               forKey:@"descriptionPartial"
-        ];
-
-        //  Area is a relationship and must be populated.
-        //
-        {   NSManagedObject* areaObj;
-            ERR_ASSERT(
-                areaObj = [THE(dataUtils)
-                    findThe:@"areaForId"
-                         at:[trailDictionary objectForKey:@"area"]
-                      error:&ERR
-                ];
-            );
-            if ( areaObj ) [dict setObject:areaObj forKey:@"area"];
-        }
 
         //  Create or update the Trail managed object.
         //
-        {   NSString* idStr = [trailDictionary objectForKey:@"id"];
-            if ( idStr ) {
-                ERR_ASSERT(
-                    [THE(dataUtils)
-                        updateOrInsertThe:@"trailForId"
-                                       at:idStr
-                           withAttributes:dict
-                                    error:&ERR
-                    ]
-                );
-            }
-        }
+        [THE(dataUtils)
+            updateOrInsertThe:@"trailForId"
+               withProperties:self.converterFunc(trailDictionary)
+        ];
 
         BMATrailDescriptor *trailDescriptor = [[BMATrailDescriptor alloc] init];
         [trailDescriptor setAerobicRating:[[trailDictionary objectForKey:@"aerobicRating"] intValue]];
@@ -210,7 +189,6 @@
         [trailDescriptor release];
     }
 
-    [dict release];
     [APP_DELEGATE saveContext];
 
     [self notifyEventListenerOfTrailsRetrievalCompletion:YES withResultData:resultArray];

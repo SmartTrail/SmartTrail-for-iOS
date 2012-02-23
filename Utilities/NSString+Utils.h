@@ -18,4 +18,9 @@
 */
 - (BOOL) isNotBlank;
 
+/** Returns a copy of the receiver with all white space (including newlines)
+    removed from both the beginnning and the end.
+*/
+- (NSString*) trim;
+
 @end

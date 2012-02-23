@@ -22,10 +22,10 @@
     </entity>
     <fetchRequest name="allAreas" entity="Area"/>
     <fetchRequest name="allTrails" entity="Trail"/>
-    <fetchRequest name="areaForId" entity="Area" predicateString="id == $ID"/>
-    <fetchRequest name="trailForId" entity="Trail" predicateString="id == $ID"/>
+    <fetchRequest name="areaForId" entity="Area" predicateString="id == $id"/>
+    <fetchRequest name="trailForId" entity="Trail" predicateString="id == $id"/>
     <elements>
-        <element name="Trail" positionX="160" positionY="192" width="128" height="240"/>
         <element name="Area" positionX="358" positionY="189" width="128" height="90"/>
+        <element name="Trail" positionX="160" positionY="192" width="128" height="240"/>
     </elements>
 </model>

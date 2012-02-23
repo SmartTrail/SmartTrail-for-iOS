@@ -9,8 +9,15 @@
 #import <CoreData/CoreData.h>
 #import "CoreDataUtils.h"
 
+/** This class is just like NSFetchedResultsController, except that it adds an
+    initializer for conveniently specifying attributes collected by an instance
+    of FetchedResultsTableDataSource.
+*/
 @interface FetchedResults : NSFetchedResultsController
 
+/** Convenience property for recalling the substitution variables dictionary
+    provided to the initializer.
+*/
 @property (nonatomic,readonly) NSDictionary* substitutionVariables;
 
 - (id)

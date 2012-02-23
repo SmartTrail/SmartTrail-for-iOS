@@ -29,10 +29,10 @@
 		2F2D149C14EEA9A700E982C5 /* FetchedResultsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149414EEA9A700E982C5 /* FetchedResultsTableDataSource.m */; };
 		2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */; };
 		2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149814EEA9A700E982C5 /* NSString+Utils.m */; };
-		2F2D14A514EEAC1500E982C5 /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D14A214EEAC1500E982C5 /* Area.m */; };
-		2F2D14A614EEAC1500E982C5 /* Trail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D14A414EEAC1500E982C5 /* Trail.m */; };
 		2F2D14A814EEAC9100E982C5 /* README.org in Resources */ = {isa = PBXBuildFile; fileRef = 2F2D14A714EEAC9100E982C5 /* README.org */; };
-		2F2D14AA14EEB0FC00E982C5 /* README.org in Resources */ = {isa = PBXBuildFile; fileRef = 2F2D14A914EEB0FC00E982C5 /* README.org */; };
+		2F2D14AA14EEB0FC00E982C5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 2F2D14A914EEB0FC00E982C5 /* README */; };
+		2FE0F94D14F2DDF900278833 /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0F94C14F2DDF900278833 /* Area.m */; };
+		2FE0F95014F2DDF900278833 /* Trail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0F94F14F2DDF900278833 /* Trail.m */; };
 		2FF002A01493E23400BF3668 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF0029F1493E23400BF3668 /* UIKit.framework */; };
 		2FF002A21493E23400BF3668 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A11493E23400BF3668 /* Foundation.framework */; };
 		2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A31493E23400BF3668 /* CoreGraphics.framework */; };
@@ -92,8 +92,8 @@
 		0370D89F14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAAreaDescriptorsWebClient.m; sourceTree = "<group>"; };
 		2F2D148514EE007900E982C5 /* TrailDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailDetailViewController.h; sourceTree = "<group>"; };
 		2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailDetailViewController.m; sourceTree = "<group>"; };
-		2F2D148814EE9D4C00E982C5 /* BMAController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMAController.h; path = SmartTrail/BMAController.h; sourceTree = "<group>"; };
-		2F2D148914EE9D4C00E982C5 /* BMAController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMAController.m; path = SmartTrail/BMAController.m; sourceTree = "<group>"; };
+		2F2D148814EE9D4C00E982C5 /* BMAController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAController.h; sourceTree = "<group>"; };
+		2F2D148914EE9D4C00E982C5 /* BMAController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAController.m; sourceTree = "<group>"; };
 		2F2D148C14EEA9A700E982C5 /* CollectionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionUtils.h; sourceTree = "<group>"; };
 		2F2D148D14EEA9A700E982C5 /* CollectionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionUtils.m; sourceTree = "<group>"; };
 		2F2D148E14EEA9A700E982C5 /* CoreDataProvisions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataProvisions.h; sourceTree = "<group>"; };
@@ -107,12 +107,12 @@
 		2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		2F2D149714EEA9A700E982C5 /* NSString+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utils.h"; sourceTree = "<group>"; };
 		2F2D149814EEA9A700E982C5 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
-		2F2D14A114EEAC1500E982C5 /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
-		2F2D14A214EEAC1500E982C5 /* Area.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Area.m; sourceTree = "<group>"; };
-		2F2D14A314EEAC1500E982C5 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trail.h; sourceTree = "<group>"; };
-		2F2D14A414EEAC1500E982C5 /* Trail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trail.m; sourceTree = "<group>"; };
 		2F2D14A714EEAC9100E982C5 /* README.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.org; sourceTree = "<group>"; };
-		2F2D14A914EEB0FC00E982C5 /* README.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.org; sourceTree = "<group>"; };
+		2F2D14A914EEB0FC00E982C5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		2FE0F94B14F2DDF900278833 /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
+		2FE0F94C14F2DDF900278833 /* Area.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Area.m; sourceTree = "<group>"; };
+		2FE0F94E14F2DDF900278833 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trail.h; sourceTree = "<group>"; };
+		2FE0F94F14F2DDF900278833 /* Trail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trail.m; sourceTree = "<group>"; };
 		2FF0029B1493E23400BF3668 /* SmartTrail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartTrail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF0029F1493E23400BF3668 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2FF002A11493E23400BF3668 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -197,11 +197,11 @@
 		2F2D14A014EEAC1500E982C5 /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
-				2F2D14A914EEB0FC00E982C5 /* README.org */,
-				2F2D14A114EEAC1500E982C5 /* Area.h */,
-				2F2D14A214EEAC1500E982C5 /* Area.m */,
-				2F2D14A314EEAC1500E982C5 /* Trail.h */,
-				2F2D14A414EEAC1500E982C5 /* Trail.m */,
+				2F2D14A914EEB0FC00E982C5 /* README */,
+				2FE0F94B14F2DDF900278833 /* Area.h */,
+				2FE0F94E14F2DDF900278833 /* Trail.h */,
+				2FE0F94F14F2DDF900278833 /* Trail.m */,
+				2FE0F94C14F2DDF900278833 /* Area.m */,
 			);
 			path = "Managed Objects";
 			sourceTree = "<group>";
@@ -209,10 +209,9 @@
 		2FF002901493E23400BF3668 = {
 			isa = PBXGroup;
 			children = (
-				2F2D148814EE9D4C00E982C5 /* BMAController.h */,
-				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
 				2FF09DB714EB197C0050552B /* CoreData.framework */,
 				0351098D14B211F200487B8B /* JSONParser */,
+				2F2D148B14EEA9A600E982C5 /* Utilities */,
 				2FF002A51493E23400BF3668 /* SmartTrail */,
 				2FF002D11493E23500BF3668 /* SmartTrailTests */,
 				2FF0029E1493E23400BF3668 /* Frameworks */,
@@ -253,8 +252,9 @@
 				2FF09E7714EC3DCA0050552B /* TrailsTableViewController.m */,
 				2F2D148514EE007900E982C5 /* TrailDetailViewController.h */,
 				2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */,
-				2F2D148B14EEA9A600E982C5 /* Utilities */,
 				2F2D14A014EEAC1500E982C5 /* Managed Objects */,
+				2F2D148814EE9D4C00E982C5 /* BMAController.h */,
+				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
 				035D946914DF525E00C937E1 /* BMAAreaDescriptorWebClient.h */,
 				035D946A14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m */,
 				0351099F14B2B1E900487B8B /* BMAAreaDescriptor.h */,
@@ -390,7 +390,7 @@
 				2FF09DBC14EC196C0050552B /* trail_icon_normal.png in Resources */,
 				2FF09DBE14EC197E0050552B /* trail_icon_pressed.png in Resources */,
 				2F2D14A814EEAC9100E982C5 /* README.org in Resources */,
-				2F2D14AA14EEB0FC00E982C5 /* README.org in Resources */,
+				2F2D14AA14EEB0FC00E982C5 /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,8 +450,8 @@
 				2F2D149C14EEA9A700E982C5 /* FetchedResultsTableDataSource.m in Sources */,
 				2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */,
 				2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */,
-				2F2D14A514EEAC1500E982C5 /* Area.m in Sources */,
-				2F2D14A614EEAC1500E982C5 /* Trail.m in Sources */,
+				2FE0F94D14F2DDF900278833 /* Area.m in Sources */,
+				2FE0F95014F2DDF900278833 /* Trail.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

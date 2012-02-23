@@ -10,25 +10,53 @@
 #import "BMANetworkUtilities.h"
 #import "JSONKit.h"
 #import "BMAAreaDescriptor.h"
-#import APP_DELEGATE_H
+#import "AppDelegate.h"
+#import "CoreDataUtils.h"
+
+@interface BMAAreaDescriptorsWebClient ()
+@property (readonly,nonatomic) PropConverter attrConverterBlock;
+- (void) closeConnection;
+@end
+
 
 @implementation BMAAreaDescriptorsWebClient
 
+
 @synthesize eventNotificationDelegate;
+@synthesize attrConverterBlock = __attrConverterBlock;
+
+
+- (void) dealloc
+{
+    [__attrConverterBlock release];  __attrConverterBlock = nil;
+    [areaData release];
+    [eventNotificationDelegate release];
+    [self closeConnection];
+    [super dealloc];
+}
+
+
+- (id) init {
+    self = [super init];
+    if ( self ) {
+        __attrConverterBlock = [[THE(dataUtils)
+            dataDictToPropDictConverterForEntityName:@"Area"
+                                usingFuncsByPropName:nil
+            //  Note that when nil is provided for the dictionary of converter
+            //  function blocks, each attribute will simply get the raw value in
+            //  the data dictionary at the key equal to that property's name.
+
+        ] retain];
+    }
+    return  self;
+}
+
 
 - (void) closeConnection
 {
     [urlConnection cancel];
     [urlConnection release];
     urlConnection = nil;
-}
-
-- (void) dealloc
-{
-    [areaData release];
-    [eventNotificationDelegate release];
-    [self closeConnection];
-    [super dealloc];
 }
 
 - (id) getAreaDescriptorsForRegion : (NSInteger) region
@@ -83,20 +111,11 @@
 
     NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
 
-    NSMutableDictionary* dict = [NSMutableDictionary new];
-
     for ( NSDictionary *areaDictionary in areas ) {
-        [dict removeAllObjects];
-        [dict setObject:[areaDictionary objectForKey:@"id"] forKey:@"id"];
-        [dict setObject:[areaDictionary objectForKey:@"name"] forKey:@"name"];
-        ERR_ASSERT(
-            [THE(dataUtils)
-                updateOrInsertThe:@"areaForId"
-                               at:[dict objectForKey:@"id"]
-                   withAttributes:dict
-                            error:&ERR
-            ]
-        );
+        [THE(dataUtils)
+            updateOrInsertThe:@"areaForId"
+               withProperties:self.attrConverterBlock( areaDictionary )
+        ];
 
         BMAAreaDescriptor *areaDescriptor = [[BMAAreaDescriptor alloc] init];
         [areaDescriptor setId:[[areaDictionary objectForKey:@"id"] intValue]];
@@ -105,7 +124,6 @@
         [areaDescriptor release];
     }
 
-    [dict release];
     [APP_DELEGATE saveContext];
 
     [self notifyEventListenerOfAreaRetrievalCompletion:YES withResultData:resultArray];

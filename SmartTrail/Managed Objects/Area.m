@@ -2,7 +2,7 @@
 //  Area.m
 //  SmartTrail
 //
-//  Created by Tyler Perkins on 2012-02-16.
+//  Created by Tyler Perkins on 2012-02-20.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,8 +12,8 @@
 
 @implementation Area
 
-@dynamic name;
 @dynamic id;
+@dynamic name;
 @dynamic trails;
 
 @end

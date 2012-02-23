@@ -2,7 +2,7 @@
 //  Area.h
 //  SmartTrail
 //
-//  Created by Tyler Perkins on 2012-02-16.
+//  Created by Tyler Perkins on 2012-02-20.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 
 @interface Area : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * id;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *trails;
 @end
 

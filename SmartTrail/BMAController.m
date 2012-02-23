@@ -23,7 +23,7 @@
     //  BMAAreaDescriptorsWebClient does not hook up to Trails. When a Trail's
     //  "area" relationship is assigned its Area managed object, Core Data
     //  automatically adds the Trail to the Area's "trail" relationship. Thus,
-    //  the getAreaDescriptorsForRegion: call must preceed the
+    //  the getAreaDescriptorsForRegion: call must precede the call to
     //  getTrailsDescriptorForRegion:, as below. That way, the Area objects
     //  exist for getTrailsDescriptorForRegion: to find.
 
