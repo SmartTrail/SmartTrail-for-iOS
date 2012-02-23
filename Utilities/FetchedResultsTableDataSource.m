@@ -74,7 +74,7 @@
     if (
         ! [key isEqualToString:@"fetchedResults"]  &&  // Avoid inf. loop.
         ! [val isEqual:oldVal]  &&
-        val != oldVal                                     // Handles val = nil.
+        val != oldVal                                  // Handles val = nil.
     ) {
         self.fetchedResults = nil;
     }
@@ -91,7 +91,7 @@
 
 
 - (FetchedResults*) fetchedResults {
-    
+
     //  Initialize fetchedResults if it is nil. If it is non-nil, we refresh
     //  it whenever the following fails:
     //
@@ -161,6 +161,10 @@
 #pragma mark - Methods implementing protocol UITableViewDataSource
 
 
+- (void) willShowManagedObject:(id)dataObj {
+}
+
+
 - (UITableViewCell*)
                 tableView:(UITableView*)tableView
     cellForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -168,7 +172,7 @@
     //  We'll need the data for this cell. Retrive it now so the User Defined
     //  Runtime Attributes are validatated first thing.
     id dataObj = [self.fetchedResults objectAtIndexPath:indexPath];
-    
+
     UITableViewCell* cell = [tableView
         dequeueReusableCellWithIdentifier:self.cellReuseIdentifier
     ];
@@ -181,23 +185,31 @@
     //
     //  Use the managed object at indexPath to fill the cell's labels.
     //
-    
+
     //  If cellTextAttributeName has been set (say, in IB), then assign the
     //  managed object's value for that attribute to cell's main text label.
     //  Otherwise, just assign the object's description to the text label.
     cell.textLabel.text = [self.cellTextAttributeName isNotBlank]
     ?   [dataObj valueForKeyPath:self.cellTextAttributeName]
     :   [dataObj description];
-    
+
     //  If cellDetailTextAttributeName has been set (say, in IB), then assign
     //  the managed object's value for that attribute to cell's detail label.
     //  Otherwise, don't assign anything, i.e., leave the label blank.
-    if ( self.cellDetailTextAttributeName ) {
+    if ( [self.cellDetailTextAttributeName isNotBlank] ) {
         cell.detailTextLabel.text = [dataObj
             valueForKeyPath:self.cellDetailTextAttributeName
         ];
     }
-    
+
+    SEL willShowManagedObjectSEL = @selector( willShowManagedObject: );
+    if ( [cell respondsToSelector:willShowManagedObjectSEL] ) {
+        //  Here we accommodate a custom table view cell by sending it the
+        //  managed object data. Presumably, it would assign values to labels
+        //  it manages, etc.
+        [cell performSelector:willShowManagedObjectSEL withObject:dataObj];
+    }
+
     return  cell;
 }
 

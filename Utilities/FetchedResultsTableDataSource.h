@@ -14,8 +14,15 @@
     onto the dock alongside the other top-level objects. Connect it to the
     table view's dataSource outlet and go to its Identity inspector. In the User
     Defined Runtime Attributes section, assign values for some of the properties
-    below. Unless your fetch request has substitution variables, you're done.
-    No code required!
+    below. No code required! Unless your fetch request has substitution
+    variables, you're done. In that case, just programatically assign a value to
+    property templateSubstitutionVariables. (See below.)
+
+    If your table uses custom table view cells, all you need to do is implement
+    an informal protocol in your subclass of UITableViewCell. Just write a
+    method having signature -(void)willShowManagedObject:(NSManagedObject*)obj.
+    Here you can assign text to UILabels or otherwise define the appearance of
+    your cell based on the managed object's data.
 
     Below, we've assumed you've already defined an appropriate entity and fetch
     request in Xcode's data modeling tool.
@@ -128,5 +135,6 @@
     this number of sections.
 */
 @property (nonatomic)          NSInteger       numSectionsForShowingIndex;
+
 
 @end
