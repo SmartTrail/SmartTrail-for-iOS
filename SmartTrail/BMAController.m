@@ -7,10 +7,9 @@
 //
 
 #import "BMAController.h"
-#import "BMAAreaDescriptor.h"
-#import "BMATrailDescriptor.h"
 #import "BMAConditionDescriptor.h"
 #import "BMAEventDescriptor.h"
+#import "AppDelegate.h"
 
 
 @implementation BMAController
@@ -31,11 +30,13 @@
         [[[BMAAreaDescriptorsWebClient alloc] init] autorelease];
     [areaDescriptorsWebClient setEventNotificationDelegate:self];
     [areaDescriptorsWebClient getAreaDescriptorsForRegion:1];
-    
+
     BMATrailsDescriptorWebClient *trailsDescriptorWebClient =
         [[[BMATrailsDescriptorWebClient alloc] init] autorelease];
     [trailsDescriptorWebClient setEventNotificationDelegate:self];
     [trailsDescriptorWebClient getTrailsDescriptorForRegion:1];
+
+    [APP_DELEGATE saveContext];
 }
 
 
@@ -49,38 +50,40 @@
 }
 
 
-- (void) bmaAreaDescriptorsWebClient : (BMAAreaDescriptorsWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
+- (void)
+    bmaAreaDescriptorsWebClient:(BMAAreaDescriptorsWebClient*)webClient
+       didCompleteAreaRetrieval:(BOOL)successfully;
 {
-    for(BMAAreaDescriptor *bmaAreaDescriptor in resultArray)
-    {
-        NSLog(@"%@", [bmaAreaDescriptor areaName]);
-    }
-    
+    NSLog( @"Multiple area retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate:nil];
 }
 
 
-- (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withAreaDescriptor : (BMAAreaDescriptor*) areaDescriptor
+- (void)
+    bmaAreaDescriptorWebClient:(BMAAreaDescriptorWebClient*)webClient
+      didCompleteAreaRetrieval:(BOOL)successfully
+                      withArea:(Area*)area
 {
-    NSLog(@"%@", [areaDescriptor areaName]);
+    NSLog( @"Area retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate:nil];
 }
 
 
-- (void) bmaTrailDescriptorsWebClient : (BMATrailsDescriptorWebClient*) webClient didCompleteTrailRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray
+- (void)
+    bmaTrailDescriptorsWebClient:(BMATrailsDescriptorWebClient*)webClient
+       didCompleteTrailRetrieval:(BOOL)successfully
 {
-    for(BMATrailDescriptor *trailDescriptor in resultArray)
-    {
-        NSLog(@"%@", trailDescriptor);
-    }
-    
+    NSLog( @"Multiple trail retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate:nil];
 }
 
 
-- (void) bmaTrailDescriptorWebClient : (BMATrailDescriptorWebClient*) webClient didCompleteTrailRetrieval : (BOOL) successfully withTrailDescriptor : (BMATrailDescriptor*) trailDescriptor
+- (void)
+    bmaTrailDescriptorWebClient:(BMATrailDescriptorWebClient*)webClient
+      didCompleteTrailRetrieval:(BOOL)successfully
+                      withTrail:(Trail*)trail
 {
-    NSLog(@"%@", trailDescriptor);
+    NSLog( @"Trail retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate: nil];
 }
 
@@ -91,7 +94,7 @@
     {
         NSLog(@"%@", conditionDescriptor);
     }
-    
+
     [webClient setEventNotificationDelegate:nil];
 }
 
@@ -102,7 +105,7 @@
     {
         NSLog(@"%@", eventDescriptor);
     }
-    
+
     [webClient setEventNotificationDelegate:nil];
 }
 

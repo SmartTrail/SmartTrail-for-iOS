@@ -14,7 +14,9 @@
 
 @optional
 
-- (void) bmaTrailDescriptorsWebClient : (BMATrailsDescriptorWebClient*) webClient didCompleteTrailRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
+- (void)
+    bmaTrailDescriptorsWebClient:(BMATrailsDescriptorWebClient*)webClient
+       didCompleteTrailRetrieval:(BOOL)successfully;
 
 @end
 

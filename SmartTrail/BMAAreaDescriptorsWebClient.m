@@ -9,12 +9,10 @@
 #import "BMAAreaDescriptorsWebClient.h"
 #import "BMANetworkUtilities.h"
 #import "JSONKit.h"
-#import "BMAAreaDescriptor.h"
 #import "AppDelegate.h"
-#import "CoreDataUtils.h"
 
 @interface BMAAreaDescriptorsWebClient ()
-@property (readonly,nonatomic) PropConverter attrConverterBlock;
+@property (readonly,nonatomic) PropConverter propConverterBlock;
 - (void) closeConnection;
 @end
 
@@ -23,12 +21,12 @@
 
 
 @synthesize eventNotificationDelegate;
-@synthesize attrConverterBlock = __attrConverterBlock;
+@synthesize propConverterBlock = __propConverterBlock;
 
 
 - (void) dealloc
 {
-    [__attrConverterBlock release];  __attrConverterBlock = nil;
+    [__propConverterBlock release];  __propConverterBlock = nil;
     [areaData release];
     [eventNotificationDelegate release];
     [self closeConnection];
@@ -39,11 +37,11 @@
 - (id) init {
     self = [super init];
     if ( self ) {
-        __attrConverterBlock = [[THE(dataUtils)
+        __propConverterBlock = [[THE(dataUtils)
             dataDictToPropDictConverterForEntityName:@"Area"
                                 usingFuncsByPropName:nil
             //  Note that when nil is provided for the dictionary of converter
-            //  function blocks, each attribute will simply get the raw value in
+            //  function blocks, each property will simply get the raw value in
             //  the data dictionary at the key equal to that property's name.
 
         ] retain];
@@ -90,11 +88,11 @@
     [areaData appendData:data];
 }
 
-- (void) notifyEventListenerOfAreaRetrievalCompletion : (BOOL) completionSuccessful withResultData : (NSArray*) resultData
+- (void) notifyEventListenerOfAreaRetrievalCompletion:(BOOL)completionSuccessful
 {
-    if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaAreaDescriptorsWebClient:didCompleteAreaRetrieval:withResultArray:)])
+    if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaAreaDescriptorsWebClient:didCompleteAreaRetrieval:)])
     {
-        [[self eventNotificationDelegate] bmaAreaDescriptorsWebClient:self didCompleteAreaRetrieval:completionSuccessful withResultArray:resultData];
+        [[self eventNotificationDelegate] bmaAreaDescriptorsWebClient:self didCompleteAreaRetrieval:completionSuccessful];
     }
 }
 
@@ -109,30 +107,20 @@
     NSDictionary *response = [responseData objectForKey:@"response"];
     NSArray *areas = [response objectForKey:@"areas"];
 
-    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
-
     for ( NSDictionary *areaDictionary in areas ) {
         [THE(dataUtils)
             updateOrInsertThe:@"areaForId"
-               withProperties:self.attrConverterBlock( areaDictionary )
+               withProperties:self.propConverterBlock( areaDictionary )
         ];
-
-        BMAAreaDescriptor *areaDescriptor = [[BMAAreaDescriptor alloc] init];
-        [areaDescriptor setId:[[areaDictionary objectForKey:@"id"] intValue]];
-        [areaDescriptor setAreaName:[areaDictionary objectForKey:@"name"]];
-        [resultArray addObject:areaDescriptor];
-        [areaDescriptor release];
     }
 
-    [APP_DELEGATE saveContext];
-
-    [self notifyEventListenerOfAreaRetrievalCompletion:YES withResultData:resultArray];
+    [self notifyEventListenerOfAreaRetrievalCompletion:YES];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     NSLog(@"%@", error);
-    [self notifyEventListenerOfAreaRetrievalCompletion:NO withResultData:nil];
+    [self notifyEventListenerOfAreaRetrievalCompletion:NO];
     [self closeConnection];
 }
 

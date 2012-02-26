@@ -7,15 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Area.h"
 
 @class BMAAreaDescriptorWebClient;
-@class BMAAreaDescriptor;
 
 @protocol BMAAreaDescriptorWebClientEventNotifications <NSObject>
 
 @optional
 
-- (void) bmaAreaDescriptorWebClient : (BMAAreaDescriptorWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withAreaDescriptor : (BMAAreaDescriptor*) bmaAreaDescriptor;
+- (void)
+    bmaAreaDescriptorWebClient:(BMAAreaDescriptorWebClient*)webClient
+      didCompleteAreaRetrieval:(BOOL)successfully
+                      withArea:(Area*)area;
 
 @end
 
@@ -27,7 +30,6 @@
 
 @property(nonatomic, retain) id eventNotificationDelegate;
 
-- (void) dealloc;
 - (id) getAreaDescriptorForArea : (NSInteger) area;
 
 @end

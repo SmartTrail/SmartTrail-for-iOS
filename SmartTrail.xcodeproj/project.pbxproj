@@ -14,11 +14,9 @@
 		0343F2E514E8BD6800B292E9 /* BMAEventsDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343F2E414E8BD6800B292E9 /* BMAEventsDescriptorWebClient.m */; };
 		0347C6C014E2321D001ECC2B /* BMATrailsDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */; };
 		0351099414B212F600487B8B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351099314B212F600487B8B /* JSONKit.m */; };
-		035109A114B2B1E900487B8B /* BMAAreaDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */; };
 		0356470D14A1065100208A47 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356470C14A1065100208A47 /* SystemConfiguration.framework */; };
 		0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356470F14A106DA00208A47 /* BMANetworkUtilities.m */; };
 		0356471314A108E500208A47 /* BMAWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356471214A108E500208A47 /* BMAWebClient.m */; };
-		03566E0F14E7697D009B7EC5 /* BMATrailDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 03566E0E14E7697D009B7EC5 /* BMATrailDescriptor.m */; };
 		035D946B14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 035D946A14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m */; };
 		0370D8A014DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0370D89F14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m */; };
 		2F2D148714EE007A00E982C5 /* TrailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */; };
@@ -77,15 +75,11 @@
 		0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMATrailsDescriptorWebClient.m; sourceTree = "<group>"; };
 		0351099214B212F600487B8B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = SmartTrail/JSONKit.h; sourceTree = "<group>"; };
 		0351099314B212F600487B8B /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = SmartTrail/JSONKit.m; sourceTree = "<group>"; };
-		0351099F14B2B1E900487B8B /* BMAAreaDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAAreaDescriptor.h; sourceTree = "<group>"; };
-		035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAAreaDescriptor.m; sourceTree = "<group>"; };
 		0356470C14A1065100208A47 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0356470E14A106DA00208A47 /* BMANetworkUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMANetworkUtilities.h; sourceTree = "<group>"; };
 		0356470F14A106DA00208A47 /* BMANetworkUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMANetworkUtilities.m; sourceTree = "<group>"; };
 		0356471114A108E500208A47 /* BMAWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAWebClient.h; sourceTree = "<group>"; };
 		0356471214A108E500208A47 /* BMAWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAWebClient.m; sourceTree = "<group>"; };
-		03566E0D14E7697D009B7EC5 /* BMATrailDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMATrailDescriptor.h; sourceTree = "<group>"; };
-		03566E0E14E7697D009B7EC5 /* BMATrailDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMATrailDescriptor.m; sourceTree = "<group>"; };
 		035D946914DF525E00C937E1 /* BMAAreaDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAAreaDescriptorWebClient.h; sourceTree = "<group>"; };
 		035D946A14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAAreaDescriptorWebClient.m; sourceTree = "<group>"; };
 		0370D89E14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAAreaDescriptorsWebClient.h; sourceTree = "<group>"; };
@@ -257,16 +251,12 @@
 				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
 				035D946914DF525E00C937E1 /* BMAAreaDescriptorWebClient.h */,
 				035D946A14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m */,
-				0351099F14B2B1E900487B8B /* BMAAreaDescriptor.h */,
-				035109A014B2B1E900487B8B /* BMAAreaDescriptor.m */,
 				0370D89E14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.h */,
 				0370D89F14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m */,
 				0356470E14A106DA00208A47 /* BMANetworkUtilities.h */,
 				0356470F14A106DA00208A47 /* BMANetworkUtilities.m */,
 				0356471114A108E500208A47 /* BMAWebClient.h */,
 				0356471214A108E500208A47 /* BMAWebClient.m */,
-				03566E0D14E7697D009B7EC5 /* BMATrailDescriptor.h */,
-				03566E0E14E7697D009B7EC5 /* BMATrailDescriptor.m */,
 				0343F2D314E886F400B292E9 /* BMATrailDescriptorWebClient.h */,
 				0343F2D414E886F400B292E9 /* BMATrailDescriptorWebClient.m */,
 				0347C6BE14E2321D001ECC2B /* BMATrailsDescriptorWebClient.h */,
@@ -430,11 +420,9 @@
 				0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */,
 				0356471314A108E500208A47 /* BMAWebClient.m in Sources */,
 				0351099414B212F600487B8B /* JSONKit.m in Sources */,
-				035109A114B2B1E900487B8B /* BMAAreaDescriptor.m in Sources */,
 				0370D8A014DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m in Sources */,
 				035D946B14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m in Sources */,
 				0347C6C014E2321D001ECC2B /* BMATrailsDescriptorWebClient.m in Sources */,
-				03566E0F14E7697D009B7EC5 /* BMATrailDescriptor.m in Sources */,
 				0343F2D514E886F400B292E9 /* BMATrailDescriptorWebClient.m in Sources */,
 				0343F2D914E893F000B292E9 /* BMAConditionDescriptor.m in Sources */,
 				0343F2DC14E8988A00B292E9 /* BMAConditionsDescriptorWebClient.m in Sources */,

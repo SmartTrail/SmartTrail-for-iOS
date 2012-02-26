@@ -7,15 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Trail.h"
 
 @class BMATrailDescriptorWebClient;
-@class BMATrailDescriptor;
 
 @protocol BMATrailDescriptorWebClientEventNotifications <NSObject>
 
 @optional
 
-- (void) bmaTrailDescriptorWebClient : (BMATrailDescriptorWebClient*) webClient didCompleteTrailRetrieval : (BOOL) successfully withTrailDescriptor : (BMATrailDescriptor*) trailDescriptor;
+- (void)
+    bmaTrailDescriptorWebClient:(BMATrailDescriptorWebClient*)webClient
+      didCompleteTrailRetrieval:(BOOL)successfully
+                      withTrail:(Trail*)trail;
 
 @end
 
@@ -27,7 +30,6 @@
 
 @property (nonatomic, retain) id<BMATrailDescriptorWebClientEventNotifications> eventNotificationDelegate;
 
-- (void) dealloc;
 - (id) getTrailDescriptorForTrail : (NSInteger) trail;
 
 @end

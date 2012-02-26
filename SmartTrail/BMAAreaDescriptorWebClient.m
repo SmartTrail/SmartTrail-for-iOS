@@ -9,18 +9,20 @@
 #import "BMAAreaDescriptorWebClient.h"
 #import "BMANetworkUtilities.h"
 #import "JSONKit.h"
-#import "BMAAreaDescriptor.h"
+#import "AppDelegate.h"
+
+@interface BMAAreaDescriptorWebClient ()
+@property (readonly,nonatomic) PropConverter propConverterBlock;
+- (void) closeConnection;
+@end
+
 
 @implementation BMAAreaDescriptorWebClient
 
-@synthesize eventNotificationDelegate;
 
-- (void) closeConnection
-{
-    [urlConnection cancel];
-    [urlConnection release];
-    urlConnection = nil;
-}
+@synthesize eventNotificationDelegate;
+@synthesize propConverterBlock = __propConverterBlock;
+
 
 - (void) dealloc
 {
@@ -30,71 +32,104 @@
     [super dealloc];
 }
 
+
+- (id) init {
+    self = [super init];
+    if ( self ) {
+        __propConverterBlock = [[THE(dataUtils)
+            dataDictToPropDictConverterForEntityName:@"Area"
+                                usingFuncsByPropName:nil
+            //  Note that when nil is provided for the dictionary of converter
+            //  function blocks, each property will simply get the raw value in
+            //  the data dictionary at the key equal to that property's name.
+
+        ] retain];
+    }
+    return  self;
+}
+
+
+- (void) closeConnection
+{
+    [urlConnection cancel];
+    [urlConnection release];
+    urlConnection = nil;
+}
+
+
 - (id) getAreaDescriptorForArea : (NSInteger) area
 {
     if(areaData != nil)
     {
         [areaData release];
     }
-    
+
     areaData = [[NSMutableData alloc] init];
-    
+
     if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
     {
         NSString *url = [NSString stringWithFormat:@"http://bouldermountainbike.org/trailsAPI/areas/%d", area];
         NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
-        [request setURL:[NSURL URLWithString:url]];  
-        [request setHTTPMethod:@"GET"];  
-        
+        [request setURL:[NSURL URLWithString:url]];
+        [request setHTTPMethod:@"GET"];
+
         [self closeConnection];
-        
+
         urlConnection =[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     }
     else
     {
         NSLog(@"No available network connections");
     }
-    
+
     return self;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data 
-{ 
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
     NSLog(@"didReceiveData");
     [areaData appendData:data];
-} 
+}
 
-- (void) notifyEventListenerOfAreaRetrievalCompletion : (BOOL) completionSuccessful withResultData : (BMAAreaDescriptor*) bmaAreaDescriptor
+
+- (void)
+    notifyEventListenerOfAreaRetrievalCompletion:(BOOL)completionSuccessful
+                                  withResultData:(Area*)area
 {
-    if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaAreaDescriptorWebClient:didCompleteAreaRetrieval:withAreaDescriptor:)])
+    if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaAreaDescriptorWebClient:didCompleteAreaRetrieval:withArea:)])
     {
-        [[self eventNotificationDelegate] bmaAreaDescriptorWebClient:self didCompleteAreaRetrieval:completionSuccessful withAreaDescriptor:bmaAreaDescriptor];
+        [[self eventNotificationDelegate] bmaAreaDescriptorWebClient:self didCompleteAreaRetrieval:completionSuccessful withArea:area];
     }
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection 
-{ 
+
+- (void)connectionDidFinishLoading:(NSURLConnection*)connection
+{
     NSLog(@"didFinishLoading");
-    
+
     [self closeConnection];
 
     JSONDecoder *decoder = [JSONDecoder decoder];
     NSDictionary *responseData = [decoder objectWithData:areaData];
     NSDictionary *response = [responseData objectForKey:@"response"];
-    NSArray *area = [response objectForKey:@"area"];
-    NSDictionary *areaDictionary = [area objectAtIndex:0];
-    BMAAreaDescriptor *areaDescriptor = [[[BMAAreaDescriptor alloc] init] autorelease];
-    [areaDescriptor setId:[[areaDictionary objectForKey:@"id"] intValue]];
-    [areaDescriptor setAreaName:[areaDictionary objectForKey:@"name"]];
-    
-    [self notifyEventListenerOfAreaRetrievalCompletion:YES withResultData:areaDescriptor];
+    NSDictionary *areaDictionary = [[response objectForKey:@"area"] objectAtIndex:0];
+
+    Area* area = (Area*)[THE(dataUtils)
+        updateOrInsertThe:@"areaForId"
+           withProperties:self.propConverterBlock( areaDictionary )
+    ];
+
+    [self notifyEventListenerOfAreaRetrievalCompletion:YES withResultData:area];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error 
-{ 
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
     NSLog(@"%@", error);
     [self notifyEventListenerOfAreaRetrievalCompletion:NO withResultData:nil];
     [self closeConnection];
-}    
+}
+
 
 @end

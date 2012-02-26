@@ -1,5 +1,5 @@
 //
-//  BMAAreaDescriptorWebClient.h
+//  BMAAreaDescriptorsWebClient.h
 //  SmartTrail
 //
 //  Created by John Dumais on 1/2/12.
@@ -14,7 +14,9 @@
 
 @optional
 
-- (void) bmaAreaDescriptorsWebClient : (BMAAreaDescriptorsWebClient*) webClient didCompleteAreaRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
+- (void)
+    bmaAreaDescriptorsWebClient:(BMAAreaDescriptorsWebClient*)webClient
+       didCompleteAreaRetrieval:(BOOL)successfully;
 
 @end
 
@@ -26,7 +28,6 @@
 
 @property(nonatomic, retain) id<BMAAreaDescriptorsWebClientEventNotifications> eventNotificationDelegate;
 
-- (void) dealloc;
 - (id) getAreaDescriptorsForRegion : (NSInteger) region;
 
 @end

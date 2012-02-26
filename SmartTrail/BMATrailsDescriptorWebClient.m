@@ -8,12 +8,11 @@
 
 #import "BMATrailsDescriptorWebClient.h"
 #import "BMANetworkUtilities.h"
-#import "BMATrailDescriptor.h"
 #import "JSONKit.h"
 #import "AppDelegate.h"
 
 @interface BMATrailsDescriptorWebClient ()
-@property (readonly,nonatomic) PropConverter converterFunc;
+@property (readonly,nonatomic) PropConverter propConverterFunc;
 - (void) closeConnection;
 @end
 
@@ -22,7 +21,7 @@
 
 
 @synthesize eventNotificationDelegate;
-@synthesize converterFunc = __converterFunc;
+@synthesize propConverterFunc = __propConverterFunc;
 
 
 - (void) dealloc
@@ -37,7 +36,7 @@
 - (id) init {
     self = [super init];
     if ( self ) {
-        __converterFunc = [[THE(dataUtils)
+        __propConverterFunc = [[THE(dataUtils)
             dataDictToPropDictConverterForEntityName:@"Trail"
                                 usingFuncsByPropName:[NSDictionary
                 dictionaryWithObjectsAndKeys:
@@ -140,11 +139,19 @@
     [trailData appendData:data];
 }
 
-- (void) notifyEventListenerOfTrailsRetrievalCompletion : (BOOL) completionSuccessful withResultData : (NSArray*) resultData
+- (void) notifyEventListenerOfTrailsRetrievalCompletion:(BOOL)completionSuccessful
 {
-    if([[self eventNotificationDelegate] respondsToSelector:@selector(bmaTrailDescriptorsWebClient:didCompleteTrailRetrieval:withResultArray:)])
-    {
-        [[self eventNotificationDelegate] bmaTrailDescriptorsWebClient:self didCompleteTrailRetrieval:completionSuccessful withResultArray:resultData];
+    if(
+        [[self eventNotificationDelegate]
+            respondsToSelector:@selector(
+                 bmaTrailDescriptorsWebClient:didCompleteTrailRetrieval:
+            )
+        ]
+    ) {
+        [[self eventNotificationDelegate]
+            bmaTrailDescriptorsWebClient:self
+               didCompleteTrailRetrieval:completionSuccessful
+        ];
     }
 }
 
@@ -159,46 +166,24 @@
     NSDictionary *response = [responseData objectForKey:@"response"];
     NSArray *trails = [response objectForKey:@"trails"];
 
-    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
-
     for ( NSDictionary *trailDictionary in trails ) {
+        //  Create or update a Trail managed object loaded with data from
+        //  trailDictionary.
 
-        //  Create or update the Trail managed object.
-        //
         [THE(dataUtils)
             updateOrInsertThe:@"trailForId"
-               withProperties:self.converterFunc(trailDictionary)
+               withProperties:self.propConverterFunc(trailDictionary)
         ];
-
-        BMATrailDescriptor *trailDescriptor = [[BMATrailDescriptor alloc] init];
-        [trailDescriptor setAerobicRating:[[trailDictionary objectForKey:@"aerobicRating"] intValue]];
-        [trailDescriptor setArea:[[trailDictionary objectForKey:@"area"] intValue]];
-        [trailDescriptor setCondition:[[trailDictionary objectForKey:@"condition"] intValue]];
-        [trailDescriptor setCoolRating:[[trailDictionary objectForKey:@"coolRating"] intValue]];
-        [trailDescriptor setDescription:[trailDictionary objectForKey:@"description"]];
-        [trailDescriptor setElevationGain:[[trailDictionary objectForKey:@"elevationGain"] intValue]];
-        [trailDescriptor setFullDescription:[trailDictionary objectForKey:@"descriptionFull"]];
-        [trailDescriptor setLastUpdated:[NSDate dateWithTimeIntervalSince1970:[[trailDictionary objectForKey:@"updatedAt"] doubleValue]]];
-        [trailDescriptor setLength:[[trailDictionary objectForKey:@"length"] floatValue]];
-        [trailDescriptor setName:[trailDictionary objectForKey:@"name"]];
-        [trailDescriptor setTechRating:[[trailDictionary objectForKey:@"techRating"] intValue]];
-        [trailDescriptor setTrailId:[[trailDictionary objectForKey:@"id"] intValue]];
-        [trailDescriptor setUrl:[trailDictionary objectForKey:@"url"]];
-
-        [resultArray addObject:trailDescriptor];
-        [trailDescriptor release];
     }
 
-    [APP_DELEGATE saveContext];
-
-    [self notifyEventListenerOfTrailsRetrievalCompletion:YES withResultData:resultArray];
+    [self notifyEventListenerOfTrailsRetrievalCompletion:YES];
 }
 
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     NSLog(@"%@", error);
-    [self notifyEventListenerOfTrailsRetrievalCompletion:NO withResultData:nil];
+    [self notifyEventListenerOfTrailsRetrievalCompletion:NO];
     [self closeConnection];
 }
 

@@ -81,7 +81,7 @@
         fetchRequestFromTemplateWithName:tmplName
                    substitutionVariables:substVars
     ];
-    
+
     NSAssert( req, @"Request template \"%@\" could not be found.", tmplName );
     return  req;
 }
@@ -89,13 +89,13 @@
 
 - (NSFetchRequest*) requestFor:(NSString*)tmplName atId:(NSString*)idString {
     NSFetchRequest* req = [self
-                  requestFor:tmplName
+                   requestFor:tmplName
         substitutionVariables:[NSDictionary
                                   dictionaryWithObject:idString
                                                 forKey:@"id"
                               ]
     ];
-    
+
     NSAssert( req, @"Request template \"%@\" could not be found.", tmplName );
     return  req;
 }
@@ -104,9 +104,7 @@
 - (NSManagedObject*) findTheOneUsingRequest:(NSFetchRequest*)req {
     NSArray* foundObjs = nil;
     ERR_ASSERT(
-        foundObjs = [self.context
-            executeFetchRequest:req error:&ERR
-        ];
+        foundObjs = [self.context executeFetchRequest:req error:&ERR];
     )
     NSAssert(
         [foundObjs count] <= 1,
