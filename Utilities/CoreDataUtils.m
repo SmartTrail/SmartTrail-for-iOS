@@ -238,7 +238,7 @@ DataDictToPropVal fnBoolForDataKey( NSString *dataKey ) {
 DataDictToPropVal fnIntForDataKey( NSString *dataKey ) {
     return  [[^(NSDictionary* dataDict, id _) {
         NSString* str = [dataDict objectForKey:dataKey];
-        return  [NSNumber numberWithInt:[str boolValue]];
+        return  [NSNumber numberWithInt:[str intValue]];
     } copy] autorelease];
 }
 

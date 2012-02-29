@@ -19,6 +19,7 @@
 
 - (void) saveContext;
 - (NSURL*) applicationDocumentsDirectory;
+- (UIImage*) imageForRating:(NSUInteger)rating;
 
 @end
 

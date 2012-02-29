@@ -9,6 +9,12 @@
 #import "AppDelegate.h"
 
 
+@interface AppDelegate ()
+@property (retain,nonatomic) NSArray* ratingImages;
+UIImage* imageForPngNamed( NSString* filename );
+@end
+
+
 @implementation AppDelegate
 
 
@@ -18,6 +24,7 @@
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+@synthesize ratingImages = __ratingImages;
 
 
 - (BOOL)
@@ -25,7 +32,20 @@
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     __bmaController = [BMAController new];
+
     __dataUtils = [[CoreDataUtils alloc] initWithProvisions:self];
+
+    self.ratingImages = [NSArray
+        arrayWithObjects:
+            imageForPngNamed(@"rating_dots_0"),
+            imageForPngNamed(@"rating_dots_1"),
+            imageForPngNamed(@"rating_dots_2"),
+            imageForPngNamed(@"rating_dots_3"),
+            imageForPngNamed(@"rating_dots_4"),
+            imageForPngNamed(@"rating_dots_5"),
+            nil
+    ];
+    NSAssert( self.ratingImages.count == 6, @"Couldn't load all five rating_dots_*.png files" );
 
     [__bmaController downloadAreasAndTrails];
 
@@ -43,7 +63,7 @@
 
 - (void) applicationDidEnterBackground:(UIApplication*)application {
     /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
 }
@@ -81,7 +101,7 @@
         {
             /*
              Replace this implementation with code to handle the error appropriately.
-             
+
              abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
              */
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -103,7 +123,7 @@
     {
         return __managedObjectContext;
     }
-    
+
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil)
     {
@@ -138,45 +158,45 @@
     {
         return __persistentStoreCoordinator;
     }
-    
+
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"SmartTrail.sqlite"];
-    
+
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
     {
         /*
          Replace this implementation with code to handle the error appropriately.
-         
+
          abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-         
+
          Typical reasons for an error here include:
          * The persistent store is not accessible;
          * The schema for the persistent store is incompatible with current managed object model.
          Check the error message to determine what the actual problem was.
-         
-         
+
+
          If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
+
          If you encounter schema incompatibility errors during development, you can reduce their frequency by:
          * Simply deleting the existing store:
          [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
+
          * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
          [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-         
+
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
+
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
+
     return __persistentStoreCoordinator;
 }
 
 
-#pragma mark - Application's Documents directory
+#pragma mark - Application's Documents directory & data there
 
 
 /** Returns the URL to the application's Documents directory.
@@ -185,6 +205,30 @@
     return [[[NSFileManager defaultManager]
              URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask
              ] lastObject];
+}
+
+
+- (UIImage*) imageForRating:(NSUInteger)rating {
+    //  Rating is in interval [0,10]. Array index must be in [0,5]
+    NSUInteger idx = lround( rating*0.5 );
+    NSUInteger highest = [self.ratingImages count] - 1;
+    NSUInteger index0Thru5 =  idx > highest  ?  highest  :  idx;
+    return  [self.ratingImages objectAtIndex:index0Thru5];
+}
+
+
+#pragma mark - Private methods and functions
+
+
+/** Returns a new, autoreleased instance of UIImage initialized with the
+    contents of a PNG file of the given name (sans the ".png" extension). A file
+    with that name and a ".png" extension will be searched for in the main
+    bundle. For example, file rating_dots_0.png would be found in the resources
+    directory, and an appropriate UIImage object would be returned.
+*/
+UIImage* imageForPngNamed( NSString* name ) {
+    NSString* path = [[NSBundle mainBundle] pathForResource:name ofType:@"png"];
+    return  [UIImage imageWithContentsOfFile:path];
 }
 
 
