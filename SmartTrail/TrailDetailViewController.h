@@ -13,9 +13,7 @@
 @interface TrailDetailViewController : UIViewController
 
 
-@property (retain,nonatomic) IBOutlet UIView*             statsView;
-@property (retain,nonatomic) IBOutlet UILabel*            trailLengthLabel;
-@property (retain,nonatomic) IBOutlet UILabel*            trailElevationGainLabel;
+@property (retain,nonatomic) IBOutlet UILabel*            statsLabel;
 @property (retain,nonatomic) IBOutlet UISegmentedControl* segmentedControl;
 @property (retain,nonatomic) IBOutlet UIView*             infoView;
 @property (retain,nonatomic) IBOutlet UIView*             conditionView;

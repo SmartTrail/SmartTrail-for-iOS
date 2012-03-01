@@ -19,9 +19,7 @@
 @implementation TrailDetailViewController
 
 
-@synthesize statsView = __statsView;
-@synthesize trailLengthLabel = __trailLengthLabel;
-@synthesize trailElevationGainLabel = __trailElevationGainLabel;
+@synthesize statsLabel = __statsLabel;
 @synthesize segmentedControl = __segmentedControl;
 @synthesize infoView = __infoView;
 @synthesize conditionView = __conditionView;
@@ -35,9 +33,7 @@
 
 
 - (void) dealloc {
-    [__statsView release];               __statsView = nil;
-    [__trailLengthLabel release];        __trailLengthLabel = nil;
-    [__trailElevationGainLabel release]; __trailElevationGainLabel = nil;
+    [__statsLabel release];              __statsLabel = nil;
     [__segmentedControl release];        __segmentedControl = nil;
     [__infoView release];                __infoView = nil;
     [__conditionView release];           __conditionView = nil;
@@ -82,9 +78,7 @@
 
 
 - (void)viewDidUnload {
-    self.statsView = nil;
-    self.trailLengthLabel = nil;
-    self.trailElevationGainLabel = nil;
+    self.statsLabel = nil;
     self.segmentedControl = nil;
     self.techRatingImageView = nil;
     self.aerobicRatingImageView = nil;
@@ -92,7 +86,7 @@
     self.infoView = nil;
     self.conditionView = nil;
     self.descriptionWebView = nil;
-    
+
     [super viewDidUnload];
 }
 
@@ -113,17 +107,13 @@
 
     //  Show trail length and elevation gain if we have data.
     //
-    if ( self.trail.length.floatValue > 0.0 ) {
-        self.statsView.hidden = NO;
-        self.trailLengthLabel.text = [NSString
-            stringWithFormat:@"%.1f", self.trail.length.floatValue
-        ];
-        self.trailElevationGainLabel.text = [NSString
-            stringWithFormat:@"%d", self.trail.elevationGain.intValue
-        ];
-    } else {
-        self.statsView.hidden = YES;
-    }
+    self.statsLabel.text =  self.trail.length.floatValue > 0.0
+    ?   [NSString
+            stringWithFormat:@"%.1f miles    gain: %d feet",
+                self.trail.length.floatValue,
+                self.trail.elevationGain.intValue
+        ]
+    :   @"";
 
     //  Show or hide info or condition views.
     //
