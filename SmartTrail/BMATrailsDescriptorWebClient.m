@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 
 @interface BMATrailsDescriptorWebClient ()
-@property (readonly,nonatomic) PropConverter propConverterFunc;
+@property (readonly,nonatomic) PropConverter propConverterBlock;
 - (void) closeConnection;
 @end
 
@@ -21,11 +21,12 @@
 
 
 @synthesize eventNotificationDelegate;
-@synthesize propConverterFunc = __propConverterFunc;
+@synthesize propConverterBlock = __propConverterBlock;
 
 
 - (void) dealloc
 {
+    [__propConverterBlock release];  __propConverterBlock = nil;
     [trailData release];
     [eventNotificationDelegate release];
     [self closeConnection];
@@ -36,7 +37,7 @@
 - (id) init {
     self = [super init];
     if ( self ) {
-        __propConverterFunc = [[THE(dataUtils)
+        __propConverterBlock = [[THE(dataUtils)
             dataDictToPropDictConverterForEntityName:@"Trail"
                                 usingFuncsByPropName:[NSDictionary
                 dictionaryWithObjectsAndKeys:
@@ -172,7 +173,7 @@
 
         [THE(dataUtils)
             updateOrInsertThe:@"trailForId"
-               withProperties:self.propConverterFunc(trailDictionary)
+               withProperties:self.propConverterBlock(trailDictionary)
         ];
     }
 

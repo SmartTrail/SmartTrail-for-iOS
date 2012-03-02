@@ -123,13 +123,13 @@
     //  Draw the rating dots.
     //
     self.techRatingImageView.image = [APP_DELEGATE
-        imageForRating:self.trail.techRating.longValue
+        imageForRating:self.trail.techRating.longValue inRange:0 through:10
     ];
     self.aerobicRatingImageView.image = [APP_DELEGATE
-        imageForRating:self.trail.aerobicRating.longValue
+        imageForRating:self.trail.aerobicRating.longValue inRange:0 through:10
     ];
     self.coolRatingImageView.image = [APP_DELEGATE
-        imageForRating:self.trail.coolRating.longValue
+        imageForRating:self.trail.coolRating.longValue inRange:0 through:10
     ];
 
     //  Render the description of the trail, which is HTML.

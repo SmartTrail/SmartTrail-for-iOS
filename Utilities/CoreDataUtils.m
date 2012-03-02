@@ -207,6 +207,7 @@
             :   [dataDict objectForKey:propName];
 
             if ( newPropVal ) {
+                //  func returned a non-nil value. Add key/value.
                 [newDataByPropName setObject:newPropVal forKey:propName];
             }
         }
@@ -256,6 +257,11 @@ DataDictToPropVal fnDateSince1970ForDataKey( NSString *dataKey ) {
         NSString* str = [dataDict objectForKey:dataKey];
         return  [NSDate dateWithTimeIntervalSince1970:[str doubleValue]];
     } copy] autorelease];
+}
+
+
+DataDictToPropVal fnConstant( id valueToReturn ) {
+    return  [[^(id _1, id _2) { return valueToReturn; } copy] autorelease];
 }
 
 

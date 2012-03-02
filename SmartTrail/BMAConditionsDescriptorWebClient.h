@@ -14,7 +14,9 @@
 
 @optional
 
-- (void) bmaTrailConditionsWebClient : (BMAConditionsDescriptorWebClient*) webClient didCompleteConditionRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray;
+- (void)
+      bmaTrailConditionsWebClient:(BMAConditionsDescriptorWebClient*)webClient
+    didCompleteConditionRetrieval:(BOOL)successfully;
 
 @end
 

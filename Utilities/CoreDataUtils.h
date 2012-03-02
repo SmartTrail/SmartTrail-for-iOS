@@ -139,7 +139,9 @@ typedef NSDictionary* (^PropConverter)(NSDictionary* dataDict);
     funcsByPropName, a dictionary of DataDictToPropVal functions keyed by the
     entity's property names. The DataDictToPropVal functions will do the work of
     deriving a particular property's value given the raw data dictionary and the
-    property's description.
+    property's description. If a key's DataDictToPropVal function returns nil,
+    the dictionary returned by the resulting PropConverter will have no value
+    for that key.
 
     If funcsByPropName is nil, then the resulting PropConverter function does no
     converting. The set of keys of the dictionary returned by the PropConverter
@@ -147,7 +149,7 @@ typedef NSDictionary* (^PropConverter)(NSDictionary* dataDict);
     and the set of keys of the input raw data dictionary. The values will just
     be looked up in the data dictionary. This is useful because you usually need
     a dictionary that has no key that is not the name of a property in the
-    entity. 
+    entity.
 
     The returned PropConverter is autoreleased.
 */
@@ -179,6 +181,14 @@ DataDictToPropVal fnBoolForDataKey( NSString *dataKey );
 DataDictToPropVal fnIntForDataKey( NSString *dataKey );
 DataDictToPropVal fnFloatForDataKey( NSString *dataKey );
 DataDictToPropVal fnDateSince1970ForDataKey( NSString *dataKey );
+
+
+/** This is just a function that returns a DataDictToPropVal function that
+    always returns the given value. This is handy if you just want the value
+    for one of your keys to be a particular value, regardless of the data
+    dictionary.
+*/
+DataDictToPropVal fnConstant( id valueToReturn );
 
 
 @end

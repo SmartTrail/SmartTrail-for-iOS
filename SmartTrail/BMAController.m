@@ -7,7 +7,6 @@
 //
 
 #import "BMAController.h"
-#import "BMAConditionDescriptor.h"
 #import "BMAEventDescriptor.h"
 #import "AppDelegate.h"
 
@@ -88,13 +87,11 @@
 }
 
 
-- (void) bmaTrailConditionsWebClient : (BMAConditionsDescriptorWebClient*) webClient didCompleteConditionRetrieval : (BOOL) successfully withResultArray : (NSArray*) resultArray
+- (void)
+      bmaTrailConditionsWebClient:(BMAConditionsDescriptorWebClient*)webClient
+    didCompleteConditionRetrieval:(BOOL)successfully
 {
-    for(BMAConditionDescriptor *conditionDescriptor in resultArray)
-    {
-        NSLog(@"%@", conditionDescriptor);
-    }
-
+    NSLog( @"Multiple condition retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate:nil];
 }
 

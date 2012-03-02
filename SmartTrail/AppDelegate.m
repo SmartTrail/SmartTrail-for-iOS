@@ -208,9 +208,15 @@ UIImage* imageForPngNamed( NSString* filename );
 }
 
 
-- (UIImage*) imageForRating:(NSUInteger)rating {
-    //  Rating is in interval [0,10]. Array index must be in [0,5]
-    NSUInteger idx = lround( rating*0.5 );
+- (UIImage*)
+    imageForRating:(NSUInteger)rating
+           inRange:(NSUInteger)lo
+           through:(NSUInteger)hi
+{
+    //  E.g., rating is in interval [0,10] & array index must be in [0,5]
+
+    NSUInteger topIndex = self.ratingImages.count - 1;
+    NSUInteger idx = lround( (rating - lo)*topIndex / ((float)(hi - lo)) );
     NSUInteger highest = [self.ratingImages count] - 1;
     NSUInteger index0Thru5 =  idx > highest  ?  highest  :  idx;
     return  [self.ratingImages objectAtIndex:index0Thru5];
