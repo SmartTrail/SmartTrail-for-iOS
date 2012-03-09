@@ -47,7 +47,7 @@ UIImage* imageForPngNamed( NSString* filename );
     ];
     NSAssert( self.ratingImages.count == 6, @"Couldn't load all five rating_dots_*.png files" );
 
-    [__bmaController downloadAreasAndTrails];
+    [__bmaController downloadAllTrailInfo];
 
     return YES;
 }

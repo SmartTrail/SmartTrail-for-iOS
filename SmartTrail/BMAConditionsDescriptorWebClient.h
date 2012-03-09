@@ -21,10 +21,6 @@
 @end
 
 @interface BMAConditionsDescriptorWebClient : NSObject
-{
-    NSURLConnection *urlConnection;
-    NSMutableData *conditionData;
-}
 
 @property (nonatomic, retain) id<BMAConditionsDescriptorWebClientEventNotifications> eventNotificationDelegate;
 

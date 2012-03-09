@@ -128,21 +128,6 @@
                                     <action selector="segmentedControlChanged:" destination="21" eventType="valueChanged" id="zyW-dA-wCV"/>
                                 </connections>
                             </segmentedControl>
-                            <view hidden="YES" contentMode="scaleToFill" id="PoF-7g-iPa" userLabel="Conditions view">
-                                <rect key="frame" x="0.0" y="65" width="320" height="351"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Conditions will be listed here." textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="JpZ-7z-bx4">
-                                        <rect key="frame" x="20" y="311" width="280" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" size="system"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
                             <view hidden="YES" contentMode="scaleToFill" id="02S-eM-U4b" userLabel="Info view">
                                 <rect key="frame" x="0.0" y="65" width="320" height="351"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -198,6 +183,22 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uC8-Md-yBF" userLabel="Conditions table view">
+                                <rect key="frame" x="0.0" y="65" width="320" height="351"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="J6P-Qi-9Kf">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="26.2    gain: 5280" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="c8D-wU-N9W">
                                 <rect key="frame" x="20" y="4" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -211,13 +212,13 @@
                     <navigationItem key="navigationItem" title="Trail Detail" id="26"/>
                     <connections>
                         <outlet property="aerobicRatingImageView" destination="UBi-9P-OE9" id="tA8-Qc-gBq"/>
-                        <outlet property="conditionView" destination="PoF-7g-iPa" id="cQd-8L-BRd"/>
+                        <outlet property="conditionView" destination="uC8-Md-yBF" id="7XY-Dd-jjh"/>
                         <outlet property="coolRatingImageView" destination="wwx-Kc-VA3" id="Pq9-xH-0Vk"/>
                         <outlet property="descriptionWebView" destination="0JK-o2-vxg" id="mXk-oA-q1b"/>
                         <outlet property="infoView" destination="02S-eM-U4b" id="odw-2g-CVE"/>
                         <outlet property="segmentedControl" destination="4aS-Ey-zlu" id="qmb-hL-StU"/>
-                        <outlet property="techRatingImageView" destination="WJF-Mw-bbu" id="aJR-t6-2M8"/>
                         <outlet property="statsLabel" destination="c8D-wU-N9W" id="WPN-WU-wJE"/>
+                        <outlet property="techRatingImageView" destination="WJF-Mw-bbu" id="aJR-t6-2M8"/>
                     </connections>
                 </viewController>
             </objects>
@@ -241,8 +242,8 @@
                 <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="infoView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="statsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="techRatingImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="trailLengthLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="TrailsTableViewController" superclassName="UITableViewController">

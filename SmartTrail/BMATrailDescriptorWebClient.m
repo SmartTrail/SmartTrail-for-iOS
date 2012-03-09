@@ -44,13 +44,13 @@
                     //  This calculation using               goes into property
                     //    the data dictionary                  having this name.
 
-                    fnIntForDataKey(@"aerobicRating"),       @"aerobicRating",
-                    fnIntForDataKey(@"condition"),           @"condition",
-                    fnIntForDataKey(@"coolRating"),          @"coolRating",
+                    fnIntegerForDataKey(@"aerobicRating"),   @"aerobicRating",
+                    fnIntegerForDataKey(@"condition"),       @"condition",
+                    fnIntegerForDataKey(@"coolRating"),      @"coolRating",
                     fnRawForDataKey(@"description"),         @"descriptionPartial",
-                    fnIntForDataKey(@"elevationGain"),       @"elevationGain",
+                    fnIntegerForDataKey(@"elevationGain"),   @"elevationGain",
                     fnFloatForDataKey(@"length"),            @"length",
-                    fnIntForDataKey(@"techRating"),          @"techRating",
+                    fnIntegerForDataKey(@"techRating"),      @"techRating",
                     fnDateSince1970ForDataKey(@"updatedAt"), @"updatedAt",
 
                     //  Note that data for each remaining property key, by
@@ -67,6 +67,8 @@
                                  at:[dataDict objectForKey:@"area"]
                         ];
                     } copy] autorelease],                    @"area",
+
+                    fnCoerceDataKey(nil), AnyOtherProperty,
 
                     nil                              ]
         ] retain];

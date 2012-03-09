@@ -21,10 +21,6 @@
 @end
 
 @interface BMAAreaDescriptorsWebClient : NSObject
-{
-    NSURLConnection *urlConnection;
-    NSMutableData *areaData;
-}
 
 @property(nonatomic, retain) id<BMAAreaDescriptorsWebClientEventNotifications> eventNotificationDelegate;
 

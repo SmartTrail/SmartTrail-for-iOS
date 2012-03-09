@@ -25,6 +25,6 @@
     BMAEventsDescriptorEventNotifications
 >
 
-- (void) downloadAreasAndTrails;
+- (void) downloadAllTrailInfo;
 
 @end

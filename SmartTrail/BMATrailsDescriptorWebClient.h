@@ -21,10 +21,6 @@
 @end
 
 @interface BMATrailsDescriptorWebClient : NSObject
-{
-    NSURLConnection *urlConnection;
-    NSMutableData *trailData;
-}
 
 @property (nonatomic, retain) id<BMATrailsDescriptorWebClientEventNotifications> eventNotificationDelegate;
 

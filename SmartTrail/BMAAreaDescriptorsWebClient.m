@@ -10,26 +10,32 @@
 #import "BMANetworkUtilities.h"
 #import "JSONKit.h"
 #import "AppDelegate.h"
+#import "NSHTTPURLResponse+Utils.h"
 
 @interface BMAAreaDescriptorsWebClient ()
-@property (readonly,nonatomic) PropConverter propConverterBlock;
-- (void) closeConnection;
+@property (readonly,nonatomic) PropConverter    propConverterBlock;
+@property (retain,nonatomic)   NSURLConnection* urlConnection;
+@property (retain,nonatomic)   NSMutableData*   receivedJSON;
+@property (retain,nonatomic)   NSDate*          serverTime;
 @end
 
 
 @implementation BMAAreaDescriptorsWebClient
 
 
-@synthesize eventNotificationDelegate;
+@synthesize eventNotificationDelegate = __eventNotificationDelegate;
 @synthesize propConverterBlock = __propConverterBlock;
+@synthesize urlConnection = __urlConnection;
+@synthesize receivedJSON = __receivedJSON;
+@synthesize serverTime = __serverTime;
 
 
-- (void) dealloc
-{
-    [__propConverterBlock release];  __propConverterBlock = nil;
-    [areaData release];
-    [eventNotificationDelegate release];
-    [self closeConnection];
+- (void) dealloc {
+    [__eventNotificationDelegate release];  __eventNotificationDelegate = nil;
+    [__propConverterBlock release];         __propConverterBlock = nil;
+    [__urlConnection release];              __urlConnection = nil;
+    [__receivedJSON release];               __receivedJSON = nil;
+    [__serverTime release];                 __serverTime = nil;
     [super dealloc];
 }
 
@@ -39,29 +45,44 @@
     if ( self ) {
         __propConverterBlock = [[THE(dataUtils)
             dataDictToPropDictConverterForEntityName:@"Area"
-                                usingFuncsByPropName:nil
-            //  Note that when nil is provided for the dictionary of converter
-            //  function blocks, each property will simply get the raw value in
-            //  the data dictionary at the key equal to that property's name.
+                                usingFuncsByPropName:[NSDictionary
+                dictionaryWithObjectsAndKeys:
 
+                    //  This calculation using               goes into property
+                    //    the data dictionary                  having this name.
+
+                    //  When this dictionary is handed to CoreDataUtil's
+                    //  updateOrInsertThe:withProperties: method, serverTime
+                    //  will contain the response's Date. So just report it.
+                    //
+                    [[^(id _1, id _2) {
+                        return  self.serverTime;
+                    } copy] autorelease],                    @"downloadedAt",
+
+                    //  This guards against the possibility that a data value
+                    //  has the wrong type.
+                    //
+                    fnCoerceDataKey(nil),                    AnyOtherProperty,
+
+                    nil
+                ]
         ] retain];
     }
     return  self;
 }
 
 
-- (void) closeConnection
-{
-    [urlConnection cancel];
-    [urlConnection release];
-    urlConnection = nil;
+- (void) setUrlConnection:(NSURLConnection*)anUrlConnection {
+    [__urlConnection cancel];
+    [__urlConnection release];
+    __urlConnection = anUrlConnection;
+    [__urlConnection retain];
 }
+
 
 - (id) getAreaDescriptorsForRegion : (NSInteger) region
 {
-    [areaData release];
-
-    areaData = [[NSMutableData alloc] init];
+    self.receivedJSON = [[NSMutableData new] autorelease];
 
     if([BMANetworkUtilities anyNetworkConnectionIsAvailable])
     {
@@ -70,9 +91,9 @@
         [request setURL:[NSURL URLWithString:url]];
         [request setHTTPMethod:@"GET"];
 
-        [self closeConnection];
-
-        urlConnection =[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+        self.urlConnection = [[[NSURLConnection alloc]
+            initWithRequest:request delegate:self startImmediately:YES
+        ] autorelease];
     }
     else
     {
@@ -82,11 +103,21 @@
     return self;
 }
 
+
+- (void)
+            connection:(NSURLConnection*)connection
+    didReceiveResponse:(NSHTTPURLResponse*)response
+{
+    self.serverTime = [response date];
+}
+
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     NSLog(@"didReceiveData");
-    [areaData appendData:data];
+    [self.receivedJSON appendData:data];
 }
+
 
 - (void) notifyEventListenerOfAreaRetrievalCompletion:(BOOL)completionSuccessful
 {
@@ -96,32 +127,33 @@
     }
 }
 
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSLog(@"didFinishLoading");
 
-    [self closeConnection];
-
     JSONDecoder *decoder = [JSONDecoder decoder];
-    NSDictionary *responseData = [decoder objectWithData:areaData];
+    NSDictionary *responseData = [decoder objectWithData:self.receivedJSON];
     NSDictionary *response = [responseData objectForKey:@"response"];
-    NSArray *areas = [response objectForKey:@"areas"];
+    NSArray *dataDictArray = [response objectForKey:@"areas"];
 
-    for ( NSDictionary *areaDictionary in areas ) {
+    for ( NSDictionary* dataDict in dataDictArray ) {
         [THE(dataUtils)
             updateOrInsertThe:@"areaForId"
-               withProperties:self.propConverterBlock( areaDictionary )
+               withProperties:self.propConverterBlock( dataDict )
         ];
     }
 
     [self notifyEventListenerOfAreaRetrievalCompletion:YES];
 }
 
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     NSLog(@"%@", error);
     [self notifyEventListenerOfAreaRetrievalCompletion:NO];
-    [self closeConnection];
+    self.urlConnection = nil;
 }
+
 
 @end

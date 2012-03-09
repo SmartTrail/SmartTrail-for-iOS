@@ -28,8 +28,9 @@
 		2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149814EEA9A700E982C5 /* NSString+Utils.m */; };
 		2F2D14A814EEAC9100E982C5 /* README.org in Resources */ = {isa = PBXBuildFile; fileRef = 2F2D14A714EEAC9100E982C5 /* README.org */; };
 		2F2D14AA14EEB0FC00E982C5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 2F2D14A914EEB0FC00E982C5 /* README */; };
-		2FE0F94D14F2DDF900278833 /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0F94C14F2DDF900278833 /* Area.m */; };
-		2FE0F95014F2DDF900278833 /* Trail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE0F94F14F2DDF900278833 /* Trail.m */; };
+		2F9A04E4150174A7001638BC /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E3150174A7001638BC /* Area.m */; };
+		2F9A04E7150174A7001638BC /* Condition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E6150174A7001638BC /* Condition.m */; };
+		2F9B471F1503ED2B00111062 /* Trail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B471E1503ED2B00111062 /* Trail.m */; };
 		2FE0F95714FD96C200278833 /* rating_dots_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FE0F95114FD96C200278833 /* rating_dots_0.png */; };
 		2FE0F95814FD96C200278833 /* rating_dots_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FE0F95214FD96C200278833 /* rating_dots_1.png */; };
 		2FE0F95914FD96C200278833 /* rating_dots_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FE0F95314FD96C200278833 /* rating_dots_2.png */; };
@@ -53,6 +54,8 @@
 		2FF09DBC14EC196C0050552B /* trail_icon_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF09DBB14EC196B0050552B /* trail_icon_normal.png */; };
 		2FF09DBE14EC197E0050552B /* trail_icon_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF09DBD14EC197E0050552B /* trail_icon_pressed.png */; };
 		2FF09E7814EC3DCA0050552B /* TrailsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF09E7714EC3DCA0050552B /* TrailsTableViewController.m */; };
+		2FF17C281507C37F00881CB3 /* NSHTTPURLResponse+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C271507C37F00881CB3 /* NSHTTPURLResponse+Utils.m */; };
+		2FF17C2B1507DE9000881CB3 /* NSDate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2A1507DE9000881CB3 /* NSDate+Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,10 +109,12 @@
 		2F2D149814EEA9A700E982C5 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		2F2D14A714EEAC9100E982C5 /* README.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.org; sourceTree = "<group>"; };
 		2F2D14A914EEB0FC00E982C5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		2FE0F94B14F2DDF900278833 /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
-		2FE0F94C14F2DDF900278833 /* Area.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Area.m; sourceTree = "<group>"; };
-		2FE0F94E14F2DDF900278833 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trail.h; sourceTree = "<group>"; };
-		2FE0F94F14F2DDF900278833 /* Trail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trail.m; sourceTree = "<group>"; };
+		2F9A04E2150174A7001638BC /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
+		2F9A04E3150174A7001638BC /* Area.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Area.m; sourceTree = "<group>"; };
+		2F9A04E5150174A7001638BC /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Condition.h; sourceTree = "<group>"; };
+		2F9A04E6150174A7001638BC /* Condition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Condition.m; sourceTree = "<group>"; };
+		2F9B471D1503ED2B00111062 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trail.h; sourceTree = "<group>"; };
+		2F9B471E1503ED2B00111062 /* Trail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trail.m; sourceTree = "<group>"; };
 		2FE0F95114FD96C200278833 /* rating_dots_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rating_dots_0.png; sourceTree = "<group>"; };
 		2FE0F95214FD96C200278833 /* rating_dots_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rating_dots_1.png; sourceTree = "<group>"; };
 		2FE0F95314FD96C200278833 /* rating_dots_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rating_dots_2.png; sourceTree = "<group>"; };
@@ -139,6 +144,10 @@
 		2FF09DBD14EC197E0050552B /* trail_icon_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trail_icon_pressed.png; sourceTree = "<group>"; };
 		2FF09E7614EC3DC90050552B /* TrailsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailsTableViewController.h; sourceTree = "<group>"; };
 		2FF09E7714EC3DCA0050552B /* TrailsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailsTableViewController.m; sourceTree = "<group>"; };
+		2FF17C261507C37F00881CB3 /* NSHTTPURLResponse+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSHTTPURLResponse+Utils.h"; sourceTree = "<group>"; };
+		2FF17C271507C37F00881CB3 /* NSHTTPURLResponse+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPURLResponse+Utils.m"; sourceTree = "<group>"; };
+		2FF17C291507DE9000881CB3 /* NSDate+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utils.h"; sourceTree = "<group>"; };
+		2FF17C2A1507DE9000881CB3 /* NSDate+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utils.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +202,10 @@
 				2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */,
 				2F2D149714EEA9A700E982C5 /* NSString+Utils.h */,
 				2F2D149814EEA9A700E982C5 /* NSString+Utils.m */,
+				2FF17C291507DE9000881CB3 /* NSDate+Utils.h */,
+				2FF17C2A1507DE9000881CB3 /* NSDate+Utils.m */,
+				2FF17C261507C37F00881CB3 /* NSHTTPURLResponse+Utils.h */,
+				2FF17C271507C37F00881CB3 /* NSHTTPURLResponse+Utils.m */,
 			);
 			path = Utilities;
 			sourceTree = SOURCE_ROOT;
@@ -201,10 +214,12 @@
 			isa = PBXGroup;
 			children = (
 				2F2D14A914EEB0FC00E982C5 /* README */,
-				2FE0F94B14F2DDF900278833 /* Area.h */,
-				2FE0F94E14F2DDF900278833 /* Trail.h */,
-				2FE0F94F14F2DDF900278833 /* Trail.m */,
-				2FE0F94C14F2DDF900278833 /* Area.m */,
+				2F9A04E2150174A7001638BC /* Area.h */,
+				2F9A04E3150174A7001638BC /* Area.m */,
+				2F9B471D1503ED2B00111062 /* Trail.h */,
+				2F9B471E1503ED2B00111062 /* Trail.m */,
+				2F9A04E5150174A7001638BC /* Condition.h */,
+				2F9A04E6150174A7001638BC /* Condition.m */,
 			);
 			path = "Managed Objects";
 			sourceTree = "<group>";
@@ -363,7 +378,7 @@
 		2FF002921493E23400BF3668 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 2FF002951493E23400BF3668 /* Build configuration list for PBXProject "SmartTrail" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -456,8 +471,11 @@
 				2F2D149C14EEA9A700E982C5 /* FetchedResultsTableDataSource.m in Sources */,
 				2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */,
 				2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */,
-				2FE0F94D14F2DDF900278833 /* Area.m in Sources */,
-				2FE0F95014F2DDF900278833 /* Trail.m in Sources */,
+				2F9A04E4150174A7001638BC /* Area.m in Sources */,
+				2F9A04E7150174A7001638BC /* Condition.m in Sources */,
+				2F9B471F1503ED2B00111062 /* Trail.m in Sources */,
+				2FF17C281507C37F00881CB3 /* NSHTTPURLResponse+Utils.m in Sources */,
+				2FF17C2B1507DE9000881CB3 /* NSDate+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
