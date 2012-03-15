@@ -45,14 +45,14 @@
     needed or when the templateSubstitutionVariables dictionary changes. The
     CoreDataUtils in dataUtils is used to obtain the instance.
 */
-@property (nonatomic,readonly) FetchedResults* fetchedResults;
+@property (nonatomic,readonly,retain) FetchedResults* fetchedResults;
 
 
 /** If the request template designated by requestTemplateName (see below)
-    requires substitution variables, you can programatically assign a dictionary
-    to this property. If you assign an NSMutableDictionary, you can repeatedly
-    set new values to variables, and the new results will be reflected in the
-    generated table.
+    requires substitution variables, you can programmatically assign a
+    dictionary to this property. If you assign an NSMutableDictionary, you can
+    repeatedly set new values to variables, and the new results will be
+    reflected in the generated table.
 */
 @property (nonatomic,retain)   NSDictionary*   templateSubstitutionVariables;
 
@@ -109,16 +109,17 @@
 
 
 /** Name of attribute to appear in the cell's main "text" label.
-    If not set, the description of managed object will appear.
+    If not set, no text label will appear, and the "detail" label, if
+    cellDetailTextAttributePath was assigned, will be vertically centered.
 */
-@property (nonatomic,retain)   NSString*       cellTextAttributeName;
+@property (nonatomic,retain)   NSString*       cellTextAttributePath;
 
 
 /** Name of attribute to appear in the cell's main "detail" label.
-    If not set, no detail lable will appear, and the "text" label will be
-    centered appropriately.
+    If not set, no detail label will appear, and the "text" label, if
+    cellTextAttributePath was assigned, will be vertically centered.
 */
-@property (nonatomic,retain)   NSString*       cellDetailTextAttributeName;
+@property (nonatomic,retain)   NSString*       cellDetailTextAttributePath;
 
 
 /** Use this property to obtain the table cell's reuse identifier, which was

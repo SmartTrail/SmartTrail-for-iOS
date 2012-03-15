@@ -20,14 +20,13 @@
 - (void) saveContext;
 - (NSURL*) applicationDocumentsDirectory;
 - (UIImage*)
-    imageForRating:(NSUInteger)rating
-           inRange:(NSUInteger)lo
-           through:(NSUInteger)hi;
+    imageForRating:(NSInteger)rating
+           inRange:(NSInteger)lo
+           through:(NSInteger)hi;
 
 @end
 
 #define APP_DELEGATE   ((AppDelegate*)[[UIApplication sharedApplication] \
-                                          delegate                       \
-                                      ]                                  \
-                       )
+                           delegate                                      \
+                       ])
 #define THE(propName)  [APP_DELEGATE propName]

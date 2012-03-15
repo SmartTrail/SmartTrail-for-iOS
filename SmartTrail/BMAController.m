@@ -53,16 +53,6 @@
     [areaDescriptorsWebClient setEventNotificationDelegate:self];
     [areaDescriptorsWebClient getAreaDescriptorsForRegion:1];
 
-    BMATrailsDescriptorWebClient *trailsDescriptorWebClient =
-        [[BMATrailsDescriptorWebClient new] autorelease];
-    [trailsDescriptorWebClient setEventNotificationDelegate:self];
-    [trailsDescriptorWebClient getTrailsDescriptorForRegion:1];
-
-    BMAConditionsDescriptorWebClient* conditionDescriptorsWebClient =
-        [[BMAConditionsDescriptorWebClient new] autorelease];
-    [conditionDescriptorsWebClient setEventNotificationDelegate:self];
-    [conditionDescriptorsWebClient getTrailConditionsForRegion:1];
-
     [APP_DELEGATE saveContext];
 }
 
@@ -83,6 +73,11 @@
 {
     NSLog( @"Multiple area retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate:nil];
+
+    BMATrailsDescriptorWebClient *trailsDescriptorWebClient =
+        [[BMATrailsDescriptorWebClient new] autorelease];
+    [trailsDescriptorWebClient setEventNotificationDelegate:self];
+    [trailsDescriptorWebClient getTrailsDescriptorForRegion:1];
 }
 
 
@@ -102,6 +97,11 @@
 {
     NSLog( @"Multiple trail retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate:nil];
+
+    BMAConditionsDescriptorWebClient* conditionDescriptorsWebClient =
+        [[BMAConditionsDescriptorWebClient new] autorelease];
+    [conditionDescriptorsWebClient setEventNotificationDelegate:self];
+    [conditionDescriptorsWebClient getTrailConditionsForRegion:1];
 }
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Area" representedClassName="Area" syncable="YES">
         <attribute name="downloadedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
@@ -36,6 +36,7 @@
     <fetchRequest name="allTrails" entity="Trail"/>
     <fetchRequest name="areaForId" entity="Area" predicateString="id == $id"/>
     <fetchRequest name="conditionForId" entity="Condition" predicateString="id == $id"/>
+    <fetchRequest name="conditionForTrailId" entity="Condition" predicateString="trail.id == $id"/>
     <fetchRequest name="trailForId" entity="Trail" predicateString="id == $id"/>
     <elements>
         <element name="Area" positionX="3240" positionY="882" width="128" height="90"/>

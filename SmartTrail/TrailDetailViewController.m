@@ -8,10 +8,21 @@
 
 #import "TrailDetailViewController.h"
 #import "AppDelegate.h"
+#import "ConditionTableViewCell.h"
+#import "UILabel+Utils.h"
 
 @interface TrailDetailViewController ()
-@property (retain,nonatomic) NSArray* viewsToSelect;
-@property (nonatomic) NSUInteger selectedViewIndex;
+
+//  These two properties maintain the views selected by the Segmented Control
+//  (radio buttons).
+@property (retain,nonatomic) NSArray*     viewsToSelect;
+@property (assign,nonatomic) NSUInteger   selectedViewIndex;
+
+//  These two properties maintain the height of the cell to be expanded, if any,
+//  and the index of its row in the table view.
+@property (retain,nonatomic) NSIndexPath* expandedCellIndexPath;
+@property (assign,nonatomic) CGFloat expandedCellHeight;
+
 - (void) showViewForIndex:(NSUInteger)idx;
 @end
 
@@ -27,9 +38,12 @@
 @synthesize aerobicRatingImageView = __aerobicRatingImageView;
 @synthesize coolRatingImageView = __coolRatingImageView;
 @synthesize descriptionWebView = __descriptionWebView;
+@synthesize conditionsDataSource = __conditionsDataSource;
 @synthesize trail = __trail;
 @synthesize viewsToSelect = __viewsToSelect;
 @synthesize selectedViewIndex = __selectedViewIndex;
+@synthesize expandedCellIndexPath = __expandedCellIndexPath;
+@synthesize expandedCellHeight = __expandedCellHeight;
 
 
 - (void) dealloc {
@@ -41,19 +55,12 @@
     [__aerobicRatingImageView release];  __aerobicRatingImageView = nil;
     [__coolRatingImageView release];     __coolRatingImageView = nil;
     [__descriptionWebView release];      __descriptionWebView = nil;
+    [__conditionsDataSource release];    __conditionsDataSource = nil;
     [__trail release];                   __trail = nil;
     [__viewsToSelect release];           __viewsToSelect = nil;
+    [__expandedCellIndexPath release];   __expandedCellIndexPath = nil;
+
     [super dealloc];
-}
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if ( self ) {
-        self.selectedViewIndex = 0;
-    }
-    return self;
 }
 
 
@@ -71,21 +78,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //  Set up the collection of views to select using the segmented controller.
     self.viewsToSelect = [NSArray
         arrayWithObjects:self.infoView, self.conditionView, nil
     ];
+    self.selectedViewIndex = 0;     // Initially show infoView.
 }
 
 
 - (void)viewDidUnload {
     self.statsLabel = nil;
     self.segmentedControl = nil;
+    self.infoView = nil;
+    self.conditionView = nil;
     self.techRatingImageView = nil;
     self.aerobicRatingImageView = nil;
     self.coolRatingImageView = nil;
-    self.infoView = nil;
-    self.conditionView = nil;
     self.descriptionWebView = nil;
+    self.conditionsDataSource = nil;
 
     [super viewDidUnload];
 }
@@ -141,20 +151,82 @@
         loadHTMLString:self.trail.descriptionFull
                baseURL:[NSURL URLWithString:bmaBaseUrl]
     ];
+
+    //  Tell the data source for the table of conditions which trail we're
+    //  viewing, so it can generate the list of Condition objects for it.
+    //
+    self.conditionsDataSource.templateSubstitutionVariables = [NSDictionary
+        dictionaryWithObject:self.trail.id forKey:@"id"
+    ];
 }
 
 
-#pragma mark - Event handlers
+#pragma mark - Actions
 
 
+/** Action triggered by the Segmented Control (radio buttons). Just reveal the
+    view corresponding to the selected segment.
+*/
 - (IBAction) segmentedControlChanged:(id)sender {
     [self showViewForIndex:(NSUInteger)[sender selectedSegmentIndex]];
+}
+
+
+#pragma mark - UITableViewDelegate implementation for the table of conditions
+
+
+- (NSIndexPath*)
+                   tableView:(UITableView*)tableView
+    willSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    //  Set of indexes of rows whose cells will change their height. The given
+    //  indexPath will not be nil, but expandedCellIndexPath will be nil if no
+    //  other cell is expanded. Also, expandedCellIndexPath may be the same as
+    //  indexPath, hence the use of an NSSet.
+    //
+    NSSet* changingCellIndexes = [NSSet
+        setWithObjects:indexPath, self.expandedCellIndexPath, nil
+    ];
+
+    //  Record the at-most-one cell to be expanded in height.
+    //
+    ConditionTableViewCell* cell = (ConditionTableViewCell*)[tableView
+        cellForRowAtIndexPath:indexPath
+    ];
+    [self
+        toggleCellForIndexPath:indexPath
+                      toHeight:(   cell.bounds.size.height
+                               +   [cell.commentLabel moreHeightWanted]
+                               )
+    ];
+
+    //  Reload the one or two rows whose cells have changed height.
+    //
+    [self.conditionView
+        reloadRowsAtIndexPaths:[changingCellIndexes allObjects]
+              withRowAnimation:UITableViewRowAnimationNone
+    ];
+
+    return  indexPath;
+}
+
+
+- (CGFloat)
+                  tableView:(UITableView*)tableView
+    heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    return  [indexPath isEqual:self.expandedCellIndexPath]
+    ?   self.expandedCellHeight         // New height of selected row.
+    :   self.conditionView.rowHeight;   // Default for all other rows.
 }
 
 
 #pragma mark - Private methods and functions
 
 
+/** Hides the view that is currently showing and un-hides the view at the
+    given index in array viewsToSelect.
+*/
 - (void) showViewForIndex:(NSUInteger)idx {
     UIView* selectedView = [self.viewsToSelect objectAtIndex:idx];
     UIView* deSelectedView = [self.viewsToSelect
@@ -165,6 +237,18 @@
     selectedView.hidden = NO;
 
     self.selectedViewIndex = idx;
+}
+
+
+/** Record the new height of the single cell to be expanded in the table of
+    conditions, along with the index of its row. The stored data will be
+    accessed by the table view when it calls the
+    tableView:heightForRowAtIndexPath: delegate method.
+*/
+- (void) toggleCellForIndexPath:(NSIndexPath*)idxPath toHeight:(CGFloat)hght {
+    self.expandedCellIndexPath =
+        [idxPath isEqual:self.expandedCellIndexPath]  ?  nil  :  idxPath;
+    self.expandedCellHeight = hght;
 }
 
 

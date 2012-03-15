@@ -12,7 +12,7 @@
 @interface FetchedResultsTableDataSource ()
 
 //  Make fetchedResults writable within this file.
-@property (nonatomic,readwrite) FetchedResults* fetchedResults;
+@property (nonatomic,readwrite,retain) FetchedResults* fetchedResults;
 
 - (void) validateState;
 
@@ -31,8 +31,8 @@
 @synthesize hasSections = __hasSections;
 @synthesize keySortedSecond = __keySortedSecond;
 @synthesize sortSecondAscending = __sortSecondAscending;
-@synthesize cellTextAttributeName = __cellTextAttributeName;
-@synthesize cellDetailTextAttributeName = __cellDetailTextAttributeName;
+@synthesize cellTextAttributePath = __cellTextAttributePath;
+@synthesize cellDetailTextAttributePath = __cellDetailTextAttributePath;
 @synthesize cellReuseIdentifier = __cellReuseIdentifier;
 @synthesize numSectionsForShowingIndex = __numSectionsForShowingIndex;
 
@@ -44,8 +44,8 @@
     [__templateSubstitutionVariables release], __templateSubstitutionVariables = nil;
     [__keySortedFirst release],                __keySortedFirst = nil;
     [__keySortedSecond release],               __keySortedSecond = nil;
-    [__cellTextAttributeName release],         __cellTextAttributeName = nil;
-    [__cellDetailTextAttributeName release],   __cellDetailTextAttributeName = nil;
+    [__cellTextAttributePath release],         __cellTextAttributePath = nil;
+    [__cellDetailTextAttributePath release],   __cellDetailTextAttributePath = nil;
     [__cellReuseIdentifier release],           __cellReuseIdentifier = nil;
     [super dealloc];
 }
@@ -161,10 +161,6 @@
 #pragma mark - Methods implementing protocol UITableViewDataSource
 
 
-- (void) willShowManagedObject:(id)dataObj {
-}
-
-
 - (UITableViewCell*)
                 tableView:(UITableView*)tableView
     cellForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -188,18 +184,18 @@
 
     //  If cellTextAttributeName has been set (say, in IB), then assign the
     //  managed object's value for that attribute to cell's main text label.
-    //  Otherwise, just assign the object's description to the text label.
-    cell.textLabel.text = [self.cellTextAttributeName isNotBlank]
-    ?   [dataObj valueForKeyPath:self.cellTextAttributeName]
-    :   [dataObj description];
+    if ( [self.cellTextAttributePath isNotBlank] ) {
+        cell.textLabel.text =
+            [[dataObj valueForKeyPath:self.cellTextAttributePath] description];
+    }
 
     //  If cellDetailTextAttributeName has been set (say, in IB), then assign
     //  the managed object's value for that attribute to cell's detail label.
     //  Otherwise, don't assign anything, i.e., leave the label blank.
-    if ( [self.cellDetailTextAttributeName isNotBlank] ) {
-        cell.detailTextLabel.text = [dataObj
-            valueForKeyPath:self.cellDetailTextAttributeName
-        ];
+    if ( [self.cellDetailTextAttributePath isNotBlank] ) {
+        cell.detailTextLabel.text = [[dataObj
+            valueForKeyPath:self.cellDetailTextAttributePath
+        ] description];
     }
 
     SEL willShowManagedObjectSEL = @selector( willShowManagedObject: );

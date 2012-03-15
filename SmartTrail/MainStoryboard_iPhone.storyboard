@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="3">
     <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1179"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
         <scene sceneID="11">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -19,6 +21,7 @@
             </objects>
             <point key="canvasLocation" x="-1" y="64"/>
         </scene>
+        <!--View Controller-->
         <scene sceneID="4z8-Oz-Fnz">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BcL-hT-fr5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -50,6 +53,7 @@
             </objects>
             <point key="canvasLocation" x="439" y="64"/>
         </scene>
+        <!--Trails Table View Controller - Master-->
         <scene sceneID="18">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17" sceneMemberID="firstResponder"/>
@@ -66,7 +70,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="31"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rV2-7n-EJo">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" id="rV2-7n-EJo">
                                             <rect key="frame" x="10" y="0.0" width="280" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -102,12 +106,13 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="hasSections" value="YES"/>
                         <userDefinedRuntimeAttribute type="string" keyPath="keySortedSecond" value="name"/>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="sortSecondAscending" value="YES"/>
-                        <userDefinedRuntimeAttribute type="string" keyPath="cellTextAttributeName" value="name"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="cellTextAttributePath" value="name"/>
                     </userDefinedRuntimeAttributes>
                 </customObject>
             </objects>
             <point key="canvasLocation" x="879" y="64"/>
         </scene>
+        <!--Trail Detail View Controller - Detail-->
         <scene sceneID="24">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="23" sceneMemberID="firstResponder"/>
@@ -183,23 +188,61 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uC8-Md-yBF" userLabel="Conditions table view">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="uC8-Md-yBF" userLabel="Conditions table view">
                                 <rect key="frame" x="0.0" y="65" width="320" height="351"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="J6P-Qi-9Kf">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="updatedAt" rowHeight="65" id="J6P-Qi-9Kf" customClass="ConditionTableViewCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Comment Comment Comment Comment Comment Comment Comment Comment Comment " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumFontSize="10" adjustsFontSizeToFit="NO" id="Sct-AQ-Lpo">
+                                                    <rect key="frame" x="12" y="21" width="300" height="42"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Bhk-0j-1E7">
+                                                    <rect key="frame" x="237" y="4" width="73" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="updatedAt" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" id="hmC-PY-dje">
+                                                    <rect key="frame" x="12" y="4" width="80" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="updatedAt" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Rdo-hE-IdS" userLabel="Label - author">
+                                                    <rect key="frame" x="96" y="4" width="134" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <outlet property="authorLabel" destination="Rdo-hE-IdS" id="qOB-WQ-ykU"/>
+                                            <outlet property="commentLabel" destination="Sct-AQ-Lpo" id="E5z-VO-CuF"/>
+                                            <outlet property="ratingImageView" destination="Bhk-0j-1E7" id="hxe-f3-AwY"/>
+                                            <outlet property="updatedAtLabel" destination="hmC-PY-dje" id="DRV-Yc-HKD"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="lsT-jN-fua" id="mgt-i0-OKo"/>
+                                    <outlet property="delegate" destination="21" id="xhH-0h-fei"/>
+                                </connections>
                             </tableView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="26.2    gain: 5280" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="c8D-wU-N9W">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="26.2    gain: 5280" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="c8D-wU-N9W">
                                 <rect key="frame" x="20" y="4" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -213,6 +256,7 @@
                     <connections>
                         <outlet property="aerobicRatingImageView" destination="UBi-9P-OE9" id="tA8-Qc-gBq"/>
                         <outlet property="conditionView" destination="uC8-Md-yBF" id="7XY-Dd-jjh"/>
+                        <outlet property="conditionsDataSource" destination="lsT-jN-fua" id="mRg-O0-I8s"/>
                         <outlet property="coolRatingImageView" destination="wwx-Kc-VA3" id="Pq9-xH-0Vk"/>
                         <outlet property="descriptionWebView" destination="0JK-o2-vxg" id="mXk-oA-q1b"/>
                         <outlet property="infoView" destination="02S-eM-U4b" id="odw-2g-CVE"/>
@@ -221,6 +265,13 @@
                         <outlet property="techRatingImageView" destination="WJF-Mw-bbu" id="aJR-t6-2M8"/>
                     </connections>
                 </viewController>
+                <customObject id="lsT-jN-fua" customClass="FetchedResultsTableDataSource">
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="conditionForTrailId"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="keySortedFirst" value="updatedAt"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="sortFirstAscending" value="NO"/>
+                    </userDefinedRuntimeAttributes>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="1434" y="64"/>
         </scene>
@@ -229,6 +280,15 @@
         <image name="trail_icon_normal.png" width="239" height="239"/>
     </resources>
     <classes>
+        <class className="ConditionTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConditionTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="authorLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="commentLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ratingImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="updatedAtLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="FetchedResultsTableDataSource" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FetchedResultsTableDataSource.h"/>
         </class>
@@ -237,7 +297,8 @@
             <relationships>
                 <relationship kind="action" name="segmentedControlChanged:"/>
                 <relationship kind="outlet" name="aerobicRatingImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="conditionView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="conditionView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="conditionsDataSource" candidateClass="FetchedResultsTableDataSource"/>
                 <relationship kind="outlet" name="coolRatingImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="infoView" candidateClass="UIView"/>
