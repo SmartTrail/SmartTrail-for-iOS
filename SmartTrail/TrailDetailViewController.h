@@ -11,8 +11,8 @@
 #import "FetchedResultsTableDataSource.h"
 
 
-@interface TrailDetailViewController : UIViewController <UITableViewDelegate>
-
+@interface TrailDetailViewController :
+    UIViewController<UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
 @property (retain,nonatomic) IBOutlet UILabel*            statsLabel;
 @property (retain,nonatomic) IBOutlet UISegmentedControl* segmentedControl;

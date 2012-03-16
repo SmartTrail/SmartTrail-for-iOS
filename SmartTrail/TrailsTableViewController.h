@@ -10,7 +10,8 @@
 #import "FetchedResultsTableDataSource.h"
 
 
-@interface TrailsTableViewController : UITableViewController
+@interface TrailsTableViewController :
+    UITableViewController<NSFetchedResultsControllerDelegate>
 
 @property (retain,nonatomic) IBOutlet
     FetchedResultsTableDataSource* fetchedResultsTableDataSource;

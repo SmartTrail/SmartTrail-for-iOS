@@ -63,7 +63,7 @@
 
 
 /** Required. The name of the fetch request template as defined in the Xcode
-    data modeling tool. If the template has variables, you can programatically
+    data modeling tool. If the template has variables, you can programmatically
     assign a dictionary to property templateSubstitutionVariables (see above).
 */
 @property (nonatomic,retain)   NSString*       requestTemplateName;
@@ -136,6 +136,17 @@
     this number of sections.
 */
 @property (nonatomic)          NSInteger       numSectionsForShowingIndex;
+
+
+/*  The delegate object to be forwarded on to the receiver's
+    NSFetchedResultsController delegate property. Since you could use property
+    fetchedResults to assign directly to its delegate property, this property is
+    provided only as a convenience. A change takes effect the next time property
+    fetchedResults is used, which happens when any of the UITableViewDataSource
+    methods are called by the UITableView.
+*/
+@property (nonatomic,retain)   IBOutlet NSObject<NSFetchedResultsControllerDelegate>*
+                                               delegate;
 
 
 @end

@@ -13,7 +13,14 @@
 @implementation TrailsTableViewController
 
 
-@synthesize fetchedResultsTableDataSource;
+@synthesize fetchedResultsTableDataSource = __fetchedResultsTableDataSource;
+
+
+- (void)dealloc {
+    [__fetchedResultsTableDataSource release]; __fetchedResultsTableDataSource = nil;
+
+    [super dealloc];
+}
 
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -28,7 +35,7 @@
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
@@ -41,7 +48,7 @@
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -97,10 +104,10 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
+    }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 */
 
@@ -148,8 +155,14 @@
 }
 
 
-- (void)dealloc {
-    [fetchedResultsTableDataSource release];
-    [super dealloc];
+#pragma mark - NSFetchedResultsControllerDelegate implementation
+
+
+- (void) controllerDidChangeContent:(NSFetchedResultsController*)sender {
+    //  Some managed object known by the results controller has been added,
+    //  removed, moved, or updated.
+    [self.tableView reloadData];
 }
+
+
 @end

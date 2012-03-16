@@ -35,18 +35,21 @@
 @synthesize cellDetailTextAttributePath = __cellDetailTextAttributePath;
 @synthesize cellReuseIdentifier = __cellReuseIdentifier;
 @synthesize numSectionsForShowingIndex = __numSectionsForShowingIndex;
+@synthesize delegate = __delegate;
 
 
 - (void) dealloc {
-    [__dataUtils release],                     __dataUtils = nil;
-    [__fetchedResults release],                __fetchedResults = nil;
-    [__requestTemplateName release],           __requestTemplateName = nil;
-    [__templateSubstitutionVariables release], __templateSubstitutionVariables = nil;
-    [__keySortedFirst release],                __keySortedFirst = nil;
-    [__keySortedSecond release],               __keySortedSecond = nil;
-    [__cellTextAttributePath release],         __cellTextAttributePath = nil;
-    [__cellDetailTextAttributePath release],   __cellDetailTextAttributePath = nil;
-    [__cellReuseIdentifier release],           __cellReuseIdentifier = nil;
+    [__dataUtils release];                     __dataUtils = nil;
+    [__fetchedResults release];                __fetchedResults = nil;
+    [__requestTemplateName release];           __requestTemplateName = nil;
+    [__templateSubstitutionVariables release]; __templateSubstitutionVariables = nil;
+    [__keySortedFirst release];                __keySortedFirst = nil;
+    [__keySortedSecond release];               __keySortedSecond = nil;
+    [__cellTextAttributePath release];         __cellTextAttributePath = nil;
+    [__cellDetailTextAttributePath release];   __cellDetailTextAttributePath = nil;
+    [__cellReuseIdentifier release];           __cellReuseIdentifier = nil;
+    [__delegate release];                      __delegate = nil;
+
     [super dealloc];
 }
 
@@ -126,17 +129,9 @@
                     ascending:self.sortSecondAscending
         ] autorelease];
     }
+    __fetchedResults.delegate = self.delegate;
+
     return __fetchedResults;
-}
-
-
-/** This setter is needed because this property is privately redeclared as
-    "readwrite". (Redeclaring "readonly" as "retain" is not permitted.)
-    We handle releasing and retaining as usual.
-*/
-- (void) setFetchedResults:(FetchedResults*)newVal {
-    [__fetchedResults release];
-    __fetchedResults = [newVal retain];
 }
 
 

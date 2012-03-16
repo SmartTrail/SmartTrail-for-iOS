@@ -221,6 +221,16 @@
 }
 
 
+#pragma mark - NSFetchedResultsControllerDelegate implementation for the table of conditions
+
+
+- (void) controllerDidChangeContent:(NSFetchedResultsController*)sender {
+    //  Some managed object known by the results controller has been added,
+    //  removed, moved, or updated.
+    [self.conditionView reloadData];
+}
+
+
 #pragma mark - Private methods and functions
 
 
