@@ -52,8 +52,6 @@
         [[BMAAreaDescriptorsWebClient new] autorelease];
     [areaDescriptorsWebClient setEventNotificationDelegate:self];
     [areaDescriptorsWebClient getAreaDescriptorsForRegion:1];
-
-    [APP_DELEGATE saveContext];
 }
 
 
@@ -121,6 +119,8 @@
 {
     NSLog( @"Multiple condition retrieval %@.", successfully ? @"succeeded" : @"failed" );
     [webClient setEventNotificationDelegate:nil];
+
+    [APP_DELEGATE saveContext];
 }
 
 
