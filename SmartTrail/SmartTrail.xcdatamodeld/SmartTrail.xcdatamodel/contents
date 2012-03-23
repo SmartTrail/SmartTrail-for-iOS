@@ -34,10 +34,10 @@
     </entity>
     <fetchRequest name="allAreas" entity="Area"/>
     <fetchRequest name="allTrails" entity="Trail"/>
-    <fetchRequest name="areaForId" entity="Area" predicateString="id == $id"/>
-    <fetchRequest name="conditionForId" entity="Condition" predicateString="id == $id"/>
-    <fetchRequest name="conditionForTrailId" entity="Condition" predicateString="trail.id == $id"/>
-    <fetchRequest name="trailForId" entity="Trail" predicateString="id == $id"/>
+    <fetchRequest name="AreaForId" entity="Area" predicateString="id == $id"/>
+    <fetchRequest name="ConditionForId" entity="Condition" predicateString="id == $id"/>
+    <fetchRequest name="ConditionsForTrailId" entity="Condition" predicateString="trail.id == $id"/>
+    <fetchRequest name="TrailForId" entity="Trail" predicateString="id == $id"/>
     <elements>
         <element name="Area" positionX="3240" positionY="882" width="128" height="90"/>
         <element name="Condition" positionX="3267" positionY="1020" width="128" height="150"/>

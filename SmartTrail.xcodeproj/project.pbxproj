@@ -7,17 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0343F2D514E886F400B292E9 /* BMATrailDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343F2D414E886F400B292E9 /* BMATrailDescriptorWebClient.m */; };
-		0343F2DC14E8988A00B292E9 /* BMAConditionsDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343F2DB14E8988900B292E9 /* BMAConditionsDescriptorWebClient.m */; };
 		0343F2E214E8BA1300B292E9 /* BMAEventDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343F2E114E8BA1300B292E9 /* BMAEventDescriptor.m */; };
 		0343F2E514E8BD6800B292E9 /* BMAEventsDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0343F2E414E8BD6800B292E9 /* BMAEventsDescriptorWebClient.m */; };
-		0347C6C014E2321D001ECC2B /* BMATrailsDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */; };
 		0351099414B212F600487B8B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351099314B212F600487B8B /* JSONKit.m */; };
 		0356470D14A1065100208A47 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356470C14A1065100208A47 /* SystemConfiguration.framework */; };
 		0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356470F14A106DA00208A47 /* BMANetworkUtilities.m */; };
 		0356471314A108E500208A47 /* BMAWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356471214A108E500208A47 /* BMAWebClient.m */; };
-		035D946B14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 035D946A14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m */; };
-		0370D8A014DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0370D89F14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m */; };
 		2F2D148714EE007A00E982C5 /* TrailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */; };
 		2F2D148A14EE9D4D00E982C5 /* BMAController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148914EE9D4C00E982C5 /* BMAController.m */; };
 		2F2D149914EEA9A700E982C5 /* CollectionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148D14EEA9A700E982C5 /* CollectionUtils.m */; };
@@ -58,6 +53,10 @@
 		2FF17C281507C37F00881CB3 /* NSHTTPURLResponse+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C271507C37F00881CB3 /* NSHTTPURLResponse+Utils.m */; };
 		2FF17C2B1507DE9000881CB3 /* NSDate+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2A1507DE9000881CB3 /* NSDate+Utils.m */; };
 		2FF17C2B1507DE9000881CB5 /* UILabel+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CB4 /* UILabel+Utils.m */; };
+		2FF17C2B1507DE9000881CB8 /* JSONWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CB7 /* JSONWebClient.m */; };
+		2FF17C2B1507DE9000881CBB /* AreaWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CBA /* AreaWebClient.m */; };
+		2FF17C2B1507DE9000881CBE /* TrailWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CBD /* TrailWebClient.m */; };
+		2FF17C2B1507DE9000881CC1 /* ConditionWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,16 +70,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0343F2D314E886F400B292E9 /* BMATrailDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMATrailDescriptorWebClient.h; sourceTree = "<group>"; };
-		0343F2D414E886F400B292E9 /* BMATrailDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMATrailDescriptorWebClient.m; sourceTree = "<group>"; };
-		0343F2DA14E8988900B292E9 /* BMAConditionsDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAConditionsDescriptorWebClient.h; sourceTree = "<group>"; };
-		0343F2DB14E8988900B292E9 /* BMAConditionsDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAConditionsDescriptorWebClient.m; sourceTree = "<group>"; };
 		0343F2E014E8BA1200B292E9 /* BMAEventDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAEventDescriptor.h; sourceTree = "<group>"; };
 		0343F2E114E8BA1300B292E9 /* BMAEventDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAEventDescriptor.m; sourceTree = "<group>"; };
 		0343F2E314E8BD6700B292E9 /* BMAEventsDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAEventsDescriptorWebClient.h; sourceTree = "<group>"; };
 		0343F2E414E8BD6800B292E9 /* BMAEventsDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAEventsDescriptorWebClient.m; sourceTree = "<group>"; };
-		0347C6BE14E2321D001ECC2B /* BMATrailsDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMATrailsDescriptorWebClient.h; sourceTree = "<group>"; };
-		0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMATrailsDescriptorWebClient.m; sourceTree = "<group>"; };
 		0351099214B212F600487B8B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = SmartTrail/JSONKit.h; sourceTree = "<group>"; };
 		0351099314B212F600487B8B /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = SmartTrail/JSONKit.m; sourceTree = "<group>"; };
 		0356470C14A1065100208A47 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -88,10 +81,6 @@
 		0356470F14A106DA00208A47 /* BMANetworkUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMANetworkUtilities.m; sourceTree = "<group>"; };
 		0356471114A108E500208A47 /* BMAWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAWebClient.h; sourceTree = "<group>"; };
 		0356471214A108E500208A47 /* BMAWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAWebClient.m; sourceTree = "<group>"; };
-		035D946914DF525E00C937E1 /* BMAAreaDescriptorWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAAreaDescriptorWebClient.h; sourceTree = "<group>"; };
-		035D946A14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAAreaDescriptorWebClient.m; sourceTree = "<group>"; };
-		0370D89E14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAAreaDescriptorsWebClient.h; sourceTree = "<group>"; };
-		0370D89F14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAAreaDescriptorsWebClient.m; sourceTree = "<group>"; };
 		2F2D148514EE007900E982C5 /* TrailDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailDetailViewController.h; sourceTree = "<group>"; };
 		2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailDetailViewController.m; sourceTree = "<group>"; };
 		2F2D148814EE9D4C00E982C5 /* BMAController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAController.h; sourceTree = "<group>"; };
@@ -154,6 +143,14 @@
 		2FF17C2A1507DE9000881CB3 /* NSDate+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utils.m"; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CB4 /* UILabel+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Utils.m"; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CB6 /* UILabel+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Utils.h"; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CB7 /* JSONWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONWebClient.m; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CB9 /* JSONWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONWebClient.h; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CBA /* AreaWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaWebClient.m; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CBC /* AreaWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaWebClient.h; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CBD /* TrailWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailWebClient.m; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CBF /* TrailWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailWebClient.h; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConditionWebClient.m; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CC2 /* ConditionWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionWebClient.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +266,10 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
+				2FF17C2B1507DE9000881CC2 /* ConditionWebClient.h */,
+				2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */,
+				2FF17C2B1507DE9000881CBF /* TrailWebClient.h */,
+				2FF17C2B1507DE9000881CBD /* TrailWebClient.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
 				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
@@ -281,22 +282,16 @@
 				2FCE73F6150AA06300524848 /* ConditionTableViewCell.h */,
 				2FCE73F7150AA06300524848 /* ConditionTableViewCell.m */,
 				2F2D14A014EEAC1500E982C5 /* Managed Objects */,
+				2FF17C2B1507DE9000881CB9 /* JSONWebClient.h */,
+				2FF17C2B1507DE9000881CB7 /* JSONWebClient.m */,
+				2FF17C2B1507DE9000881CBC /* AreaWebClient.h */,
+				2FF17C2B1507DE9000881CBA /* AreaWebClient.m */,
 				2F2D148814EE9D4C00E982C5 /* BMAController.h */,
 				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
-				035D946914DF525E00C937E1 /* BMAAreaDescriptorWebClient.h */,
-				035D946A14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m */,
-				0370D89E14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.h */,
-				0370D89F14DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m */,
 				0356470E14A106DA00208A47 /* BMANetworkUtilities.h */,
 				0356470F14A106DA00208A47 /* BMANetworkUtilities.m */,
 				0356471114A108E500208A47 /* BMAWebClient.h */,
 				0356471214A108E500208A47 /* BMAWebClient.m */,
-				0343F2D314E886F400B292E9 /* BMATrailDescriptorWebClient.h */,
-				0343F2D414E886F400B292E9 /* BMATrailDescriptorWebClient.m */,
-				0347C6BE14E2321D001ECC2B /* BMATrailsDescriptorWebClient.h */,
-				0347C6BF14E2321D001ECC2B /* BMATrailsDescriptorWebClient.m */,
-				0343F2DA14E8988900B292E9 /* BMAConditionsDescriptorWebClient.h */,
-				0343F2DB14E8988900B292E9 /* BMAConditionsDescriptorWebClient.m */,
 				0343F2E014E8BA1200B292E9 /* BMAEventDescriptor.h */,
 				0343F2E114E8BA1300B292E9 /* BMAEventDescriptor.m */,
 				0343F2E314E8BD6700B292E9 /* BMAEventsDescriptorWebClient.h */,
@@ -464,11 +459,6 @@
 				0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */,
 				0356471314A108E500208A47 /* BMAWebClient.m in Sources */,
 				0351099414B212F600487B8B /* JSONKit.m in Sources */,
-				0370D8A014DBA27800B8C37C /* BMAAreaDescriptorsWebClient.m in Sources */,
-				035D946B14DF525E00C937E1 /* BMAAreaDescriptorWebClient.m in Sources */,
-				0347C6C014E2321D001ECC2B /* BMATrailsDescriptorWebClient.m in Sources */,
-				0343F2D514E886F400B292E9 /* BMATrailDescriptorWebClient.m in Sources */,
-				0343F2DC14E8988A00B292E9 /* BMAConditionsDescriptorWebClient.m in Sources */,
 				0343F2E214E8BA1300B292E9 /* BMAEventDescriptor.m in Sources */,
 				0343F2E514E8BD6800B292E9 /* BMAEventsDescriptorWebClient.m in Sources */,
 				2FF09D9E14EAF8F70050552B /* SmartTrail.xcdatamodeld in Sources */,
@@ -488,6 +478,10 @@
 				2FF17C2B1507DE9000881CB3 /* NSDate+Utils.m in Sources */,
 				2FCE73F8150AA06300524848 /* ConditionTableViewCell.m in Sources */,
 				2FF17C2B1507DE9000881CB5 /* UILabel+Utils.m in Sources */,
+				2FF17C2B1507DE9000881CB8 /* JSONWebClient.m in Sources */,
+				2FF17C2B1507DE9000881CBB /* AreaWebClient.m in Sources */,
+				2FF17C2B1507DE9000881CBE /* TrailWebClient.m in Sources */,
+				2FF17C2B1507DE9000881CC1 /* ConditionWebClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

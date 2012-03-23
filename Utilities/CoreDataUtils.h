@@ -214,10 +214,12 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 DataDictToPropVal fnRawForDataKey( NSString *dataKey );
 
 
-/** These functions are like fnRawForDataKey, above, except that each returned
-    DataDictToPropVal block will convert the dataKey string (or the property's
-    name, if nil) into a value of the type suitable for a managed object's
-    attribute.
+/** These functions are like fnRawForDataKey, above, returning a
+    DataDictToPropVal function to convert the value for the dataKey string (or
+    the property's name, if nil). This data dictionary value is converted into
+    a value of the type indicated by the function's name. Normally, the data
+    dictionary value will be a string, but in case it isn't, the string returned
+    by its description method is used for the conversion.
 */
 DataDictToPropVal fnBoolForDataKey( NSString *dataKey );
 DataDictToPropVal fnIntegerForDataKey( NSString *dataKey );
