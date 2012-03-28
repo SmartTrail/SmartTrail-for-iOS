@@ -10,3 +10,8 @@ So /please/ do not check in any manual changes to these files. If you think you
 need to do so, try rethinking your app's object model. These classes just define
 data objects -- basically just smart data structures. Their job is to hold data.
 Adding state or behavior is likely to violate the separation of concerns.
+
+If you do need to associate particular behavior with one of these
+NSManagedObject subclasses, consider creating a catagory of the subclass. In
+that case, this directory is the best place for the catagory's .h file, and
+you can edit it as needed, of course.

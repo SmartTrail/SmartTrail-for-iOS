@@ -2,7 +2,7 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Area" representedClassName="Area" syncable="YES">
         <attribute name="downloadedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="trails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trail" inverseName="area" inverseEntity="Trail" syncable="YES"/>
     </entity>
@@ -10,10 +10,20 @@
         <attribute name="authorName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloadedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="trail" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Trail" inverseName="conditions" inverseEntity="Trail" syncable="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="Event" syncable="YES">
+        <attribute name="descriptionFull" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="downloadedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="endAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Trail" representedClassName="Trail" syncable="YES">
         <attribute name="aerobicRating" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -22,7 +32,7 @@
         <attribute name="descriptionPartial" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="downloadedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="elevationGain" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="length" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,14 +43,17 @@
         <relationship name="conditions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Condition" inverseName="trail" inverseEntity="Condition" syncable="YES"/>
     </entity>
     <fetchRequest name="allAreas" entity="Area"/>
+    <fetchRequest name="allEvents" entity="Event"/>
     <fetchRequest name="allTrails" entity="Trail"/>
     <fetchRequest name="AreaForId" entity="Area" predicateString="id == $id"/>
     <fetchRequest name="ConditionForId" entity="Condition" predicateString="id == $id"/>
     <fetchRequest name="ConditionsForTrailId" entity="Condition" predicateString="trail.id == $id"/>
+    <fetchRequest name="EventForId" entity="Event" predicateString="id == $id"/>
     <fetchRequest name="TrailForId" entity="Trail" predicateString="id == $id"/>
     <elements>
         <element name="Area" positionX="3240" positionY="882" width="128" height="90"/>
         <element name="Condition" positionX="3267" positionY="1020" width="128" height="150"/>
+        <element name="Event" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Trail" positionX="3033" positionY="885" width="128" height="285"/>
     </elements>
 </model>

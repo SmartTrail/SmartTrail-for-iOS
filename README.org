@@ -10,11 +10,29 @@ This repository is for the development of the iOS version of the SmartTrail app.
 
 *** To Do
 
-[This might be a good spot for TODO items.]
+**** Need tests!
+
+**** Maps
+
+**** BMAController
+
+***** Method downloadAllTrailInfo should run in separate thread.
+
+***** Need method for downloading events in separate thread. Call it from EventsTableViewController's viewWillAppear method.
+
+***** Need method to ping server for the time.
+
+***** Work out how to schedule periodic checks for new data.
+
+**** Need app icon.
+
+**** Create Favorites view.
+
+**** Look into wrapping HTML to provide needed CSS definitions.
 
 *** License (MIT)
 
-*Copyright (C) 2011 by Boulder Mountainbike Alliance. All rights reserved*
+*Copyright (C) 2011-2012 by Boulder Mountainbike Alliance. All rights reserved*
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

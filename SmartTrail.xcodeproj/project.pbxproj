@@ -13,6 +13,10 @@
 		0356470D14A1065100208A47 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356470C14A1065100208A47 /* SystemConfiguration.framework */; };
 		0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356470F14A106DA00208A47 /* BMANetworkUtilities.m */; };
 		0356471314A108E500208A47 /* BMAWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356471214A108E500208A47 /* BMAWebClient.m */; };
+		2F03AE8A151FEC38000A5688 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE89151FEC38000A5688 /* EventDetailViewController.m */; };
+		2F03AE8E1520D988000A5688 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE8D1520D988000A5688 /* Event.m */; };
+		2F03AE911520DBD4000A5688 /* Event+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE901520DBD4000A5688 /* Event+Display.m */; };
+		2F1F84E4151D3F59003D79A2 /* EventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F1F84E3151D3F59003D79A2 /* EventsTableViewController.m */; };
 		2F2D148714EE007A00E982C5 /* TrailDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */; };
 		2F2D148A14EE9D4D00E982C5 /* BMAController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148914EE9D4C00E982C5 /* BMAController.m */; };
 		2F2D149914EEA9A700E982C5 /* CollectionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148D14EEA9A700E982C5 /* CollectionUtils.m */; };
@@ -57,6 +61,7 @@
 		2FF17C2B1507DE9000881CBB /* AreaWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CBA /* AreaWebClient.m */; };
 		2FF17C2B1507DE9000881CBE /* TrailWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CBD /* TrailWebClient.m */; };
 		2FF17C2B1507DE9000881CC1 /* ConditionWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */; };
+		2FF17C2B1507DE9000881CC4 /* EventWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC3 /* EventWebClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +86,14 @@
 		0356470F14A106DA00208A47 /* BMANetworkUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMANetworkUtilities.m; sourceTree = "<group>"; };
 		0356471114A108E500208A47 /* BMAWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAWebClient.h; sourceTree = "<group>"; };
 		0356471214A108E500208A47 /* BMAWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAWebClient.m; sourceTree = "<group>"; };
+		2F03AE88151FEC38000A5688 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
+		2F03AE89151FEC38000A5688 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
+		2F03AE8C1520D988000A5688 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		2F03AE8D1520D988000A5688 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		2F03AE8F1520DBD4000A5688 /* Event+Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Event+Display.h"; sourceTree = "<group>"; };
+		2F03AE901520DBD4000A5688 /* Event+Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Event+Display.m"; sourceTree = "<group>"; };
+		2F1F84E2151D3F59003D79A2 /* EventsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsTableViewController.h; sourceTree = "<group>"; };
+		2F1F84E3151D3F59003D79A2 /* EventsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsTableViewController.m; sourceTree = "<group>"; };
 		2F2D148514EE007900E982C5 /* TrailDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailDetailViewController.h; sourceTree = "<group>"; };
 		2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailDetailViewController.m; sourceTree = "<group>"; };
 		2F2D148814EE9D4C00E982C5 /* BMAController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMAController.h; sourceTree = "<group>"; };
@@ -151,6 +164,8 @@
 		2FF17C2B1507DE9000881CBF /* TrailWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailWebClient.h; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConditionWebClient.m; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CC2 /* ConditionWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionWebClient.h; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CC3 /* EventWebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventWebClient.m; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CC5 /* EventWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventWebClient.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +240,10 @@
 				2F9B471E1503ED2B00111062 /* Trail.m */,
 				2F9A04E5150174A7001638BC /* Condition.h */,
 				2F9A04E6150174A7001638BC /* Condition.m */,
+				2F03AE8C1520D988000A5688 /* Event.h */,
+				2F03AE8F1520DBD4000A5688 /* Event+Display.h */,
+				2F03AE901520DBD4000A5688 /* Event+Display.m */,
+				2F03AE8D1520D988000A5688 /* Event.m */,
 			);
 			path = "Managed Objects";
 			sourceTree = "<group>";
@@ -266,10 +285,6 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
-				2FF17C2B1507DE9000881CC2 /* ConditionWebClient.h */,
-				2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */,
-				2FF17C2B1507DE9000881CBF /* TrailWebClient.h */,
-				2FF17C2B1507DE9000881CBD /* TrailWebClient.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
 				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
@@ -281,11 +296,21 @@
 				2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */,
 				2FCE73F6150AA06300524848 /* ConditionTableViewCell.h */,
 				2FCE73F7150AA06300524848 /* ConditionTableViewCell.m */,
+				2F1F84E2151D3F59003D79A2 /* EventsTableViewController.h */,
+				2F1F84E3151D3F59003D79A2 /* EventsTableViewController.m */,
+				2F03AE88151FEC38000A5688 /* EventDetailViewController.h */,
+				2F03AE89151FEC38000A5688 /* EventDetailViewController.m */,
 				2F2D14A014EEAC1500E982C5 /* Managed Objects */,
 				2FF17C2B1507DE9000881CB9 /* JSONWebClient.h */,
 				2FF17C2B1507DE9000881CB7 /* JSONWebClient.m */,
 				2FF17C2B1507DE9000881CBC /* AreaWebClient.h */,
 				2FF17C2B1507DE9000881CBA /* AreaWebClient.m */,
+				2FF17C2B1507DE9000881CBF /* TrailWebClient.h */,
+				2FF17C2B1507DE9000881CBD /* TrailWebClient.m */,
+				2FF17C2B1507DE9000881CC2 /* ConditionWebClient.h */,
+				2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */,
+				2FF17C2B1507DE9000881CC5 /* EventWebClient.h */,
+				2FF17C2B1507DE9000881CC3 /* EventWebClient.m */,
 				2F2D148814EE9D4C00E982C5 /* BMAController.h */,
 				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
 				0356470E14A106DA00208A47 /* BMANetworkUtilities.h */,
@@ -482,6 +507,11 @@
 				2FF17C2B1507DE9000881CBB /* AreaWebClient.m in Sources */,
 				2FF17C2B1507DE9000881CBE /* TrailWebClient.m in Sources */,
 				2FF17C2B1507DE9000881CC1 /* ConditionWebClient.m in Sources */,
+				2FF17C2B1507DE9000881CC4 /* EventWebClient.m in Sources */,
+				2F1F84E4151D3F59003D79A2 /* EventsTableViewController.m in Sources */,
+				2F03AE8A151FEC38000A5688 /* EventDetailViewController.m in Sources */,
+				2F03AE8E1520D988000A5688 /* Event.m in Sources */,
+				2F03AE911520DBD4000A5688 /* Event+Display.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

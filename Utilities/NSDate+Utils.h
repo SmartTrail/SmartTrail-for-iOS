@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface NSDate (NSDate_Utils)
-
 
 /** Parses the given string using the given format into the number of seconds
     from the reference date, 1 January 1970, GMT. The format must be of the form
@@ -25,7 +23,6 @@
     timeIntervalSince1970FromString:(NSString*)str
                            inFormat:(NSString*)fmt;
 
-
 /** Creates and returns an NSDate object set to the value parsed from the given
     string, using the given format. (See "man strftime"). An assertion
     indicating a parsing failure will be triggered if we're running in DEBUG
@@ -33,7 +30,6 @@
     1969-12-31 23:59:59.
 */
 + (id) dateFromString:(NSString*)str inFormat:(NSString*)fmt;
-
 
 /** Returns an NSDate object set to the value parsed from the given string,
     using the given format. (See "man strftime"). An assertion
@@ -43,5 +39,8 @@
 */
 - (id) initFromString:(NSString*)str inFormat:(NSString*)fmt;
 
+- (BOOL) isBefore:(NSDate*)aDate;
+
+- (BOOL) isAfter:(NSDate*)aDate;
 
 @end

@@ -216,22 +216,38 @@ NSMutableURLRequest* requestGET( NSString* urlString ) {
 */
 - (void) processJSONAndStore:(NSData*)json {
 
-    //  Parse the JSON into a data structure consisting of nested dictionaries
-    //  and arrays.
-    NSDictionary *parsedData = [[JSONDecoder decoder] objectWithData:json];
+    if ( json ) {
+        
+        //  Parse the JSON into a data structure consisting of nested dictionaries
+        //  and arrays.
+        NSDictionary *parsedData = [[JSONDecoder decoder] objectWithData:json];
+        NSAssert(
+            parsedData,
+            @"Received JSON data could not be parsed. Data as ASCII:\n\n%@\n",
+            [[[NSString alloc]
+                initWithData:json
+                    encoding:NSASCIIStringEncoding
+            ] autorelease]
+        );
 
-    //  By convention, the name of the fetch request template that finds an
-    //  object by its ID is "<entity name>ForId".
-    NSString* fetchReqName = [self.entityName stringByAppendingString:@"ForId"];
+        //  By convention, the name of the fetch request template that finds an
+        //  object by its ID is "<entity name>ForId".
+        NSString* fetchReqName = [self.entityName stringByAppendingString:@"ForId"];
+        
+        //  Drill down to the data array and process each data dictionary in it.
+        //
+        for ( NSDictionary* dataDict in self.dataDictsExtractor(parsedData) ) {
+            //  Create or update a managed object loaded with data from dataDict.
+            [self.dataUtils
+                updateOrInsertThe:fetchReqName
+                   withProperties:self.propConverter(dataDict)
+            ];
+        }
 
-    //  Drill down to the data array and process each data dictionary in it.
-    //
-    for ( NSDictionary* dataDict in self.dataDictsExtractor(parsedData) ) {
-        //  Create or update a managed object loaded with data from dataDict.
-        [self.dataUtils
-            updateOrInsertThe:fetchReqName
-               withProperties:self.propConverter(dataDict)
-        ];
+    } else {
+#ifdef DEBUG
+        NSLog( @"No data received from %@", self.urlString );
+#endif
     }
 }
 

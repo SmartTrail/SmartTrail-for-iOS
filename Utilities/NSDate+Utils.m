@@ -55,4 +55,14 @@
 }
 
 
+- (BOOL) isBefore:(NSDate*)aDate {
+    return  [self compare:aDate] == NSOrderedAscending;
+}
+
+
+- (BOOL) isAfter:(NSDate*)aDate {
+    return  [self compare:aDate] == NSOrderedDescending;
+}
+
+
 @end

@@ -10,15 +10,12 @@
 
 @interface AreaWebClient : JSONWebClient
 
-
 /** Prepares the receiver to load all areas in region ID 1.
 */
 - (id) init;
 
-
 /** Prepares the receiver to load all areas in the indicated region.
 */
 - (id) initWithRegionId:(NSInteger)regionId;
-
 
 @end

@@ -147,10 +147,10 @@
 - (void) prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender {
     if ( [[segue identifier] isEqual:@"showTrailDetail"] ) {
         TrailDetailViewController* detailCtlr = segue.destinationViewController;
-        Trail* seletedTrail = [self.fetchedResultsTableDataSource.fetchedResults
+        Trail* selectedTrail = [self.fetchedResultsTableDataSource.fetchedResults
             objectAtIndexPath:self.tableView.indexPathForSelectedRow
         ];
-        detailCtlr.trail = seletedTrail;
+        detailCtlr.trail = selectedTrail;
     }
 }
 

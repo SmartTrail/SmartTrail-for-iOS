@@ -10,15 +10,12 @@
 
 @interface TrailWebClient : JSONWebClient
 
-
 /** Prepares the receiver to load all trails in region ID 1.
 */
 - (id) init;
 
-
 /** Prepares the receiver to load all trails in the indicated region.
 */
 - (id) initWithRegionId:(NSInteger)regionId;
-
 
 @end
