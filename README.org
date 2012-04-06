@@ -9,26 +9,19 @@
 This repository is for the development of the iOS version of the SmartTrail app.
 
 *** To Do
-
-**** Need tests!
-
-**** Maps
-
-**** BMAController
-
-***** Method downloadAllTrailInfo should run in separate thread.
-
-***** Need method for downloading events in separate thread. Call it from EventsTableViewController's viewWillAppear method.
-
-***** Need method to ping server for the time.
-
-***** Work out how to schedule periodic checks for new data.
-
-**** Need app icon.
-
-**** Create Favorites view.
-
-**** Look into wrapping HTML to provide needed CSS definitions.
+**** Need automated unit tests!
+**** Need Splash Page, displayed at least when app is run the first time. It should stay up until data is downloaded.
+***** TODO WebClient:  Employ KVO to notify listeners.
+**** Need map view as a tab, plus maps for trail detail view.
+**** Need uploading of conditions
+**** Need Favorites view.
+**** Need Alerts view.
+**** BMAController:
+***** TODO Work out how to schedule periodic checks for new data.
+***** TODO Automatically turn on and off the network activity indicator.
+**** Web views:
+***** TODO Move labels and rating images into scroll view or web view.
+***** TODO Capture tapped links and redirect relevant ones to views in the app. Others should be brought up in Safari.
 
 *** License (MIT)
 

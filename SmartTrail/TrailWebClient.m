@@ -12,13 +12,8 @@
 @implementation TrailWebClient
 
 
-- (id) init {
-    return  [self initWithRegionId:1];
-}
-
-
-- (id) initWithRegionId:(NSInteger)regionId {
-    self = [super initWithDataUtils:THE(dataUtils) entityName:@"Trail"];
+- (id) initWithDataUtils:(CoreDataUtils*)utils regionId:(NSInteger)regionId {
+    self = [super initWithDataUtils:utils entityName:@"Trail"];
     if ( self ) {
 
         self.urlString = [NSString
@@ -27,7 +22,7 @@
                 regionId
         ];
 
-        self.propConverter = [THE(dataUtils)
+        self.propConverter = [utils
             dataDictToPropDictConverterForEntityName:@"Trail"
                                 usingFuncsByPropName:[NSDictionary
                 dictionaryWithObjectsAndKeys:
@@ -56,7 +51,7 @@
                     //  been loaded.
                     //
                     [[^( NSDictionary* dataDict, id _ ){
-                        return  [THE(dataUtils)
+                        return  [utils
                             findThe:@"AreaForId"
                                  at:[dataDict objectForKey:@"area"]
                         ];

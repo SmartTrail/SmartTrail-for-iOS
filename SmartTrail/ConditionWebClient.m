@@ -12,8 +12,8 @@
 @implementation ConditionWebClient
 
 
-- (id) init {
-    self = [super initWithDataUtils:THE(dataUtils) entityName:@"Condition"];
+- (id) initWithDataUtils:(CoreDataUtils*)utils regionId:(NSInteger)regionId {
+    self = [super initWithDataUtils:utils entityName:@"Condition"];
     if ( self ) {
 
         //  Default: Just get all conditions in region 1.
@@ -22,7 +22,7 @@
                 [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BmaBaseUrl"]
         ];
 
-        self.propConverter = [THE(dataUtils)
+        self.propConverter = [utils
             dataDictToPropDictConverterForEntityName:@"Condition"
                                 usingFuncsByPropName:[NSDictionary
                 dictionaryWithObjectsAndKeys:
@@ -47,7 +47,7 @@
                     //  been loaded.
                     //
                     [[^( NSDictionary* dataDict, id _ ){
-                        return  [THE(dataUtils)
+                        return  [utils
                             findThe:@"TrailForId"
                                  at:[dataDict objectForKey:@"trailId"]
                         ];
@@ -62,16 +62,14 @@
 }
 
 
-- (id) initWithAreaId:(NSInteger)areaId {
-    self = [self init];
+- (id) initWithDataUtils:(CoreDataUtils*)utils areaId:(NSInteger)areaId {
+    self = [self initWithDataUtils:utils regionId:1];
     if ( self ) {
-
         self.urlString = [NSString
             stringWithFormat:@"%@trailsAPI/areas/%d/conditions",
                 [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BmaBaseUrl"],
                 areaId
         ];
-
     }
     return  self;
 }

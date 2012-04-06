@@ -12,13 +12,8 @@
 @implementation EventWebClient
 
 
-- (id) init {
-    return  [self initWithRegionId:1];
-}
-
-
-- (id) initWithRegionId:(NSInteger)regionId {
-    self = [super initWithDataUtils:THE(dataUtils) entityName:@"Event"];
+- (id) initWithDataUtils:(CoreDataUtils*)utils regionId:(NSInteger)regionId {
+    self = [super initWithDataUtils:utils entityName:@"Event"];
     if ( self ) {
 
         self.urlString = [NSString
@@ -27,7 +22,7 @@
                 regionId
         ];
 
-        self.propConverter = [THE(dataUtils)
+        self.propConverter = [utils
             dataDictToPropDictConverterForEntityName:@"Event"
                                 usingFuncsByPropName:[NSDictionary
                 dictionaryWithObjectsAndKeys:

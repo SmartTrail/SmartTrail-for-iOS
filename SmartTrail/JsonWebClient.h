@@ -5,7 +5,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CoreDataUtils.h"
+#import "WebClient.h"
 
 
 /** A DataDictsExtractor is a block taking a dictionary of all the data parsed
@@ -19,17 +19,10 @@ typedef NSArray* (^DataDictsExtractor)(NSDictionary*);
 /** This class is responsible for issuing a request to a RESTfull web service,
     loading the returned JSON data, and using it to update or insert a series
     of managed objects of a particular entity. This sequence may be conducted
-    synchronously or asynchronously, but can be done only once. That is, an
-    instance has a lifetime consisting of only one request-load-update sequence,
-    then it is finished and cannot be reused. This simplifies asynchronous
-    processes, since each instance is associated with just one such sequence.
+    synchronously or asynchronously, but can be done only once. See the
+    superclass' header file, WebClient.h, for more details.
 */
-@interface JSONWebClient : NSObject
-
-/** The complete URL for the request. Assign to this property before calling a
-    "send..." method.
-*/
-@property (copy,nonatomic)            NSString*           urlString;
+@interface JSONWebClient : WebClient
 
 /** A function block to pull the array of data dictionaries out of parsed JSON.
     See the definition of DataDictsExtractor, above. If no value is assigned to
@@ -41,7 +34,7 @@ typedef NSArray* (^DataDictsExtractor)(NSDictionary*);
     If you assign a different DataDictsExtractor to this property, do so before
     calling a "send..." method.
 */
-@property (copy,nonatomic)            DataDictsExtractor  dataDictsExtractor;
+@property (copy,nonatomic) DataDictsExtractor  dataDictsExtractor;
 
 /** A function block to convert a data dictionary into a dictionary suitable
     for populating a managed object. (Such objects have the entity determined by
@@ -51,46 +44,18 @@ typedef NSArray* (^DataDictsExtractor)(NSDictionary*);
     object. The value is found in the dictionary at the key equal to the
     property's name.
 */
-@property (copy,nonatomic)            PropConverter       propConverter;
-
-/** Has value YES iff a "send..." method has been called.
-*/
-@property (readonly,nonatomic)        BOOL                isUsed;
-
-/** The time found in the response to the request initiated by a "send..."
-    method.
-*/
-@property (readonly,retain,nonatomic) NSDate*             serverTime;
-
-/** If the request initiated by a "send..." is unsuccessful, an error is stored
-    in this property. Otherwise it is nil.
-*/
-@property (readonly,retain,nonatomic) NSError*            error;
+@property (copy,nonatomic) PropConverter       propConverter;
 
 /** Initializes the receiver with the given CoreDataUtils, which will be used to
     update/insert a number of managed objects with downloaded JSON data. The
-    objects will all be in the entity (and class) with the given name.
+    objects will all be in the entity (and class) with the given name. This is
+    the designated initializer.
 */
 - (id) initWithDataUtils:(CoreDataUtils*)dataUtils entityName:(NSString*)name;
 
-/** Sends a GET request to the URL defined by property urlString. This method
-    does not return until the resulting data is loaded and processed into
-    managed objects. Once this method is called, the receiver is considered used
-    (property isUsed is YES), and neither method sendSynchronousGet nor
-    sendAsynchronousGet will function again.
+/** Overrides the superclass version to just fail an assertion if called in
+    DEBUG mode. You must call the designated initializer, above.
 */
-- (void) sendSynchronousGet;
-
-/** Sends a GET request to the URL defined by property urlString. Returns
-    immediately without waiting for the response. Once this method is called,
-    the receiver is considered used (property isUsed is YES), and neither method
-    sendSynchronousGet nor sendAsynchronousGet will function again.
-*/
-- (void) sendAsynchronousGet;
-
-/** If sendAsynchronousGet was called, but response data has not yet begun to
-    be processed, this method may be called to ignore any response data.
-*/
-- (void) cancel;
+- (id) init;
 
 @end

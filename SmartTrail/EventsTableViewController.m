@@ -60,9 +60,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [[[EventWebClient new] autorelease] sendAsynchronousGet];
-    [APP_DELEGATE saveContext];
-
+    [THE(bmaController) downloadEvents];
 }
 
 

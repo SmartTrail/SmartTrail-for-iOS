@@ -10,12 +10,9 @@
 
 @interface TrailWebClient : JSONWebClient
 
-/** Prepares the receiver to load all trails in region ID 1.
+/** Prepares the receiver to load all trails in the indicated region. Always
+    pass a CoreDataUtils instance created in the current thread.
 */
-- (id) init;
-
-/** Prepares the receiver to load all trails in the indicated region.
-*/
-- (id) initWithRegionId:(NSInteger)regionId;
+- (id) initWithDataUtils:(CoreDataUtils*)utils regionId:(NSInteger)regionId;
 
 @end

@@ -11,13 +11,11 @@
 
 @interface ConditionWebClient : JSONWebClient
 
-/** Prepares the receiver to load all conditions for all trails in region 1.
+/** Prepares the receiver to load all conditions in the indicated region. Always
+    pass a CoreDataUtils instance created in the current thread.
 */
-- (id) init;
+- (id) initWithDataUtils:(CoreDataUtils*)utils regionId:(NSInteger)regionId;
 
-/** Prepares the receiver to load all conditions for all trails in the indicated
-    area.
-*/
-- (id) initWithAreaId:(NSInteger)areaId;
+- (id) initWithDataUtils:(CoreDataUtils*)utils areaId:(NSInteger)areaId;
 
 @end

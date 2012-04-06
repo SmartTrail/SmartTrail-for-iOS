@@ -21,10 +21,12 @@ id descriptionOfValueIn(
 @implementation CoreDataUtils
 
 
+@synthesize context = __context;
 @synthesize appDelegate = __appDelegate;
 
 
 - (void) dealloc {
+    [__context release];      __context = nil;
     [__appDelegate release];  __appDelegate = nil;
     [super dealloc];
 }
@@ -33,10 +35,18 @@ id descriptionOfValueIn(
 #pragma mark - Accessors
 
 
-/** For the context readonly property.
+/** If context property has not already been set, makes a new one.
 */
 - (NSManagedObjectContext*) context {
-    return  self.appDelegate.managedObjectContext;
+    if ( ! __context ) {
+        NSPersistentStoreCoordinator* coord =
+            self.appDelegate.persistentStoreCoordinator;
+        if ( coord ) {
+            self.context = [NSManagedObjectContext new];
+            __context.persistentStoreCoordinator = coord;
+        }
+    }
+    return  __context;
 }
 
 
@@ -72,6 +82,16 @@ id descriptionOfValueIn(
         self.appDelegate = appDelegate;
     }
     return  self;
+}
+
+
+- (void) onSaveMergeChangesIntoContext:(NSManagedObjectContext*)otherContext {
+    [[NSNotificationCenter defaultCenter]
+        addObserver:otherContext
+           selector:@selector(mergeChangesFromContextDidSaveNotification:)
+               name:NSManagedObjectContextDidSaveNotification
+             object:self.context
+    ];
 }
 
 
@@ -137,6 +157,18 @@ id descriptionOfValueIn(
 
 - (NSArray*) find:(NSString*)tmplName {
     NSFetchRequest* req = [self requestFor:tmplName];
+    ERR_ASSERT(
+        return  [self.context executeFetchRequest:req error:&ERR];
+    )
+}
+
+
+- (NSArray*)         find:(NSString*)tmplName
+    substitutionVariables:(NSDictionary*)substVars
+{
+    NSFetchRequest* req = [self
+        requestFor:tmplName substitutionVariables:substVars
+    ];
     ERR_ASSERT(
         return  [self.context executeFetchRequest:req error:&ERR];
     )
@@ -265,6 +297,39 @@ id descriptionOfValueIn(
         return  newDataByPropName;
 
     } copy ] autorelease];
+}
+
+
+#pragma mark - Deleting managed objects
+
+
+- (NSInteger) deleteObjects:(NSArray*)objArray {
+    for ( NSManagedObject* obj in objArray )  [self.context deleteObject:obj];
+    return [objArray count];
+}
+
+
+- (NSInteger)      delete:(NSString*)tmplName
+    substitutionVariables:(NSDictionary*)substVars
+{
+    return [self
+        deleteObjects:[self find:tmplName substitutionVariables:substVars]
+    ];
+}
+
+
+#pragma mark - Saving the context
+
+
+/** Save the managed object context. If there is an error, complain and stop if
+    we're in DEBUG mode, otherwise just roll back the context.
+*/
+- (void) save {
+    if ( [self.context hasChanges] ) {
+        NSError* err = nil;
+        [self.context save:&err];
+        NSAssert( ! err, @"There are changes in the managed object context, but couldn't save them." );
+    }
 }
 
 

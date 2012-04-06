@@ -41,12 +41,13 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 @interface CoreDataUtils : NSObject
 
 
-/** Convenience property to get the NSManagedObjectContext provided by the
-    CoreDataProvisions (usually the application delegate). Its value is
-    obtained when this instance is initialized and is immutable. If you need
-    to change the context, create a new instance of this class.
+/** Unless assigned-to, this property returns a newly created managed object
+    context.  This is important when using the receiver to work with Core Data
+    in another thread. In the new thread, create a new instance of this class
+    and just don't assign to the context property. This will force this method
+    to create a new context just for the thread, as required by Core Data.
 */
-@property (readonly) NSManagedObjectContext* context;
+@property (retain,nonatomic) NSManagedObjectContext* context;
 
 
 #pragma mark - Initialization
@@ -66,6 +67,16 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 /** Designated initializer.
 */
 - (id) initWithProvisions:(NSObject<CoreDataProvisions>*)appDelegate;
+
+
+/** When the receiver's managed object context is saved, an otherContext can
+    be automatically updated with the saved changes. Just call this method
+    before calling save, and when save is finally called (or the receiver's
+    context is saved using NSManagedContext's save: method), otherContext's
+    mergeChangesFromContextDidSaveNotification: method will be called with
+    an NSNotification containing the changes.
+*/
+- (void) onSaveMergeChangesIntoContext:(NSManagedObjectContext*)otherContext;
 
 
 #pragma mark - Finding or collecting managed objects
@@ -107,12 +118,24 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 - (NSManagedObject*) findTheOneUsingRequest:(NSFetchRequest*)req;
 
 
-/** Runs the given request and returns all managed objects it finds, or nil if
-    none are found. This provides an easy way to run a request template having
-    no substitution variables. If an error occurs, returns nil. If no objects
-    match the criteria specified by request, returns an empty array.
+/** Given the name of a request template, which must be as described above for
+    method requestFor:atId:, this method runs the indicated request and returns
+    all managed objects it finds, or nil if none are found. This provides an
+    easy way to run a request template having no substitution variables. If an
+    error occurs, returns nil. If no objects match the criteria specified by
+    request, returns an empty array.
 */
 - (NSArray*) find:(NSString*)tmplName;
+
+
+/** Given the name of a request template, which must be as described above for
+    method requestFor:atId:, this method runs the indicated request with the
+    given substitution variables and returns all managed objects it finds, or
+    nil if none are found. If an error occurs, returns nil. If no objects match
+    the criteria specified by request, returns an empty array.
+*/
+- (NSArray*)         find:(NSString*)tmplName
+    substitutionVariables:(NSDictionary*)substVars;
 
 
 /** Given the name of a request template, which must be as described above for
@@ -130,8 +153,10 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
     object whose propName property is equal to the value in the given dictionary
     for key propName. If none is found, a new managed object is created whose
     class is indicated by the name of the request template's entity. The managed
-    object is then populated using the keys and values in the dictionary. Note
-    that every key in the dictionary must be the name of a property in the
+    object is then populated using the keys and values in the dictionary, and
+    its address is returned.
+
+    Note that every key in the dictionary must be the name of a property in the
     entity, or an NSUnknownKeyException will be thrown. (To deal with this, use
     method dataDictToPropDictConverterForEntityName:usingFuncsByPropName:.)
 
@@ -189,6 +214,29 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 - (PropConverter)
     dataDictToPropDictConverterForEntityName:(NSString*)entityName
                         usingFuncsByPropName:(NSDictionary*)funcsByPropName;
+
+
+#pragma mark - Deleting managed objects
+
+
+/** Deletes every member of the given array of NSManagedObject instances, and
+    returns the number deleted.
+*/
+- (NSInteger) deleteObjects:(NSArray*)objArray;
+
+
+/** Given the name of a request template, which must be as described above for
+    method requestFor:atId:, this method finds managed objects using the
+    indicated request and deletes them. The number deleted is returned.
+*/
+- (NSInteger)      delete:(NSString*)tmplName
+    substitutionVariables:(NSDictionary*)substVars;
+
+
+#pragma mark - Saving the context
+
+
+- (void) save;
 
 
 #pragma mark - Handy DataDictToPropVal function blocks

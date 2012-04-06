@@ -12,13 +12,8 @@
 @implementation AreaWebClient
 
 
-- (id) init {
-    return  [self initWithRegionId:1];
-}
-
-
-- (id) initWithRegionId:(NSInteger)regionId {
-    self = [super initWithDataUtils:THE(dataUtils) entityName:@"Area"];
+- (id) initWithDataUtils:(CoreDataUtils*)utils regionId:(NSInteger)regionId {
+    self = [super initWithDataUtils:utils entityName:@"Area"];
     if ( self ) {
         self.urlString = [NSString
             stringWithFormat:@"%@trailsAPI/regions/%d/areas",

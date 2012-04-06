@@ -49,5 +49,7 @@
 	</array>
 	<key>BmaBaseUrl</key>
 	<string>http://bouldermountainbike.org/</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 </dict>
 </plist>

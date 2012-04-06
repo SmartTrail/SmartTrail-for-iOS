@@ -34,6 +34,7 @@ UIImage* imageForPngNamed( NSString* filename );
     __bmaController = [BMAController new];
 
     __dataUtils = [[CoreDataUtils alloc] initWithProvisions:self];
+    __dataUtils.context = [self managedObjectContext];
 
     self.ratingImages = [NSArray
         arrayWithObjects:
