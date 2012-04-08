@@ -167,7 +167,7 @@
     UITableViewCell* cell = [tableView
         dequeueReusableCellWithIdentifier:self.cellReuseIdentifier
     ];
-    NSAssert1(
+    NSAssert(
         cell,
         @"Couldn't create a UITableViewCell. In the storyboard, find the Identifier field of the Attributes Inspector for the Table View Cell prototype. It must have value \"%@\".",
         self.cellReuseIdentifier

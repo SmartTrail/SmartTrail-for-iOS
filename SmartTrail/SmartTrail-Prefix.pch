@@ -19,7 +19,7 @@
     #define ERR_ASSERT( expr )                                          \
         {   NSError* ERR = nil;                                         \
             expr;                                                       \
-            NSAssert1( ! ERR, @"Error description: %@", &ERR );    \
+            NSAssert( ! ERR, @"Error description: %@", &ERR );          \
         }
 
 #endif

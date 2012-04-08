@@ -248,7 +248,7 @@ id descriptionOfValueIn(
                  entityForName:entityName
         inManagedObjectContext:self.context
     ];
-    NSAssert1(
+    NSAssert(
         entity,
         @"Could not find entity \"%@\". Entity names are case-sensitive.",
         entityName

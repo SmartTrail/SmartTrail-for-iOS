@@ -18,7 +18,6 @@ This repository is for the development of the iOS version of the SmartTrail app.
 **** Need Alerts view.
 **** BMAController:
 ***** TODO Work out how to schedule periodic checks for new data.
-***** TODO Automatically turn on and off the network activity indicator.
 **** Web views:
 ***** TODO Move labels and rating images into scroll view or web view.
 ***** TODO Capture tapped links and redirect relevant ones to views in the app. Others should be brought up in Safari.
