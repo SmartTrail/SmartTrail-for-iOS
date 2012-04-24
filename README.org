@@ -10,17 +10,18 @@ This repository is for the development of the iOS version of the SmartTrail app.
 
 *** To Do
 **** Need automated unit tests!
-**** Need Splash Page, displayed at least when app is run the first time. It should stay up until data is downloaded.
-***** TODO WebClient:  Employ KVO to notify listeners.
+**** Switch to ARC.
+**** Need splash view, displayed at least when app is run the first time. It should stay up until initial data is downloaded.
+***** WebClient:  Employ KVO to notify listeners. In particular, splash view needs to know when to hide.
 **** Need map view as a tab, plus maps for trail detail view.
 **** Need uploading of conditions
 **** Need Favorites view.
 **** Need Alerts view.
-**** BMAController:
-***** TODO Work out how to schedule periodic checks for new data.
+**** Conditions: Better rating image should replace the dots.
+**** Need images for tab bar.
 **** Web views:
-***** TODO Move labels and rating images into scroll view or web view.
-***** TODO Capture tapped links and redirect relevant ones to views in the app. Others should be brought up in Safari.
+***** Move labels and rating images into scroll view or web view.
+***** Capture tapped links and redirect relevant ones to views in the app. Others should be brought up in Safari.
 
 *** License (MIT)
 
