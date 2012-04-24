@@ -50,6 +50,17 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 @property (retain,nonatomic) NSManagedObjectContext* context;
 
 
+/** Setting to YES causes self.context to listen for notifications named
+    NSManagedObjectContextDidSaveNotification. These are posted when any
+    NSManagedObjectContext's save: method is invoked (and thus, also when any
+    CoreDataUtils's save method is invoked). When the notification is received,
+    self.context merges the changes into itself. By default, this property's
+    value is NO. After having set this property to YES, you can later set it to
+    NO, which will cause self.context to stop listening.
+*/
+@property (assign,nonatomic) BOOL mergesWhenAnyContextSaves;
+
+
 #pragma mark - Initialization
 
 
@@ -67,16 +78,6 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 /** Designated initializer.
 */
 - (id) initWithProvisions:(NSObject<CoreDataProvisions>*)appDelegate;
-
-
-/** When the receiver's managed object context is saved, an otherContext can
-    be automatically updated with the saved changes. Just call this method
-    before calling save, and when save is finally called (or the receiver's
-    context is saved using NSManagedContext's save: method), otherContext's
-    mergeChangesFromContextDidSaveNotification: method will be called with
-    an NSNotification containing the changes.
-*/
-- (void) onSaveMergeChangesIntoContext:(NSManagedObjectContext*)otherContext;
 
 
 #pragma mark - Finding or collecting managed objects
@@ -144,6 +145,11 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
     is returned. If more than one is found, an assertion is violated.
 */
 - (NSManagedObject*) findThe:(NSString*)tmplName at:(NSString*)idString;
+
+
+- (NSInteger)
+                  countOf:(NSString*)tmplName
+    substitutionVariables:(NSDictionary*)substVars;
 
 
 #pragma mark - Inserting new managed objects or updating existing ones
@@ -228,6 +234,14 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 /** Given the name of a request template, which must be as described above for
     method requestFor:atId:, this method finds managed objects using the
     indicated request and deletes them. The number deleted is returned.
+*/
+- (NSInteger) delete:(NSString*)tmplName;
+
+
+/** Given the name of a request template, which must be as described above for
+    method requestFor:atId:, this method finds managed objects using the
+    indicated request and substitution variables and deletes them. The
+    number deleted is returned.
 */
 - (NSInteger)      delete:(NSString*)tmplName
     substitutionVariables:(NSDictionary*)substVars;

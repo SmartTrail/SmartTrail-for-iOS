@@ -22,6 +22,8 @@
                 [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BmaBaseUrl"]
         ];
 
+        __block ConditionWebClient* unretained_self = self; // Avoid retain cycle.
+        __block CoreDataUtils* unretained_utils = utils;
         self.propConverter = [utils
             dataDictToPropDictConverterForEntityName:@"Condition"
                                 usingFuncsByPropName:[NSDictionary
@@ -39,7 +41,7 @@
                     //  will contain the response's Date. So just report it.
                     //
                     [[^(id _1, id _2) {
-                        return  self.serverTime;
+                        return  unretained_self.serverTime;
                     } copy] autorelease],                    @"downloadedAt",
 
                     //  All that remains is to populate the "trail" relationship.
@@ -47,7 +49,7 @@
                     //  been loaded.
                     //
                     [[^( NSDictionary* dataDict, id _ ){
-                        return  [utils
+                        return  [unretained_utils
                             findThe:@"TrailForId"
                                  at:[dataDict objectForKey:@"trailId"]
                         ];
@@ -62,11 +64,11 @@
 }
 
 
-- (id) initWithDataUtils:(CoreDataUtils*)utils areaId:(NSInteger)areaId {
+- (id) initWithDataUtils:(CoreDataUtils*)utils areaId:(NSString*)areaId {
     self = [self initWithDataUtils:utils regionId:1];
     if ( self ) {
         self.urlString = [NSString
-            stringWithFormat:@"%@trailsAPI/areas/%d/conditions",
+            stringWithFormat:@"%@trailsAPI/areas/%@/conditions",
                 [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BmaBaseUrl"],
                 areaId
         ];

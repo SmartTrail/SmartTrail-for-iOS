@@ -17,7 +17,6 @@
 @property (readonly,nonatomic) BMAController* bmaController;
 @property (readonly,nonatomic) CoreDataUtils* dataUtils;
 
-- (void) saveContext;
 - (NSURL*) applicationDocumentsDirectory;
 - (UIImage*)
     imageForRating:(NSInteger)rating

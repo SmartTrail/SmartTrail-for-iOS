@@ -21,7 +21,6 @@ UIImage* imageForPngNamed( NSString* filename );
 @synthesize window = __window;
 @synthesize bmaController = __bmaController;
 @synthesize dataUtils = __dataUtils;
-@synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize ratingImages = __ratingImages;
@@ -31,10 +30,10 @@ UIImage* imageForPngNamed( NSString* filename );
                       application:(UIApplication*)application
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    __bmaController = [BMAController new];
-
     __dataUtils = [[CoreDataUtils alloc] initWithProvisions:self];
-    __dataUtils.context = [self managedObjectContext];
+    __dataUtils.mergesWhenAnyContextSaves = YES;
+
+    __bmaController = [BMAController new];
 
     self.ratingImages = [NSArray
         arrayWithObjects:
@@ -47,8 +46,6 @@ UIImage* imageForPngNamed( NSString* filename );
             nil
     ];
     NSAssert( self.ratingImages.count == 6, @"Couldn't load all five rating_dots_*.png files" );
-
-    [__bmaController downloadAllTrailInfo];
 
     return YES;
 }
@@ -93,46 +90,7 @@ UIImage* imageForPngNamed( NSString* filename );
 }
 
 
-- (void) saveContext {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil)
-    {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
-        {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-}
-
-
 #pragma mark - Core Data stack
-
-
-/**
- Returns the managed object context for the application.
- If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
- */
-- (NSManagedObjectContext*) managedObjectContext {
-    if (__managedObjectContext != nil)
-    {
-        return __managedObjectContext;
-    }
-
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil)
-    {
-        __managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [__managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return __managedObjectContext;
-}
 
 
 /**

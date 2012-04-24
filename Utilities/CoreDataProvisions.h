@@ -8,8 +8,6 @@
 @protocol CoreDataProvisions
 
 @property (nonatomic,readonly)
-    NSManagedObjectContext*       managedObjectContext;
-@property (nonatomic,readonly)
     NSManagedObjectModel*         managedObjectModel;
 @property (nonatomic,readonly)
     NSPersistentStoreCoordinator* persistentStoreCoordinator;

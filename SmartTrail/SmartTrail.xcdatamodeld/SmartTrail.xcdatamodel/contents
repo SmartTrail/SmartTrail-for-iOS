@@ -48,9 +48,12 @@
     <fetchRequest name="AreaForId" entity="Area" predicateString="id == $id"/>
     <fetchRequest name="areasDownloadedBefore" entity="Area" predicateString="downloadedAt &lt; $date"/>
     <fetchRequest name="ConditionForId" entity="Condition" predicateString="id == $id"/>
-    <fetchRequest name="conditionsDownloadedBefore" entity="Condition" predicateString="downloadedAt &lt; $date"/>
+    <fetchRequest name="conditionsForAreaIdDownloadedBefore" entity="Condition" predicateString="trail.area.id == $id AND downloadedAt &lt; $date"/>
     <fetchRequest name="ConditionsForTrailId" entity="Condition" predicateString="trail.id == $id"/>
+    <fetchRequest name="conditionsUpdatedBefore" entity="Condition" predicateString="updatedAt &lt; $date"/>
     <fetchRequest name="EventForId" entity="Event" predicateString="id == $id"/>
+    <fetchRequest name="eventsDownloadedBefore" entity="Event" predicateString="downloadedAt &lt; $date"/>
+    <fetchRequest name="expiredEvents" entity="Event" predicateString="endAt &lt; downloadedAt"/>
     <fetchRequest name="TrailForId" entity="Trail" predicateString="id == $id"/>
     <fetchRequest name="trailsDownloadedBefore" entity="Trail" predicateString="downloadedAt &lt; $date"/>
     <elements>

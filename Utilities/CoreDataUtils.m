@@ -1,5 +1,5 @@
-//
 //  Created by tyler on 2012-01-13.
+//
 //
 // To change the template use AppCode | Preferences | File Templates.
 //
@@ -10,10 +10,11 @@
 #import "NSString+Utils.h"
 
 @interface CoreDataUtils ()
-@property (nonatomic,retain) NSObject<CoreDataProvisions>* appDelegate;
+@property (retain,nonatomic) NSObject<CoreDataProvisions>* appDelegate;
+@property (retain,nonatomic) id contextSaveObserver;
 @end
 
-id descriptionOfValueIn(
+static id descriptionOfValueIn(
     NSDictionary* dataDict, NSString* key, NSPropertyDescription* prop
 );
 
@@ -23,40 +24,16 @@ id descriptionOfValueIn(
 
 @synthesize context = __context;
 @synthesize appDelegate = __appDelegate;
+@synthesize contextSaveObserver = __contextSaveObserver;
 
 
 - (void) dealloc {
-    [__context release];      __context = nil;
-    [__appDelegate release];  __appDelegate = nil;
+    self.mergesWhenAnyContextSaves = NO;  // Removes notification from center.
+
+    [__context release];                __context = nil;
+    [__appDelegate release];            __appDelegate = nil;
+    [__contextSaveObserver release];    __contextSaveObserver = nil;
     [super dealloc];
-}
-
-
-#pragma mark - Accessors
-
-
-/** If context property has not already been set, makes a new one.
-*/
-- (NSManagedObjectContext*) context {
-    if ( ! __context ) {
-        NSPersistentStoreCoordinator* coord =
-            self.appDelegate.persistentStoreCoordinator;
-        if ( coord ) {
-            self.context = [NSManagedObjectContext new];
-            __context.persistentStoreCoordinator = coord;
-        }
-    }
-    return  __context;
-}
-
-
-- (NSObject<CoreDataProvisions>*) appDelegate {
-    if ( ! __appDelegate ) {
-        self.appDelegate = (NSObject<CoreDataProvisions>*)[
-            [UIApplication sharedApplication] delegate
-        ];
-    }
-    return  __appDelegate;
 }
 
 
@@ -85,13 +62,67 @@ id descriptionOfValueIn(
 }
 
 
-- (void) onSaveMergeChangesIntoContext:(NSManagedObjectContext*)otherContext {
-    [[NSNotificationCenter defaultCenter]
-        addObserver:otherContext
-           selector:@selector(mergeChangesFromContextDidSaveNotification:)
-               name:NSManagedObjectContextDidSaveNotification
-             object:self.context
-    ];
+#pragma mark - Accessors
+
+
+/** If context property has not already been set, makes a new one.
+*/
+- (NSManagedObjectContext*) context {
+    if ( ! __context ) {
+        NSPersistentStoreCoordinator* coord =
+            self.appDelegate.persistentStoreCoordinator;
+        if ( coord ) {
+            __context = [NSManagedObjectContext new];
+            __context.persistentStoreCoordinator = coord;
+        }
+    }
+    return  __context;
+}
+
+
+- (NSObject<CoreDataProvisions>*) appDelegate {
+    if ( ! __appDelegate ) {
+        self.appDelegate = (NSObject<CoreDataProvisions>*)[
+            [UIApplication sharedApplication] delegate
+        ];
+    }
+    return  __appDelegate;
+}
+
+
+- (BOOL) mergesWhenAnyContextSaves {
+    return  self.contextSaveObserver != nil;
+}
+
+
+- (void) setMergesWhenAnyContextSaves:(BOOL)shouldListen {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+
+    if ( shouldListen  &&  ! self.contextSaveObserver ) {
+        __block CoreDataUtils* unretained_self = self;
+
+        //  Register a block to handle context save events. The returned
+        //  observer id is needed only to unregister. See the "else if", below.
+        //  We could have instead used method addObserver:selector:name:object:,
+        //  for which we PROVIDE the observer, self.context, obviating the need
+        //  for property contextSaveObserver. However, using a block has proven
+        //  to be more flexible and easier to debug, since additional statements
+        //  like NSLog(...) can be executed in the block.
+        self.contextSaveObserver = [center
+            addObserverForName:NSManagedObjectContextDidSaveNotification
+                        object:nil
+                         queue:nil
+                    usingBlock:^( NSNotification* note ){
+                        [unretained_self.context
+                            mergeChangesFromContextDidSaveNotification:note
+                        ];
+                    }
+        ];
+
+    } else if ( ! shouldListen  &&  self.contextSaveObserver ) {
+        [center removeObserver:self.contextSaveObserver];
+        self.contextSaveObserver = nil;
+    }
 }
 
 
@@ -179,6 +210,19 @@ id descriptionOfValueIn(
     return  idString
     ?   [self findTheOneUsingRequest:[self requestFor:tmplName atId:idString]]
     :   nil;
+}
+
+
+- (NSInteger)
+                  countOf:(NSString*)tmplName
+    substitutionVariables:(NSDictionary*)substVars
+{
+    NSFetchRequest* req = [self
+        requestFor:tmplName substitutionVariables:substVars
+    ];
+    ERR_ASSERT(
+        return  [self.context countForFetchRequest:req error:&ERR];
+    )
 }
 
 
@@ -306,6 +350,11 @@ id descriptionOfValueIn(
 - (NSInteger) deleteObjects:(NSArray*)objArray {
     for ( NSManagedObject* obj in objArray )  [self.context deleteObject:obj];
     return [objArray count];
+}
+
+
+- (NSInteger) delete:(NSString*)tmplName {
+    return [self deleteObjects:[self find:tmplName]];
 }
 
 

@@ -158,6 +158,10 @@
     self.conditionsDataSource.templateSubstitutionVariables = [NSDictionary
         dictionaryWithObject:self.trail.id forKey:@"id"
     ];
+
+    //  Update the list of all conditions for trails in this trail's area,
+    //  if they have not already been updated recently.
+    [THE(bmaController) checkConditionsForArea:self.trail.area];
 }
 
 

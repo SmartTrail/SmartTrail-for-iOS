@@ -60,7 +60,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [THE(bmaController) downloadEvents];
+    [THE(bmaController) checkEvents];
 }
 
 
