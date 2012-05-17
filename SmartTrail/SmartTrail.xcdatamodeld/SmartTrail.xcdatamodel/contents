@@ -38,24 +38,25 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="techRating" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="area" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Area" inverseName="trails" inverseEntity="Area" syncable="YES"/>
         <relationship name="conditions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Condition" inverseName="trail" inverseEntity="Condition" syncable="YES"/>
     </entity>
     <fetchRequest name="allAreas" entity="Area"/>
     <fetchRequest name="allEvents" entity="Event"/>
     <fetchRequest name="allTrails" entity="Trail"/>
-    <fetchRequest name="AreaForId" entity="Area" predicateString="id == $id"/>
+    <fetchRequest name="AreaForId" entity="Area" predicateString="id LIKE $id"/>
     <fetchRequest name="areasDownloadedBefore" entity="Area" predicateString="downloadedAt &lt; $date"/>
-    <fetchRequest name="ConditionForId" entity="Condition" predicateString="id == $id"/>
-    <fetchRequest name="conditionsForAreaIdDownloadedBefore" entity="Condition" predicateString="trail.area.id == $id AND downloadedAt &lt; $date"/>
-    <fetchRequest name="ConditionsForTrailId" entity="Condition" predicateString="trail.id == $id"/>
+    <fetchRequest name="ConditionForId" entity="Condition" predicateString="id LIKE $id"/>
+    <fetchRequest name="conditionsForAreaIdDownloadedBefore" entity="Condition" predicateString="trail.area.id LIKE $id AND downloadedAt &lt; $date"/>
+    <fetchRequest name="ConditionsForTrailId" entity="Condition" predicateString="trail.id LIKE $id"/>
     <fetchRequest name="conditionsUpdatedBefore" entity="Condition" predicateString="updatedAt &lt; $date"/>
-    <fetchRequest name="EventForId" entity="Event" predicateString="id == $id"/>
+    <fetchRequest name="EventForId" entity="Event" predicateString="id LIKE $id"/>
     <fetchRequest name="eventsDownloadedBefore" entity="Event" predicateString="downloadedAt &lt; $date"/>
     <fetchRequest name="expiredEvents" entity="Event" predicateString="endAt &lt; downloadedAt"/>
-    <fetchRequest name="TrailForId" entity="Trail" predicateString="id == $id"/>
+    <fetchRequest name="TrailForId" entity="Trail" predicateString="id LIKE $id"/>
     <fetchRequest name="trailsDownloadedBefore" entity="Trail" predicateString="downloadedAt &lt; $date"/>
+    <fetchRequest name="trailsForURL" entity="Trail" predicateString="url LIKE $url"/>
     <elements>
         <element name="Area" positionX="3240" positionY="882" width="128" height="90"/>
         <element name="Condition" positionX="3267" positionY="1020" width="128" height="150"/>

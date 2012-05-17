@@ -6,7 +6,6 @@
 
 
 #import "CoreDataUtils.h"
-#import "CoreDataProvisions.h"
 #import "NSString+Utils.h"
 
 @interface CoreDataUtils ()
@@ -28,7 +27,7 @@ static id descriptionOfValueIn(
 
 
 - (void) dealloc {
-    self.mergesWhenAnyContextSaves = NO;  // Removes notification from center.
+    self.mergesWhenAnyContextSaves = NO;    // Removes notification from center.
 
     [__context release];                __context = nil;
     [__appDelegate release];            __appDelegate = nil;
@@ -258,7 +257,8 @@ static id descriptionOfValueIn(
                               ]
     ];
     NSManagedObject* obj = [self findTheOneUsingRequest:req];
-    if ( ! obj ) {
+    BOOL mustInsert = ! obj;
+    if ( mustInsert ) {
         //  No managed object with the given id was found. Create one.
         NSEntityDescription* entity = [req entity];
         obj = [[(NSManagedObject*)[NSClassFromString([entity name]) alloc]
@@ -268,7 +268,25 @@ static id descriptionOfValueIn(
     }
 
     //  Populate the managed object with the given properties.
-    [obj setValuesForKeysWithDictionary:propDict];
+
+    @try {
+        [obj setValuesForKeysWithDictionary:propDict];
+
+    } @catch ( NSException* e ) {
+        NSAssert(
+            NO,
+            @"Could not populate a %@ with the dictionary %@\nException name: %@\nReason: %@\nUser info: %@\n",
+            [obj class],
+            propDict,
+            [e name],
+            [e reason],
+            [e userInfo]
+        );
+
+        //  If we're here, we couldn't update obj. Leave it alone if it already
+        //  had data, otherwise delete it.
+        if ( mustInsert )  [self.context deleteObject:obj];
+    }
 
     return  obj;
 }

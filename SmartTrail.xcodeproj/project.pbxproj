@@ -31,6 +31,7 @@
 		2F2D149C14EEA9A700E982C5 /* FetchedResultsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149414EEA9A700E982C5 /* FetchedResultsTableDataSource.m */; };
 		2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */; };
 		2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149814EEA9A700E982C5 /* NSString+Utils.m */; };
+		2F71257915598D52008A8445 /* LinkingWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */; };
 		2F9A04E4150174A7001638BC /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E3150174A7001638BC /* Area.m */; };
 		2F9A04E7150174A7001638BC /* Condition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E6150174A7001638BC /* Condition.m */; };
 		2F9B471F1503ED2B00111062 /* Trail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B471E1503ED2B00111062 /* Trail.m */; };
@@ -114,6 +115,8 @@
 		2F2D149814EEA9A700E982C5 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		2F2D14A714EEAC9100E982C5 /* README.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.org; sourceTree = "<group>"; };
 		2F2D14A914EEB0FC00E982C5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		2F71257715598D52008A8445 /* LinkingWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkingWebViewDelegate.h; sourceTree = "<group>"; };
+		2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkingWebViewDelegate.m; sourceTree = "<group>"; };
 		2F9A04E2150174A7001638BC /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
 		2F9A04E3150174A7001638BC /* Area.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Area.m; sourceTree = "<group>"; };
 		2F9A04E5150174A7001638BC /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Condition.h; sourceTree = "<group>"; };
@@ -228,6 +231,8 @@
 				2F2D149214EEA9A700E982C5 /* FetchedResults.m */,
 				2F2D149314EEA9A700E982C5 /* FetchedResultsTableDataSource.h */,
 				2F2D149414EEA9A700E982C5 /* FetchedResultsTableDataSource.m */,
+				2F71257715598D52008A8445 /* LinkingWebViewDelegate.h */,
+				2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */,
 				2F2D149514EEA9A700E982C5 /* NSObject+Utils.h */,
 				2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */,
 				2F2D149714EEA9A700E982C5 /* NSString+Utils.h */,
@@ -510,6 +515,7 @@
 				2F03AE8E1520D988000A5688 /* Event.m in Sources */,
 				2F03AE911520DBD4000A5688 /* Event+Display.m in Sources */,
 				2FF17C2B1507DE9000881CC7 /* WebClient.m in Sources */,
+				2F71257915598D52008A8445 /* LinkingWebViewDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,8 @@
 
 @interface NSObject (NSObject_Utils)
 
+/** Returns the given object if it is not nil, otherwise returns the receiver.
+*/
 - (id) unless:(id)obj;
 
 @end

@@ -23,4 +23,10 @@
 */
 - (NSString*) trim;
 
+/** Similar to NSString's capitalizedString method, but returns a string with
+    the first character from each word in the receiver changed to its
+    corresponding lowercase value.
+*/
+- (NSString*) decapitalizedString;
+
 @end

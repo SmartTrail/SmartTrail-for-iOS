@@ -16,10 +16,14 @@
 
     #define APP_DELEGATE_H  "AppDelegate.h"
 
-    #define ERR_ASSERT( expr )                                          \
-        {   NSError* ERR = nil;                                         \
-            expr;                                                       \
-            NSAssert( ! ERR, @"Error description: %@", &ERR );          \
-        }
+    #define ERR_ASSERT( expr ) {                                            \
+        @try {                                                              \
+            NSError* ERR = nil;                                             \
+            expr;                                                           \
+            NSAssert( ! ERR, @"Error description: %@", &ERR );              \
+        } @catch ( NSException* e ) {                                       \
+            NSAssert( NO, @"\n\nException thrown in ERR_ASSERT: %@\n", e ); \
+        }                                                                   \
+    }
 
 #endif

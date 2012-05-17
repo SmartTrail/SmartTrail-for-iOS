@@ -13,9 +13,10 @@
 #import "ConditionWebClient.h"
 #import "EventWebClient.h"
 #import "Area.h"
+#import "NSObject+Utils.h"
 
 static const NSTimeInterval TrailInfoInterval = 86400.0;    // Once a day.
-static const NSTimeInterval ConditionInterval = 600.0;      // Every 15 min.
+static const NSTimeInterval ConditionInterval = 600.0;      // Every 10 min.
 static const NSTimeInterval EventInterval = 3600.0;         // Every hour.
 static const NSTimeInterval RecentEnoughInterval = 180.0;   // Three min.
 static const NSTimeInterval ConditionLifeSpan = 2419200.0;  // Four weeks.
@@ -39,9 +40,11 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 
 
 @implementation BMAController
-{
-    NSInteger netActivitiesCount;
-    NSTimeInterval serverTimeDelta;
+
+
+{   //  These ivars store no reference values, so don't need to be properties.
+    NSInteger __netActivitiesCount;
+    NSTimeInterval __serverTimeDelta;
 }
 @synthesize eventDownloadTimer = __eventDownloadTimer;
 @synthesize conditionDownloadTimer = __conditionDownloadTimer;
@@ -94,13 +97,13 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 
 
 - (NSDate*) serverTimeEstimate {
-    return [NSDate dateWithTimeIntervalSinceNow:serverTimeDelta];
+    return [NSDate dateWithTimeIntervalSinceNow:__serverTimeDelta];
 }
 
 
 - (void) setServerTimeEstimate:(NSDate*)now {
     NSAssert( now, @"areaClient.serverTime is nil" );
-    serverTimeDelta =
+    __serverTimeDelta =
         [now timeIntervalSince1970] - [[NSDate date] timeIntervalSince1970];
 }
 
@@ -145,7 +148,7 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
         [self aNetActivityDidStop];
         [utils save];
 
-        //  Trails are saved, so can now download conditions (asyncronously).
+        //  Trails are saved, so can now download conditions (asynchronously).
         if ( ! areaClient.error  &&  ! trailClient.error ) {
             [self downloadConditionsInArea:nil];
         }
@@ -215,13 +218,14 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
     NSInteger count = [THE(dataUtils)
                       countOf:@"conditionsForAreaIdDownloadedBefore"
         substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:
-                                  area.id,         @"id",
-                                  littleWhileAgo,  @"date",
+                                  [[NSNull null] unless:area.id],   @"id",
+                                  littleWhileAgo,                   @"date",
                                   nil
                               ]
     ];
-    //  If we haven't checked in a while, download now and reset the timer.
-    if ( count )  [self.conditionDownloadTimer fire];
+    //  If we haven't checked this area's conditions in a while, download them,
+    //  but don't reset the timer.
+    if ( count )  [self downloadConditionsInArea:area];
 }
 
 
@@ -282,8 +286,8 @@ void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval ) {
 */
 - (void) aNetActivityDidStart {
     dispatch_async( dispatch_get_main_queue(), ^{
-        netActivitiesCount++;
-        if ( netActivitiesCount > 0 ) {
+        __netActivitiesCount++;
+        if ( __netActivitiesCount > 0 ) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         }
     } );
@@ -297,8 +301,8 @@ void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval ) {
 */
 - (void) aNetActivityDidStop {
     dispatch_async( dispatch_get_main_queue(), ^{
-        netActivitiesCount--;
-        if ( netActivitiesCount <= 0 ) {
+        __netActivitiesCount--;
+        if ( __netActivitiesCount <= 0 ) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
     } );
