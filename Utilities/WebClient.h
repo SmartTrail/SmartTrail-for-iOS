@@ -8,6 +8,9 @@
 #import <Foundation/Foundation.h>
 #import "CoreDataUtils.h"
 
+static NSString* const WebClientErrorDomain = @"WebClientErrorDomain";
+enum { WebClientErrorNoDataInResponse };
+
 
 /** This class is responsible for issuing a request to an HTTP server, loading
     the returned data, and optionally processing the data. This sequence may be

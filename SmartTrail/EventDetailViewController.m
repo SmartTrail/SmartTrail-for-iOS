@@ -7,6 +7,8 @@
 //
 
 #import "EventDetailViewController.h"
+#import "TrailDetailViewController.h"
+#import "LinkingWebViewDelegate.h"
 
 
 @implementation EventDetailViewController
@@ -73,6 +75,17 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orient {
     return  orient == UIInterfaceOrientationPortrait;
+}
+
+
+- (void) prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender {
+    if ( [segue.identifier isEqualToString:@"TrailDetailSegue"] ) {
+        //  User tapped a link in the web view that happens to be a trail.
+        TrailDetailViewController* trailDetailCtlr =
+            segue.destinationViewController;
+        trailDetailCtlr.trail =
+            (Trail*)((LinkingWebViewDelegate*)sender).managedObjectForURL;
+    }
 }
 
 

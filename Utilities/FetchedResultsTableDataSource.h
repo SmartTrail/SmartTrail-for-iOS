@@ -15,8 +15,8 @@
     table view's dataSource outlet and go to its Identity inspector. In the User
     Defined Runtime Attributes section, assign values for some of the properties
     below. No code required! Unless your fetch request has substitution
-    variables, you're done. In that case, just programatically assign a value to
-    property templateSubstitutionVariables. (See below.)
+    variables, you're done. In that case, just programmatically assign a value
+    to property templateSubstitutionVariables. (See below.)
 
     If your table uses custom table view cells, all you need to do is implement
     an informal protocol in your subclass of UITableViewCell. Just write a
@@ -33,7 +33,7 @@
 /** The CoreDataUtils object used to obtain the resultsController. Normally,
     you won't set this property; the object in the app delegate's dataUtils
     property is used by default. However, you might want to set it, for
-    example, if you needed to access data from a NSManagedObjectContext
+    example, if you needed to access data from an NSManagedObjectContext
     different than the one provided by the app delegate. If you do set it,
     you must do so before any UITableViewDataSource methods are called.
 */

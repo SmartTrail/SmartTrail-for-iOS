@@ -160,8 +160,8 @@
                 tableView:(UITableView*)tableView
     cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    //  We'll need the data for this cell. Retrive it now so the User Defined
-    //  Runtime Attributes are validatated first thing.
+    //  We'll need the data for this cell. Retrieve it now so the User Defined
+    //  Runtime Attributes are validated first thing.
     id dataObj = [self.fetchedResults objectAtIndexPath:indexPath];
 
     UITableViewCell* cell = [tableView

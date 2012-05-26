@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11D50b" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Area" representedClassName="Area" syncable="YES">
         <attribute name="downloadedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
@@ -53,7 +53,7 @@
     <fetchRequest name="conditionsUpdatedBefore" entity="Condition" predicateString="updatedAt &lt; $date"/>
     <fetchRequest name="EventForId" entity="Event" predicateString="id LIKE $id"/>
     <fetchRequest name="eventsDownloadedBefore" entity="Event" predicateString="downloadedAt &lt; $date"/>
-    <fetchRequest name="expiredEvents" entity="Event" predicateString="endAt &lt; downloadedAt"/>
+    <fetchRequest name="eventsEndedBefore" entity="Event" predicateString="endAt &lt; $date"/>
     <fetchRequest name="TrailForId" entity="Trail" predicateString="id LIKE $id"/>
     <fetchRequest name="trailsDownloadedBefore" entity="Trail" predicateString="downloadedAt &lt; $date"/>
     <fetchRequest name="trailsForURL" entity="Trail" predicateString="url LIKE $url"/>

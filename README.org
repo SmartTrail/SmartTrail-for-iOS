@@ -15,13 +15,14 @@ This repository is for the development of the iOS version of the SmartTrail app.
 ***** WebClient:  Employ KVO to notify listeners. In particular, splash view needs to know when to hide.
 **** Need map view as a tab, plus maps for trail detail view.
 **** Need uploading of conditions
+**** Web views:
+***** Move labels and rating images into scroll view or web view.
 **** Need Favorites view.
 **** Need Alerts view.
 **** Conditions: Better rating image should replace the dots.
 **** Need images for tab bar.
-**** Web views:
-***** Move labels and rating images into scroll view or web view.
-***** Capture tapped links and redirect relevant ones to views in the app. Others should be brought up in Safari.
+**** Refactor hard-coded region 1 into a parameter in SmartTrail-Info.plist.
+
 
 *** License (MIT)
 

@@ -8,51 +8,49 @@
 
 #import "BMAController.h"
 #import "AppDelegate.h"
+#import "NetActivityIndicatorController.h"
 #import "AreaWebClient.h"
 #import "TrailWebClient.h"
 #import "ConditionWebClient.h"
 #import "EventWebClient.h"
 #import "Area.h"
-#import "NSObject+Utils.h"
-
-static const NSTimeInterval TrailInfoInterval = 86400.0;    // Once a day.
-static const NSTimeInterval ConditionInterval = 600.0;      // Every 10 min.
-static const NSTimeInterval EventInterval = 3600.0;         // Every hour.
-static const NSTimeInterval RecentEnoughInterval = 180.0;   // Three min.
-static const NSTimeInterval ConditionLifeSpan = 2419200.0;  // Four weeks.
-
-static dispatch_queue_t getQ();
-void deleteObjects(
-    CoreDataUtils* utils, NSString* templateName, NSTimeInterval age
-);
-static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 
 @interface BMAController ()
-@property (readwrite,retain,nonatomic) NSDate* serverTimeEstimate;
-@property (retain,nonatomic) NSTimer* eventDownloadTimer;
-@property (retain,nonatomic) NSTimer* conditionDownloadTimer;
-- (void) aNetActivityDidStart;
-- (void) aNetActivityDidStop;
-- (NSDate*) serverTimeEstimate;
-- (void) setServerTimeEstimate:(NSDate*)now;
+@property (retain,nonatomic) NetActivityIndicatorController* netIndicator;
+@property (retain,nonatomic) NSTimer*   eventDownloadTimer;
+@property (retain,nonatomic) NSNumber*  serverTimeDelta;
+- (void) downloadTrailsEtc:(NSTimer*)timer;
+- (void) downloadConditions:(NSTimer*)timer;
+- (void) downloadEvents:(NSTimer*)timer;
+static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
+void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
+- (NSDate*) ago:(NSTimeInterval)age;
 - (void) downloadConditionsInArea:(Area*)area;
+- (void) setServerTimeDeltaFromDate:(NSDate*)now;
 @end
 
 
 @implementation BMAController
 
 
-{   //  These ivars store no reference values, so don't need to be properties.
-    NSInteger __netActivitiesCount;
-    NSTimeInterval __serverTimeDelta;
+{   //  These ivars don't store NSObjects, so don't need to be properties.
+    dispatch_queue_t __areaTrailQ;
+    dispatch_queue_t __conditionQ;
+    dispatch_queue_t __eventQ;
 }
+@synthesize netIndicator = __netIndicator;
 @synthesize eventDownloadTimer = __eventDownloadTimer;
-@synthesize conditionDownloadTimer = __conditionDownloadTimer;
+@synthesize serverTimeDelta = __serverTimeDelta;
 
 
 - (void) dealloc {
+    [__netIndicator release];           __netIndicator = nil;
     [__eventDownloadTimer release];     __eventDownloadTimer = nil;
-    [__conditionDownloadTimer release]; __conditionDownloadTimer = nil;
+    [__serverTimeDelta release];        __serverTimeDelta = nil;
+    dispatch_release( __areaTrailQ );
+    dispatch_release( __conditionQ );
+    dispatch_release( __eventQ );
+
     [super dealloc];
 }
 
@@ -60,17 +58,27 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 - (id) init {
     self = [super init];
     if ( self ) {
+        self.netIndicator = [[NetActivityIndicatorController new] autorelease];
 
-        NSTimer* trailTimer = [NSTimer
+        __areaTrailQ = dispatch_queue_create(
+            "BMAController_serial_areaTrailQ", DISPATCH_QUEUE_SERIAL
+        );
+        __conditionQ = dispatch_queue_create(
+            "BMAController_serial_conditionQ", DISPATCH_QUEUE_SERIAL
+        );
+        __eventQ = dispatch_queue_create(
+            "BMAController_serial_eventQ", DISPATCH_QUEUE_SERIAL
+        );
+
+        [[NSTimer
             scheduledTimerWithTimeInterval:TrailInfoInterval
                                     target:self
-                                  selector:@selector(downloadTrailInfo:)
+                                  selector:@selector(downloadTrailsEtc:)
                                   userInfo:nil
                                    repeats:YES
-        ];
-        [trailTimer fire];
+        ] fire];
 
-        self.conditionDownloadTimer = [NSTimer
+        [NSTimer
             scheduledTimerWithTimeInterval:ConditionInterval
                                     target:self
                                   selector:@selector(downloadConditions:)
@@ -78,7 +86,6 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
                                    repeats:YES
         ];
         //  No need to fire now, since conditions were downloaded w/ trail info.
-
 
         self.eventDownloadTimer = [NSTimer
             scheduledTimerWithTimeInterval:EventInterval
@@ -93,27 +100,75 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 }
 
 
-#pragma mark - Property accessors
+#pragma mark - Methods for triggering an ad hoc download
+
+
+- (void) checkConditionsForArea:(Area*)area {
+    NSDate* littleWhileAgo = [self.serverTimeEstimate
+        dateByAddingTimeInterval:-RecentEnoughInterval
+    ];
+    NSInteger count = 1;        // If we don't have time or area, download.
+
+    if ( area && littleWhileAgo )  count = [THE(dataUtils)
+                      countOf:@"conditionsForAreaIdDownloadedBefore"
+        substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:
+                                  area.id,         @"id",
+                                  littleWhileAgo,  @"date",
+                                  nil
+                              ]
+    ];
+    //  If we haven't checked this area's conditions in a while, download them,
+    //  but don't reset the timer, since we may not have ALL conditions.
+    if ( count )  [self downloadConditionsInArea:area];
+}
+
+
+- (void) checkEvents {
+    NSDate* littleWhileAgo = [self.serverTimeEstimate
+        dateByAddingTimeInterval:-RecentEnoughInterval
+    ];
+    NSInteger count = 1;        // In case we don't have server time, download.
+
+    if ( littleWhileAgo )  count = [THE(dataUtils)
+                      countOf:@"eventsDownloadedBefore"
+        substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:
+                                  littleWhileAgo,  @"date",
+                                  nil
+                              ]
+    ];
+    //  If we haven't checked in a while, download now and reset the timer.
+    if ( count )  [self.eventDownloadTimer fire];
+}
+
+
+#pragma mark - Server time
 
 
 - (NSDate*) serverTimeEstimate {
-    return [NSDate dateWithTimeIntervalSinceNow:__serverTimeDelta];
+    NSNumber* delta = self.serverTimeDelta;
+    return  delta
+    ?   [NSDate dateWithTimeIntervalSinceNow:[delta doubleValue]]
+    :   nil;
 }
 
 
-- (void) setServerTimeEstimate:(NSDate*)now {
-    NSAssert( now, @"areaClient.serverTime is nil" );
-    __serverTimeDelta =
-        [now timeIntervalSince1970] - [[NSDate date] timeIntervalSince1970];
-}
+#pragma mark - Timer handlers (private)
 
 
-#pragma mark - Timer handlers
-
-
-- (void) downloadTrailInfo:(NSTimer*)timer {
+/** Normally just called by the NSTimer objects configured in method init, this
+    method requests data from the BMA server, parses the returned JSON, and
+    creates or updates suitable Area, Trail, and Condition managed objects
+    representing the data, and persists the objects. Although this method
+    returns immediately while its work is performed asynchronously in a
+    concurrent dispatch queue, the managed objects are populated in an order
+    that ensures relationships between them are correct. In case this method
+    was unable to be called at the scheduled time, this method resets the given
+    timer to next fire in TrailInfoInterval seconds. This is so the start of
+    these downloads will be be separated by at least that interval.
+*/
+- (void) downloadTrailsEtc:(NSTimer*)timer {
     rescheduleTimerToNext( timer, TrailInfoInterval );
-    dispatch_async( getQ(), ^{
+    dispatch_async(__areaTrailQ, ^{
         CoreDataUtils* utils = [[CoreDataUtils alloc]
             initWithProvisions:APP_DELEGATE
         ];
@@ -137,35 +192,44 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
         //  Do the downloads.
         //
 
-        [self aNetActivityDidStart];
+        [self.netIndicator aNetActivityDidStart];
 
         //  Download all areas.
         [areaClient sendSynchronousGet];
-        //  Download all trails.
-        if ( ! areaClient.error )  [trailClient sendSynchronousGet];
-        //  Download all conditions for all trails.
+        if ( areaClient.error ) {
+            [self.netIndicator aNetActivityDidStop];
+            [utils.context rollback];
+            //  Try again next time, but don't wait so long.
+            rescheduleTimerToNext( timer, DownloadRetryInterval);
 
-        [self aNetActivityDidStop];
-        [utils save];
+        } else {
+            //  Download all trails.
+            [trailClient sendSynchronousGet];
+            [self.netIndicator aNetActivityDidStop];
 
-        //  Trails are saved, so can now download conditions (asynchronously).
-        if ( ! areaClient.error  &&  ! trailClient.error ) {
-            [self downloadConditionsInArea:nil];
-        }
-
-        //  Delete unneeded managed objects.
-        //
-        if ( ! areaClient.error ) {
             //  We just downloaded all areas. Delete obsolete ones.
-            deleteObjects( utils, @"areasDownloadedBefore", 0 );
-            if ( trailClient.isUsed  &&  ! trailClient.error ) {
-                //  We just downloaded all trails. Delete obsolete ones.
-                deleteObjects( utils, @"trailsDownloadedBefore", 0 );
-            }
-
+            deleteUsing(
+                utils, @"areasDownloadedBefore", [areaClient serverTime]
+            );
             [utils save];
-        }
 
+            //  Trails are saved, so can now download conditions (asynchronously).
+            if ( trailClient.error ) {
+                [utils.context rollback];
+                //  Try again next time, but don't wait so long.
+                rescheduleTimerToNext( timer, DownloadRetryInterval);
+
+            } else {
+                //  We just downloaded all trails. Delete obsolete ones.
+                deleteUsing(
+                    utils, @"trailsDownloadedBefore", [trailClient serverTime]
+                );
+                [utils save];
+
+                //  Asynchronously download all conditions for all trails.
+                [self downloadConditionsInArea:nil];
+            }
+        }
         [trailClient release];
         [areaClient release];
         [utils release];
@@ -173,15 +237,37 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 }
 
 
+/** Normally just called by the NSTimer objects configured in method init,
+    this method downloads, processes, and persists Condition data into managed
+    objects. It returns immediately while its work is performed in the
+    background. In case this method was unable to be called at the scheduled
+    time, this method resets the given timer to next fire in ConditionInterval
+    seconds. This is so the start of these downloads will be be separated by at
+    least that interval.  Conditions older than ConditionLifeSpan are deleted.
+*/
 - (void) downloadConditions:(NSTimer*)timer {
     rescheduleTimerToNext( timer, ConditionInterval);
     [self downloadConditionsInArea:nil];    //  Get conditions in all areas.
 }
 
 
+/** Normally just called by the NSTimer objects configured in method init, this
+    method downloads, processes, and persists Event data into managed objects.
+    It returns immediately while its work is performed in the background. In
+    case this method was unable to be called at the scheduled time, this method
+    resets the given timer to next fire in EventInterval seconds. This is so the
+    start of these downloads will be be separated by at least that interval.
+    Expired Event managed objects are deleted, i.e., those whose whose endAt
+    date has passed.
+
+    See comments below for method downloadConditionsInArea: explaining why this
+    method does its work in a serial queue. In a nutshell, it's because method
+    checkEvents: (like checkConditionsForArea:) can create a new context at any
+    time, possibly resulting in duplicates.
+*/
 - (void) downloadEvents:(NSTimer*)timer {
     rescheduleTimerToNext( timer, EventInterval );
-    dispatch_async( getQ(), ^{
+    dispatch_async( __eventQ, ^{
         CoreDataUtils* utils = [[CoreDataUtils alloc]
             initWithProvisions:APP_DELEGATE
         ];
@@ -191,16 +277,23 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
             initWithDataUtils:utils regionId:1
         ];
 
-        [self aNetActivityDidStart];
+        [self.netIndicator aNetActivityDidStart];
         [eventClient sendSynchronousGet];
-        [self aNetActivityDidStop];
+        [self.netIndicator aNetActivityDidStop];
 
-        if ( ! eventClient.error ) {
-            self.serverTimeEstimate = [eventClient serverTime];
+        if ( eventClient.error ) {
+            [utils.context rollback];
+            //  Try again next time, but don't wait so long.
+            rescheduleTimerToNext( timer, DownloadRetryInterval);
+
+        } else {
+            [self setServerTimeDeltaFromDate:[eventClient serverTime]];
             //  Delete all events whose endAt date has passed.
-            [utils delete:@"expiredEvents"];
+            deleteUsing(
+                utils, @"eventsEndedBefore", [eventClient serverTime]
+            );
+            [utils save];
         }
-        [utils save];
 
         [eventClient release];
         [utils release];
@@ -208,66 +301,7 @@ static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 }
 
 
-#pragma mark - Methods for triggering an ad hoc download
-
-
-- (void) checkConditionsForArea:(Area*)area {
-    NSDate* littleWhileAgo = [NSDate
-        dateWithTimeIntervalSinceNow:-RecentEnoughInterval
-    ];
-    NSInteger count = [THE(dataUtils)
-                      countOf:@"conditionsForAreaIdDownloadedBefore"
-        substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:
-                                  [[NSNull null] unless:area.id],   @"id",
-                                  littleWhileAgo,                   @"date",
-                                  nil
-                              ]
-    ];
-    //  If we haven't checked this area's conditions in a while, download them,
-    //  but don't reset the timer.
-    if ( count )  [self downloadConditionsInArea:area];
-}
-
-
-- (void) checkEvents {
-    NSDate* littleWhileAgo = [NSDate
-        dateWithTimeIntervalSinceNow:-RecentEnoughInterval
-    ];
-    NSInteger count = [THE(dataUtils)
-                      countOf:@"eventsDownloadedBefore"
-        substitutionVariables:[NSDictionary dictionaryWithObjectsAndKeys:
-                                  littleWhileAgo,  @"date",
-                                  nil
-                              ]
-    ];
-    //  If we haven't checked in a while, download now and reset the timer.
-    if ( count )  [self.eventDownloadTimer fire];
-}
-
-
-#pragma mark - Private methods and functions
-
-
-/** Retrieve the dispatch queue used for the asynchronous actions in this file.
-*/
-dispatch_queue_t getQ() {
-    return  dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0 );
-}
-
-
-/** Using the given CoreDataUtils object, deletes all managed objects obtained
-    using the fetch request template of the given name with a $date argument
-    which is the given interval earlier than the present.
-*/
-void deleteObjects(
-    CoreDataUtils* utils, NSString* fetchName, NSTimeInterval age
-) {
-    NSDictionary* args = [NSDictionary
-        dictionaryWithObject:[NSDate dateWithTimeIntervalSinceNow:-age]
-                      forKey:@"date"
-    ];
-    [utils delete:fetchName substitutionVariables:args];
-}
+#pragma mark - Other private methods and functions
 
 
 /** Resets the fire date on the given timer to the time anInterval from now.
@@ -279,41 +313,49 @@ void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval ) {
 }
 
 
-/** Sent to indicate that a network activity began. Tracks the number of such
-    activities and displays the Network Activity Indicator if any activities
-    have started and not ended yet. A call to this method must be followed
-    at some point by a call to aNetActivityDidStop when the activity ends.
+/** Deletes the managed objects in utils.context returned by the fetch request
+    whose template has the given name and which accepts a single date parameter.
+    If the date argument is nil, this method does nothing. This is handy if
+    we're passing a WebClient's serverTime result, and it is unavailable.
 */
-- (void) aNetActivityDidStart {
-    dispatch_async( dispatch_get_main_queue(), ^{
-        __netActivitiesCount++;
-        if ( __netActivitiesCount > 0 ) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        }
-    } );
+void deleteUsing(
+    CoreDataUtils* utils, NSString* fetchName, NSDate* beforeThis
+) {
+    if ( beforeThis ) {
+        NSDictionary* args = [NSDictionary
+            dictionaryWithObject:beforeThis
+                          forKey:@"date"
+        ];
+        [utils delete:fetchName substitutionVariables:args];
+    }
 }
 
 
-/** Sent to indicate that a network activity ended. Tracks the number of such
-    activities and hides the Network Activity Indicator if all activities
-    have ended. A call to this method must eventually follow the call to
-    aNetActivityDidStart made when the activity began.
+/** Calculates the current time minus the given interval. The current time is
+    obtained from method serverTimeEstimate, which could be nil. In this case,
+    nil is returned.
 */
-- (void) aNetActivityDidStop {
-    dispatch_async( dispatch_get_main_queue(), ^{
-        __netActivitiesCount--;
-        if ( __netActivitiesCount <= 0 ) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        }
-    } );
+- (NSDate*) ago:(NSTimeInterval)age {
+    return  [[self serverTimeEstimate] dateByAddingTimeInterval:-age];
 }
 
 
-/** Asynchronously downloads all conditions in the given area of region 1, or
-    in all areas of region 1 if given nil.
+/** This method downloads all conditions in the given area of region 1, or in
+    all areas of region 1 if given nil. Although it is asynchronous, returning
+    immediately, all calls do the work on the same serial queue. This is because
+    it is possible that this method is called before another call finishes. For
+    example, the user activates the app for the first time in TrailInfoInterval,
+    causing conditions to be downloaded after the areas and trails. If, before
+    utils.context is saved, the user tapped a particular trail in the GUI, this
+    method would again run its block again and cause identical conditions to be
+    loaded into a second utils.context, because this utils is necessarily
+    distinct from the previous one. Then CoreDataUtils'
+    updateOrInsertThe:withProperties:matchingKey: method would not know about
+    Condition managed objects that were loaded into the previous utils.context
+    but not yet saved. Thus, duplicate conditions are likely to be created.
 */
 - (void) downloadConditionsInArea:(Area*)area {
-    dispatch_async( getQ(), ^{
+    dispatch_async( __conditionQ, ^{
         CoreDataUtils* utils = [[CoreDataUtils alloc]
             initWithProvisions:APP_DELEGATE
         ];
@@ -323,17 +365,17 @@ void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval ) {
         ?   [[ConditionWebClient alloc] initWithDataUtils:utils areaId:area.id]
         :   [[ConditionWebClient alloc] initWithDataUtils:utils regionId:1];
 
-        [self aNetActivityDidStart];
+        [self.netIndicator aNetActivityDidStart];
         [condClient sendSynchronousGet];
-        [self aNetActivityDidStop];
+        [self.netIndicator aNetActivityDidStop];
 
         if ( ! condClient.error ) {
-            self.serverTimeEstimate = [condClient serverTime];
+            [self setServerTimeDeltaFromDate:[condClient serverTime]];
 
             //  Delete conditions that are too old. (Note that this happens
             //  whether or not we successfully downloaded new ones above.)
-            deleteObjects(
-                utils, @"conditionsUpdatedBefore", ConditionLifeSpan
+            deleteUsing(
+                utils, @"conditionsUpdatedBefore", [self ago:ConditionLifeSpan]
             );
         }
         [utils save];
@@ -341,6 +383,24 @@ void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval ) {
         [condClient release];
         [utils release];
     } );
+}
+
+
+/** Record the difference between the system time and the server time in the
+    serverTimeDelta property. If the argument is nil, a warning is logged in
+    debug mode and no change is made to serverTimeDelta. The property is an
+    NSNumber object, so will remain nil if we've never obtained the server time.
+*/
+- (void) setServerTimeDeltaFromDate:(NSDate*)now {
+    if ( now ) {
+        self.serverTimeDelta = [NSNumber numberWithDouble:
+            [now timeIntervalSince1970] - [[NSDate date] timeIntervalSince1970]
+        ];
+    } else {
+#ifdef DEBUG
+        NSLog( @"Warning: WebClient's setServerTimeDeltaFromDate: method did not receive the current time from the server." );
+#endif
+    }
 }
 
 

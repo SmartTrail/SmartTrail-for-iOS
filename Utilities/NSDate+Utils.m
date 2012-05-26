@@ -8,6 +8,7 @@
 
 #import "NSDate+Utils.h"
 
+
 @implementation NSDate (NSDate_Utils)
 
 
@@ -17,12 +18,15 @@
 {
     const char* cStr = [str cStringUsingEncoding:NSASCIIStringEncoding];
     const char* cFmt = [fmt cStringUsingEncoding:NSASCIIStringEncoding];
+    time_t secsSince1970 = -1L;
 
-    //  Parse the text into a tm structure.
-    struct tm tStruct;
-    strptime( cStr, cFmt, &tStruct );
+    if ( cStr && cFmt ) {
+        //  Parse the text into a tm structure.
+        struct tm tStruct;
+        strptime( cStr, cFmt, &tStruct );
 
-    time_t secsSince1970 = mktime(&tStruct);
+        secsSince1970 = mktime(&tStruct);
+    }
 
     NSAssert(
         secsSince1970 != -1L,
@@ -31,27 +35,34 @@
         fmt
     );
 
-    return (NSTimeInterval)secsSince1970;
+    return  secsSince1970 == -1
+    ?   [self badTimeInterval]
+    :   (NSTimeInterval)secsSince1970;
 }
 
 
 + (id) dateFromString:(NSString*)str inFormat:(NSString*)fmt {
-    return  [self
-        dateWithTimeIntervalSince1970:[self
-            timeIntervalSince1970FromString:str
-                                   inFormat:fmt
-        ]
+    NSTimeInterval interval = [self
+        timeIntervalSince1970FromString:str inFormat:fmt
     ];
+    return  interval == [self badTimeInterval]
+    ?   nil
+    :   [self dateWithTimeIntervalSince1970:interval];
+}
+
+
++ (NSTimeInterval) badTimeInterval {
+    return  [[NSDate distantPast] timeIntervalSince1970];
 }
 
 
 - (id) initFromString:(NSString*)str inFormat:(NSString*)fmt {
-    return  [self
-        initWithTimeIntervalSince1970:[NSDate
-            timeIntervalSince1970FromString:str
-                                   inFormat:fmt
-        ]
+    NSTimeInterval interval = [NSDate
+        timeIntervalSince1970FromString:str inFormat:fmt
     ];
+    return  interval == [NSDate badTimeInterval]
+    ?   nil
+    :   [self initWithTimeIntervalSince1970:interval];
 }
 
 

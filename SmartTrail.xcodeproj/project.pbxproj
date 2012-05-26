@@ -60,6 +60,7 @@
 		2FF17C2B1507DE9000881CC1 /* ConditionWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */; };
 		2FF17C2B1507DE9000881CC4 /* EventWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC3 /* EventWebClient.m */; };
 		2FF17C2B1507DE9000881CC7 /* WebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC6 /* WebClient.m */; };
+		2FF17C2B1507DE9000881CCA /* NetActivityIndicatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,8 @@
 		2FF17C2B1507DE9000881CC5 /* EventWebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventWebClient.h; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CC6 /* WebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebClient.m; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CC8 /* WebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebClient.h; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetActivityIndicatorController.m; path = Utilities/NetActivityIndicatorController.m; sourceTree = SOURCE_ROOT; };
+		2FF17C2B1507DE9000881CCB /* NetActivityIndicatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetActivityIndicatorController.h; path = Utilities/NetActivityIndicatorController.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +305,8 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
+				2FF17C2B1507DE9000881CCB /* NetActivityIndicatorController.h */,
+				2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
 				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
@@ -516,6 +521,7 @@
 				2F03AE911520DBD4000A5688 /* Event+Display.m in Sources */,
 				2FF17C2B1507DE9000881CC7 /* WebClient.m in Sources */,
 				2F71257915598D52008A8445 /* LinkingWebViewDelegate.m in Sources */,
+				2FF17C2B1507DE9000881CCA /* NetActivityIndicatorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

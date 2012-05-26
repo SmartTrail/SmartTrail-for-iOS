@@ -140,13 +140,18 @@
     pushControllerOrSegueForIdentifier:(NSString*)ident
                      withManagedObject:(NSManagedObject*)manObj
 {
-    UIViewController* newViewController = [[self.viewController storyboard]
-        instantiateViewControllerWithIdentifier:ident
-    ];
+    //  Unfortunately, there is no API for querying the storyboard for a
+    //  view controller or segue having a given identifier. We'll just have to
+    //  try to create a view controller with the identifier, and if that fails,
+    //  instead try to perform the segue with the identifier.
+    //
+    @try {
+        //  First look for view controller. This throws exception on failure.
+        UIViewController* newViewController = [[self.viewController storyboard]
+            instantiateViewControllerWithIdentifier:ident
+        ];
 
-    if ( newViewController ) {
-        //  Found a view controller with given identifier. Push it.
-
+        //  Found the view controller. Initialize and push it.
         [newViewController
             setValue:manObj
               forKey:[manObj.entity.name decapitalizedString]
@@ -155,7 +160,7 @@
             pushViewController:newViewController animated:YES
         ];
 
-    } else {
+    } @catch ( NSException* viewControllerNotFound ) {
         //  No controller for ident, so find a segue for ident and perform it.
 
         @try {
@@ -163,11 +168,13 @@
                 performSegueWithIdentifier:ident sender:self
             ];
 
-        } @catch ( NSException* exception ) {
+        } @catch ( NSException* segueNotFound ) {
             NSAssert(
                 NO,
-                @"Could find neither a UIViewController nor a UIStoryboardSegue having identifier '%@'. Use IB's Attributes inspector to assign it.",
-                self.destinationIdentifier
+                @"No view controller found with identifier '%@', and could not perform a segue having that identifier. Check in IB that a segue has that identifier, and check that your implementation of prepareForSegue:sender: in class %@ handles '%@'.",
+                ident,
+                [self.viewController class],
+                ident
             );
         }
     }

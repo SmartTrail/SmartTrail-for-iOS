@@ -86,9 +86,22 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 
 
 - (void) processReceivedData:(NSData*)data {
+    if ( ! data ) {
+        NSString* msg = [NSString
+            stringWithFormat:@"WebClient received no data from %@", self.urlString
+        ];
 #ifdef DEBUG
-    if ( ! data )  NSLog( @"No data received from %@", self.urlString );
+        NSLog( @"*** %@", msg );
 #endif
+        self.error = [NSError
+            errorWithDomain:WebClientErrorDomain
+                       code:WebClientErrorNoDataInResponse
+                   userInfo:[NSDictionary
+                              dictionaryWithObject:msg
+                                            forKey:NSLocalizedDescriptionKey
+                            ]
+        ];
+    }
 }
 
 

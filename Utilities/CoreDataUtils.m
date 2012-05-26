@@ -101,7 +101,7 @@ static id descriptionOfValueIn(
         __block CoreDataUtils* unretained_self = self;
 
         //  Register a block to handle context save events. The returned
-        //  observer id is needed only to unregister. See the "else if", below.
+        //  observer id is needed only to deregister. See the "else if", below.
         //  We could have instead used method addObserver:selector:name:object:,
         //  for which we PROVIDE the observer, self.context, obviating the need
         //  for property contextSaveObserver. However, using a block has proven

@@ -108,8 +108,8 @@
     using its keys and values.
 */
 - (void) processReceivedData:(NSData*)json {
-
-    if ( json ) {
+    [super processReceivedData:json];
+    if ( ! self.error ) {
 
         //  Parse the JSON into a data structure consisting of nested dictionaries
         //  and arrays.
@@ -136,11 +136,6 @@
                    withProperties:self.propConverter(dataDict)
             ];
         }
-
-    } else {
-#ifdef DEBUG
-        NSLog( @"No data received from %@", self.urlString );
-#endif
     }
 }
 
