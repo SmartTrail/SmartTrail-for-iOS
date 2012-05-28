@@ -83,6 +83,29 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 #pragma mark - Finding or collecting managed objects
 
 
+/** Returns the NSEntityDescription of the entity with the given name. When
+    inserting a new managed object instantiated with NSManageObject's
+    initWithEntity:insertIntoManagedObjectContext: method, you should not
+    obtain the entity from a fetch request created from a template, say like
+    [[aManagedObjectModel fetchRequestTemplateForName:@"aName"] entity]. I
+    have not seen this documented anywhere, but it seems that the entity
+    description object in a relation of an entity so created may not be the same
+    object as the one known to a managed object you obtain by way of a fetch.
+    Maybe the mechanism for generating a fetch request from a template is
+    caching old entity objects. At any rate, this will cause an exception at
+    least when you try to insert a new managed object that has a to-one
+    relation. The relation's destination entity "isEqual:' to the entity of the
+    fetched object, but they may not be "==". It seems like this should be OK,
+    but may be a bug.
+
+    If you use this method instead, the entity description is ultimately
+    derived from self.context, so should be the same entity description object
+    known to an object obtained by performing a fetch on that entity in
+    self.context.
+*/
+- (NSEntityDescription*) entityForName:(NSString*)name;
+
+
 /** Obtains the fetch request defined by the indicated fetch request template.
     An assertion will fail if no such template can be found.
 */

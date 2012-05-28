@@ -16,7 +16,6 @@
 #import "Area.h"
 
 @interface BMAController ()
-@property (retain,nonatomic) NetActivityIndicatorController* netIndicator;
 @property (retain,nonatomic) NSTimer*   eventDownloadTimer;
 @property (retain,nonatomic) NSNumber*  serverTimeDelta;
 - (void) downloadTrailsEtc:(NSTimer*)timer;
@@ -38,13 +37,11 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
     dispatch_queue_t __conditionQ;
     dispatch_queue_t __eventQ;
 }
-@synthesize netIndicator = __netIndicator;
 @synthesize eventDownloadTimer = __eventDownloadTimer;
 @synthesize serverTimeDelta = __serverTimeDelta;
 
 
 - (void) dealloc {
-    [__netIndicator release];           __netIndicator = nil;
     [__eventDownloadTimer release];     __eventDownloadTimer = nil;
     [__serverTimeDelta release];        __serverTimeDelta = nil;
     dispatch_release( __areaTrailQ );
@@ -58,7 +55,6 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 - (id) init {
     self = [super init];
     if ( self ) {
-        self.netIndicator = [[NetActivityIndicatorController new] autorelease];
 
         __areaTrailQ = dispatch_queue_create(
             "BMAController_serial_areaTrailQ", DISPATCH_QUEUE_SERIAL
@@ -192,12 +188,12 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
         //  Do the downloads.
         //
 
-        [self.netIndicator aNetActivityDidStart];
+        [NetActivityIndicatorController aNetActivityDidStart];
 
         //  Download all areas.
         [areaClient sendSynchronousGet];
         if ( areaClient.error ) {
-            [self.netIndicator aNetActivityDidStop];
+            [NetActivityIndicatorController aNetActivityDidStop];
             [utils.context rollback];
             //  Try again next time, but don't wait so long.
             rescheduleTimerToNext( timer, DownloadRetryInterval);
@@ -205,7 +201,7 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
         } else {
             //  Download all trails.
             [trailClient sendSynchronousGet];
-            [self.netIndicator aNetActivityDidStop];
+            [NetActivityIndicatorController aNetActivityDidStop];
 
             //  We just downloaded all areas. Delete obsolete ones.
             deleteUsing(
@@ -213,7 +209,6 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
             );
             [utils save];
 
-            //  Trails are saved, so can now download conditions (asynchronously).
             if ( trailClient.error ) {
                 [utils.context rollback];
                 //  Try again next time, but don't wait so long.
@@ -226,7 +221,8 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
                 );
                 [utils save];
 
-                //  Asynchronously download all conditions for all trails.
+                //  Trails are saved, now asynchronously download all conditions
+                //  for all trails.
                 [self downloadConditionsInArea:nil];
             }
         }
@@ -277,9 +273,9 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
             initWithDataUtils:utils regionId:1
         ];
 
-        [self.netIndicator aNetActivityDidStart];
+        [NetActivityIndicatorController aNetActivityDidStart];
         [eventClient sendSynchronousGet];
-        [self.netIndicator aNetActivityDidStop];
+        [NetActivityIndicatorController aNetActivityDidStop];
 
         if ( eventClient.error ) {
             [utils.context rollback];
@@ -365,9 +361,9 @@ void deleteUsing(
         ?   [[ConditionWebClient alloc] initWithDataUtils:utils areaId:area.id]
         :   [[ConditionWebClient alloc] initWithDataUtils:utils regionId:1];
 
-        [self.netIndicator aNetActivityDidStart];
+        [NetActivityIndicatorController aNetActivityDidStart];
         [condClient sendSynchronousGet];
-        [self.netIndicator aNetActivityDidStop];
+        [NetActivityIndicatorController aNetActivityDidStop];
 
         if ( ! condClient.error ) {
             [self setServerTimeDeltaFromDate:[condClient serverTime]];

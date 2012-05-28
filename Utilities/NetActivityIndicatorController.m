@@ -7,27 +7,35 @@
 
 #import "NetActivityIndicatorController.h"
 
+static NSInteger NetActivitiesCount = 0;
+
 
 @implementation NetActivityIndicatorController
-{
-    NSInteger __netActivitiesCount;
+
+
++ (id) alloc {
+    NSAssert(
+        NO,
+        @"Class NetActivityIndicatorController is not intended to be instantiated."
+    );
+    return nil;
 }
 
 
-- (void) aNetActivityDidStart {
++ (void) aNetActivityDidStart {
     dispatch_async( dispatch_get_main_queue(), ^{
-        __netActivitiesCount++;
-        if ( __netActivitiesCount > 0 ) {
+        NetActivitiesCount++;
+        if ( NetActivitiesCount > 0 ) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         }
     } );
 }
 
 
-- (void) aNetActivityDidStop {
++ (void) aNetActivityDidStop {
     dispatch_async( dispatch_get_main_queue(), ^{
-        __netActivitiesCount--;
-        if ( __netActivitiesCount <= 0 ) {
+        NetActivitiesCount--;
+        if ( NetActivitiesCount <= 0 ) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
     } );

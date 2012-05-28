@@ -128,6 +128,13 @@ static id descriptionOfValueIn(
 #pragma mark - Finding or collecting managed objects
 
 
+- (NSEntityDescription*) entityForName:(NSString*)name {
+    return  [self.context.persistentStoreCoordinator.managedObjectModel.entitiesByName
+        objectForKey:name
+    ];
+}
+
+
 - (NSFetchRequest*) requestFor:(NSString*)tmplName {
     NSFetchRequest* req = [self.appDelegate.managedObjectModel
         fetchRequestTemplateForName:tmplName
@@ -260,7 +267,7 @@ static id descriptionOfValueIn(
     BOOL mustInsert = ! obj;
     if ( mustInsert ) {
         //  No managed object with the given id was found. Create one.
-        NSEntityDescription* entity = [req entity];
+        NSEntityDescription* entity = [self entityForName:[req entityName]];
         obj = [[(NSManagedObject*)[NSClassFromString([entity name]) alloc]
                             initWithEntity:entity
             insertIntoManagedObjectContext:self.context
