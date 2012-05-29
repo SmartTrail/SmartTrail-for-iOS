@@ -10,12 +10,11 @@
 #import "NSString+Utils.h"
 
 @interface FetchedResultsTableDataSource ()
-
 //  Make fetchedResults writable within this file.
-@property (nonatomic,readwrite,retain) FetchedResults* fetchedResults;
-
+@property (nonatomic,readwrite,retain) NSFetchedResultsController* fetchedResults;
+@property (nonatomic,retain)           NSDictionary*               prevSubstVars;
 - (void) validateState;
-
+- (Class) fetchedResultsClassWithName:(NSString*)name;
 @end
 
 
@@ -24,6 +23,7 @@
 
 @synthesize dataUtils = __dataUtils;
 @synthesize fetchedResults = __fetchedResults;
+@synthesize fetchedResultsClassName = __fetchedResultsClassName;
 @synthesize requestTemplateName = __requestTemplateName;
 @synthesize templateSubstitutionVariables = __templateSubstitutionVariables;
 @synthesize keySortedFirst = __keySortedFirst;
@@ -36,11 +36,13 @@
 @synthesize cellReuseIdentifier = __cellReuseIdentifier;
 @synthesize numSectionsForShowingIndex = __numSectionsForShowingIndex;
 @synthesize delegate = __delegate;
+@synthesize prevSubstVars = __prevSubstVars;
 
 
 - (void) dealloc {
     [__dataUtils release];                     __dataUtils = nil;
     [__fetchedResults release];                __fetchedResults = nil;
+    [__fetchedResultsClassName release];       __fetchedResultsClassName = nil;
     [__requestTemplateName release];           __requestTemplateName = nil;
     [__templateSubstitutionVariables release]; __templateSubstitutionVariables = nil;
     [__keySortedFirst release];                __keySortedFirst = nil;
@@ -49,6 +51,7 @@
     [__cellDetailTextAttributePath release];   __cellDetailTextAttributePath = nil;
     [__cellReuseIdentifier release];           __cellReuseIdentifier = nil;
     [__delegate release];                      __delegate = nil;
+    [__prevSubstVars release];                 __prevSubstVars = nil;
 
     [super dealloc];
 }
@@ -77,7 +80,7 @@
     if (
         ! [key isEqualToString:@"fetchedResults"]  &&  // Avoid inf. loop.
         ! [val isEqual:oldVal]  &&
-        val != oldVal                                  // Handles val = nil.
+        val != oldVal                                  // Handles val == nil.
     ) {
         self.fetchedResults = nil;
     }
@@ -93,7 +96,7 @@
 }
 
 
-- (FetchedResults*) fetchedResults {
+- (NSFetchedResultsController*) fetchedResults {
 
     //  Initialize fetchedResults if it is nil. If it is non-nil, we refresh
     //  it whenever the following fails:
@@ -112,24 +115,50 @@
     id vars = self.templateSubstitutionVariables;
     if (
         ! __fetchedResults || (
-            vars  &&  ! [vars
-                isEqualToDictionary:__fetchedResults.substitutionVariables
-            ]
+            vars  &&  ! [vars isEqualToDictionary:self.prevSubstVars]
         )
     ) {
         [self validateState];
-        self.fetchedResults = [[[FetchedResults alloc]
-            initWithDataUtils:self.dataUtils
-                 templateName:self.requestTemplateName
-             substitutingVars:self.templateSubstitutionVariables
-                     sortedBy:self.keySortedFirst
-                    ascending:self.sortFirstAscending
-                    isSection:self.hasSections
-                       thenBy:self.keySortedSecond
-                    ascending:self.sortSecondAscending
+
+        //  Save substitution vars. in order to compare (above) the next time.
+        self.prevSubstVars = [vars copy];
+
+        //  Configure a new fetch request for the new NSFetchedResultsController
+        //  we will create below.
+        //
+        NSFetchRequest* req = [self.dataUtils
+            requestFor:self.requestTemplateName substitutionVariables:vars
+        ];
+        {   NSSortDescriptor* sort1 = [NSSortDescriptor
+                sortDescriptorWithKey:self.keySortedFirst
+                            ascending:self.sortFirstAscending
+            ];
+            if ( [self.keySortedSecond isNotBlank] ) {
+                NSSortDescriptor* sort2 = [NSSortDescriptor
+                    sortDescriptorWithKey:self.keySortedSecond
+                                ascending:self.sortSecondAscending
+                ];
+                req.sortDescriptors = [NSArray arrayWithObjects:sort1,sort2,nil];
+
+            } else {
+                req.sortDescriptors = [NSArray arrayWithObject:sort1];
+            }
+        }
+
+        //  Create the new NSFetchedResultsController, which may be a subclass
+        //  designated by name in self.fetchedResultsClassName.
+        //
+        self.fetchedResults = [[[[self
+            fetchedResultsClassWithName:self.fetchedResultsClassName
+        ] alloc]
+            initWithFetchRequest:req
+            managedObjectContext:self.dataUtils.context
+              sectionNameKeyPath:(self.hasSections ? self.keySortedFirst : nil)
+                       cacheName:nil
         ] autorelease];
+
+        __fetchedResults.delegate = self.delegate;
     }
-    __fetchedResults.delegate = self.delegate;
 
     return __fetchedResults;
 }
@@ -269,6 +298,26 @@
         [self.keySortedFirst isNotBlank],
         @"FetchedResultsTableDataSource's keySortedFirst property is nil or empty. You can define its value in IB's Identity Inspector for this FetchedResultsTableDataSource object. Add it in the 'User Defined Runtime Attributes' section."
     );
+}
+
+
+/** Find the class of the given name and ensure it is a subclass of
+    NSFetchedResultsController. If the name is nil, just return class
+    NSFetchedResultsController.
+*/
+- (Class) fetchedResultsClassWithName:(NSString*)name {
+    Class theClass = name
+    ?   NSClassFromString(name)
+    :   [NSFetchedResultsController class];
+
+    NSAssert( theClass, @"No class by name '%@' is currently loaded. Check the fetchedResultsClassName property in the 'User Defined Runtime Attributes' section of IB's Identity Inspector for this FetchedResultsTableDataSource object. If present, it must be the name of a defined subclass of NSFetchedResultsController.", name );
+    NSAssert(
+        [theClass isSubclassOfClass:[NSFetchedResultsController class]],
+        @"%@ is not a subclass of NSFetchedResultsController, as required. Check the fetchedResultsClassName property in the 'User Defined Runtime Attributes' section of IB's Identity Inspector for this FetchedResultsTableDataSource object.",
+        theClass
+    );
+
+    return theClass;
 }
 
 

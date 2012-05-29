@@ -27,7 +27,6 @@
 		2F2D148A14EE9D4D00E982C5 /* BMAController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148914EE9D4C00E982C5 /* BMAController.m */; };
 		2F2D149914EEA9A700E982C5 /* CollectionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D148D14EEA9A700E982C5 /* CollectionUtils.m */; };
 		2F2D149A14EEA9A700E982C5 /* CoreDataUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149014EEA9A700E982C5 /* CoreDataUtils.m */; };
-		2F2D149B14EEA9A700E982C5 /* FetchedResults.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149214EEA9A700E982C5 /* FetchedResults.m */; };
 		2F2D149C14EEA9A700E982C5 /* FetchedResultsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149414EEA9A700E982C5 /* FetchedResultsTableDataSource.m */; };
 		2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */; };
 		2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149814EEA9A700E982C5 /* NSString+Utils.m */; };
@@ -106,8 +105,6 @@
 		2F2D148E14EEA9A700E982C5 /* CoreDataProvisions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataProvisions.h; sourceTree = "<group>"; };
 		2F2D148F14EEA9A700E982C5 /* CoreDataUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataUtils.h; sourceTree = "<group>"; };
 		2F2D149014EEA9A700E982C5 /* CoreDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtils.m; sourceTree = "<group>"; };
-		2F2D149114EEA9A700E982C5 /* FetchedResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedResults.h; sourceTree = "<group>"; };
-		2F2D149214EEA9A700E982C5 /* FetchedResults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedResults.m; sourceTree = "<group>"; };
 		2F2D149314EEA9A700E982C5 /* FetchedResultsTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedResultsTableDataSource.h; sourceTree = "<group>"; };
 		2F2D149414EEA9A700E982C5 /* FetchedResultsTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedResultsTableDataSource.m; sourceTree = "<group>"; };
 		2F2D149514EEA9A700E982C5 /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
@@ -230,8 +227,6 @@
 				2F2D148E14EEA9A700E982C5 /* CoreDataProvisions.h */,
 				2F2D148F14EEA9A700E982C5 /* CoreDataUtils.h */,
 				2F2D149014EEA9A700E982C5 /* CoreDataUtils.m */,
-				2F2D149114EEA9A700E982C5 /* FetchedResults.h */,
-				2F2D149214EEA9A700E982C5 /* FetchedResults.m */,
 				2F2D149314EEA9A700E982C5 /* FetchedResultsTableDataSource.h */,
 				2F2D149414EEA9A700E982C5 /* FetchedResultsTableDataSource.m */,
 				2F71257715598D52008A8445 /* LinkingWebViewDelegate.h */,
@@ -499,7 +494,6 @@
 				2F2D148A14EE9D4D00E982C5 /* BMAController.m in Sources */,
 				2F2D149914EEA9A700E982C5 /* CollectionUtils.m in Sources */,
 				2F2D149A14EEA9A700E982C5 /* CoreDataUtils.m in Sources */,
-				2F2D149B14EEA9A700E982C5 /* FetchedResults.m in Sources */,
 				2F2D149C14EEA9A700E982C5 /* FetchedResultsTableDataSource.m in Sources */,
 				2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */,
 				2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */,

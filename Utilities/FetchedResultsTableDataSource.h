@@ -6,7 +6,6 @@
 
 #import <Foundation/Foundation.h>
 #import "CoreDataUtils.h"
-#import "FetchedResults.h"
 
 
 /** This class makes it dead simple to make a table for displaying the list of
@@ -45,7 +44,20 @@
     needed or when the templateSubstitutionVariables dictionary changes. The
     CoreDataUtils in dataUtils is used to obtain the instance.
 */
-@property (nonatomic,readonly,retain) FetchedResults* fetchedResults;
+@property (nonatomic,readonly,retain) NSFetchedResultsController* fetchedResults;
+
+
+/** If you need to specify a subclass of the NSFetchedResultsController used by
+    the receiver, assign a value to this property. This will be necessary, for
+    example, if you need to override methods sectionIndexTitles and
+    sectionIndexTitleForSectionName:. The class with this name will be allocated
+    with class method alloc and initialized with method
+    initWithFetchRequest:managedObjectContext:sectionNameKeyPath:cacheName:.
+    As usual, the created instance being used is reported in property
+    fetchedResults. If fetchedResultsClassName is nil (the default), then an
+    instance of NSFetchedResultsController will be used.
+*/
+@property (nonatomic,copy)     NSString*       fetchedResultsClassName;
 
 
 /** If the request template designated by requestTemplateName (see below)
@@ -66,7 +78,7 @@
     data modeling tool. If the template has variables, you can programmatically
     assign a dictionary to property templateSubstitutionVariables (see above).
 */
-@property (nonatomic,retain)   NSString*       requestTemplateName;
+@property (nonatomic,copy)     NSString*       requestTemplateName;
 
 
 /** Required. This must be a name of an attribute of the Entity specified by
@@ -77,7 +89,7 @@
     provided) into the Identifier field of the Attributes Inspector for the
     prototype cell.
 */
-@property (nonatomic,retain)   NSString*       keySortedFirst;
+@property (nonatomic,copy)     NSString*       keySortedFirst;
 
 
 /** Whether the attribute indicated by keySortedFirst should appear in
@@ -99,7 +111,7 @@
     Default is nil, meaning only the attribute named by keySortedFirst is
     examined.
 */
-@property (nonatomic,retain)   NSString*       keySortedSecond;
+@property (nonatomic,copy)     NSString*       keySortedSecond;
 
 
 /** If keySortedSecond is non-nil, specifies whether its attribute should appear
@@ -112,14 +124,14 @@
     If not set, no text label will appear, and the "detail" label, if
     cellDetailTextAttributePath was assigned, will be vertically centered.
 */
-@property (nonatomic,retain)   NSString*       cellTextAttributePath;
+@property (nonatomic,copy)     NSString*       cellTextAttributePath;
 
 
 /** Name of attribute to appear in the cell's main "detail" label.
     If not set, no detail label will appear, and the "text" label, if
     cellTextAttributePath was assigned, will be vertically centered.
 */
-@property (nonatomic,retain)   NSString*       cellDetailTextAttributePath;
+@property (nonatomic,copy)     NSString*       cellDetailTextAttributePath;
 
 
 /** Use this property to obtain the table cell's reuse identifier, which was
@@ -128,7 +140,7 @@
     "yourKeySortedFirst/yourKeySortedSecond" will be generated. This must match
     the value you assigned in Interface Builder.
 */
-@property (nonatomic,retain)   NSString*       cellReuseIdentifier;
+@property (nonatomic,copy)     NSString*       cellReuseIdentifier;
 
 
 /** This is the threshold for controlling whether a section index is shown over
@@ -139,11 +151,15 @@
 
 
 /*  The delegate object to be forwarded on to the receiver's
-    NSFetchedResultsController delegate property. Since you could use property
-    fetchedResults to assign directly to its delegate property, this property is
-    provided only as a convenience. A change takes effect the next time property
-    fetchedResults is used, which happens when any of the UITableViewDataSource
-    methods are called by the UITableView.
+    NSFetchedResultsController delegate property. You could instead use property
+    fetchedResults to assign directly to its delegate property. But this
+    property is convenient because you would have to do that every time you
+    modified one of the above properties, especially
+    templateSubstitutionVariables. Every time the receiver creates a new
+    instance for fetchedResults, it handles this assignment for you. Note that
+    a change to this delegate property takes effect the next time property
+    fetchedResults is called, which happens when any of the
+    UITableViewDataSource methods are called by the UITableView.
 */
 @property (nonatomic,retain)   IBOutlet NSObject<NSFetchedResultsControllerDelegate>*
                                                delegate;
