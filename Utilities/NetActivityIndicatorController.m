@@ -13,12 +13,17 @@ static NSInteger NetActivitiesCount = 0;
 @implementation NetActivityIndicatorController
 
 
-+ (id) alloc {
++ (id) allocWithZone:(NSZone*)zone {
     NSAssert(
         NO,
         @"Class NetActivityIndicatorController is not intended to be instantiated."
     );
     return nil;
+}
+
+
++ (id) alloc {
+    return  [self allocWithZone:nil];
 }
 
 

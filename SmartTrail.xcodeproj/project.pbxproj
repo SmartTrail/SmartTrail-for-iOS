@@ -246,6 +246,8 @@
 				2FF17C271507C37F00881CB3 /* NSHTTPURLResponse+Utils.m */,
 				2FF17C2B1507DE9000881CB6 /* UILabel+Utils.h */,
 				2FF17C2B1507DE9000881CB4 /* UILabel+Utils.m */,
+				2FF17C2B1507DE9000881CCB /* NetActivityIndicatorController.h */,
+				2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */,
 			);
 			path = Utilities;
 			sourceTree = SOURCE_ROOT;
@@ -305,8 +307,6 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
-				2FF17C2B1507DE9000881CCB /* NetActivityIndicatorController.h */,
-				2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
 				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
