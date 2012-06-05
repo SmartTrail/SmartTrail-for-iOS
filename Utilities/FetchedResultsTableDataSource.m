@@ -121,7 +121,7 @@
         [self validateState];
 
         //  Save substitution vars. in order to compare (above) the next time.
-        self.prevSubstVars = [vars copy];
+        self.prevSubstVars = [[vars copy] autorelease];
 
         //  Configure a new fetch request for the new NSFetchedResultsController
         //  we will create below.

@@ -41,13 +41,11 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 @interface CoreDataUtils : NSObject
 
 
-/** Unless assigned-to, this property returns a newly created managed object
-    context.  This is important when using the receiver to work with Core Data
-    in another thread. In the new thread, create a new instance of this class
-    and just don't assign to the context property. This will force this method
-    to create a new context just for the thread, as required by Core Data.
+/** Returns the managed object context upon which all data-manipulation methods
+    of this class operate. If you need to use a different context, just create
+    a new instance of this class.
 */
-@property (retain,nonatomic) NSManagedObjectContext* context;
+@property (readonly,nonatomic) NSManagedObjectContext* context;
 
 
 /** Setting to YES causes self.context to listen for notifications named
@@ -66,18 +64,20 @@ static NSString* AnyOtherProperty = @"ANY OTHER PROPERTY";
 
 /** Creates and returns an autoreleased CoreDataUtils instance.
 */
-+ (id) coreDataUtilsWithProvisions:(NSObject<CoreDataProvisions>*)appDelegate;
-
-
-/** Do not use this method, it is disabled. Use the designated initializer
-    instead.
-*/
-- (id) init;
++ (id) coreDataUtilsWithStoreCoordinator:(NSPersistentStoreCoordinator*)coord;
 
 
 /** Designated initializer.
 */
-- (id) initWithProvisions:(NSObject<CoreDataProvisions>*)appDelegate;
+- (id) initWithStoreCoordinator:(NSPersistentStoreCoordinator*)coord;
+
+
+/** Same as calling initWithStoreCoordinator:, with the
+    NSPersistentStoreCoordinator obtained by calling method
+    persistentStoreCoordinator on the current application's application
+    delegate.
+*/
+- (id) init;
 
 
 #pragma mark - Finding or collecting managed objects

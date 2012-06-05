@@ -9,7 +9,6 @@
 #import "NSString+Utils.h"
 
 @interface CoreDataUtils ()
-@property (retain,nonatomic) NSObject<CoreDataProvisions>* appDelegate;
 @property (retain,nonatomic) id contextSaveObserver;
 @end
 
@@ -22,7 +21,6 @@ static id descriptionOfValueIn(
 
 
 @synthesize context = __context;
-@synthesize appDelegate = __appDelegate;
 @synthesize contextSaveObserver = __contextSaveObserver;
 
 
@@ -30,7 +28,6 @@ static id descriptionOfValueIn(
     self.mergesWhenAnyContextSaves = NO;    // Removes notification from center.
 
     [__context release];                __context = nil;
-    [__appDelegate release];            __appDelegate = nil;
     [__contextSaveObserver release];    __contextSaveObserver = nil;
     [super dealloc];
 }
@@ -41,52 +38,34 @@ static id descriptionOfValueIn(
 
 /** Convenience class method for instantiation.
 */
-+ (id) coreDataUtilsWithProvisions:(NSObject<CoreDataProvisions>*)appDelegate {
-    return  [[[self alloc] initWithProvisions:appDelegate] autorelease];
++ (id) coreDataUtilsWithStoreCoordinator:(NSPersistentStoreCoordinator*)coord {
+    return  [[[self alloc] initWithStoreCoordinator:coord] autorelease];
 }
 
 
-- (id) init {
-    NSAssert( NO, @"The designated initializer, initWithProvisions:, must be called instead." );
-    return  nil;
-}
-
-
-- (id) initWithProvisions:(NSObject<CoreDataProvisions>*)appDelegate {
+- (id) initWithStoreCoordinator:(NSPersistentStoreCoordinator*)coord {
     self = [super init];
     if ( self ) {
-        self.appDelegate = appDelegate;
+        __context = [NSManagedObjectContext new];
+        __context.persistentStoreCoordinator = coord;
     }
     return  self;
 }
 
 
+- (id) init {
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    NSAssert(
+        [appDelegate respondsToSelector:@selector(persistentStoreCoordinator)],
+        @"To use this no-arg. init method, the application delegate must implement method persistentStoreCoordinator."
+    );
+    return  [self
+        initWithStoreCoordinator:[appDelegate persistentStoreCoordinator]
+    ];
+}
+
+
 #pragma mark - Accessors
-
-
-/** If context property has not already been set, makes a new one.
-*/
-- (NSManagedObjectContext*) context {
-    if ( ! __context ) {
-        NSPersistentStoreCoordinator* coord =
-            self.appDelegate.persistentStoreCoordinator;
-        if ( coord ) {
-            __context = [NSManagedObjectContext new];
-            __context.persistentStoreCoordinator = coord;
-        }
-    }
-    return  __context;
-}
-
-
-- (NSObject<CoreDataProvisions>*) appDelegate {
-    if ( ! __appDelegate ) {
-        self.appDelegate = (NSObject<CoreDataProvisions>*)[
-            [UIApplication sharedApplication] delegate
-        ];
-    }
-    return  __appDelegate;
-}
 
 
 - (BOOL) mergesWhenAnyContextSaves {
@@ -98,7 +77,6 @@ static id descriptionOfValueIn(
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
 
     if ( shouldListen  &&  ! self.contextSaveObserver ) {
-        __block CoreDataUtils* unretained_self = self;
 
         //  Register a block to handle context save events. The returned
         //  observer id is needed only to deregister. See the "else if", below.
@@ -112,7 +90,7 @@ static id descriptionOfValueIn(
                         object:nil
                          queue:nil
                     usingBlock:^( NSNotification* note ){
-                        [unretained_self.context
+                        [self.context
                             mergeChangesFromContextDidSaveNotification:note
                         ];
                     }
@@ -136,7 +114,7 @@ static id descriptionOfValueIn(
 
 
 - (NSFetchRequest*) requestFor:(NSString*)tmplName {
-    NSFetchRequest* req = [self.appDelegate.managedObjectModel
+    NSFetchRequest* req = [self.context.persistentStoreCoordinator.managedObjectModel
         fetchRequestTemplateForName:tmplName
     ];
 
@@ -149,7 +127,7 @@ static id descriptionOfValueIn(
                requestFor:(NSString*)tmplName
     substitutionVariables:(NSDictionary*)substVars
 {
-    NSFetchRequest* req = [self.appDelegate.managedObjectModel
+    NSFetchRequest* req = [self.context.persistentStoreCoordinator.managedObjectModel
         fetchRequestFromTemplateWithName:tmplName
                    substitutionVariables:substVars
     ];
@@ -194,9 +172,11 @@ static id descriptionOfValueIn(
 
 - (NSArray*) find:(NSString*)tmplName {
     NSFetchRequest* req = [self requestFor:tmplName];
+    NSArray* arr;
     ERR_ASSERT(
-        return  [self.context executeFetchRequest:req error:&ERR];
-    )
+        arr = [self.context executeFetchRequest:req error:&ERR];
+    );
+    return  arr;
 }
 
 
@@ -206,9 +186,11 @@ static id descriptionOfValueIn(
     NSFetchRequest* req = [self
         requestFor:tmplName substitutionVariables:substVars
     ];
+    NSArray* arr;
     ERR_ASSERT(
-        return  [self.context executeFetchRequest:req error:&ERR];
-    )
+        arr = [self.context executeFetchRequest:req error:&ERR];
+    );
+    return  arr;
 }
 
 
@@ -226,9 +208,11 @@ static id descriptionOfValueIn(
     NSFetchRequest* req = [self
         requestFor:tmplName substitutionVariables:substVars
     ];
+    NSInteger arr;
     ERR_ASSERT(
-        return  [self.context countForFetchRequest:req error:&ERR];
-    )
+        arr = [self.context countForFetchRequest:req error:&ERR];
+    );
+    return  arr;
 }
 
 

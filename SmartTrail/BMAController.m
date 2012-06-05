@@ -166,7 +166,7 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
     rescheduleTimerToNext( timer, TrailInfoInterval );
     dispatch_async(__areaTrailQ, ^{
         CoreDataUtils* utils = [[CoreDataUtils alloc]
-            initWithProvisions:APP_DELEGATE
+            initWithStoreCoordinator:[APP_DELEGATE persistentStoreCoordinator]
         ];
         //  When an object is saved by another context between the time this
         //  context fetches the object and the time this thread attempts to save
@@ -265,7 +265,7 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
     rescheduleTimerToNext( timer, EventInterval );
     dispatch_async( __eventQ, ^{
         CoreDataUtils* utils = [[CoreDataUtils alloc]
-            initWithProvisions:APP_DELEGATE
+            initWithStoreCoordinator:[APP_DELEGATE persistentStoreCoordinator]
         ];
         utils.context.mergePolicy = NSOverwriteMergePolicy;
 
@@ -353,7 +353,7 @@ void deleteUsing(
 - (void) downloadConditionsInArea:(Area*)area {
     dispatch_async( __conditionQ, ^{
         CoreDataUtils* utils = [[CoreDataUtils alloc]
-            initWithProvisions:APP_DELEGATE
+            initWithStoreCoordinator:[APP_DELEGATE persistentStoreCoordinator]
         ];
         utils.context.mergePolicy = NSOverwriteMergePolicy;
 

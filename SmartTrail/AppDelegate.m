@@ -30,7 +30,9 @@ UIImage* imageForPngNamed( NSString* filename );
                       application:(UIApplication*)application
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    __dataUtils = [[CoreDataUtils alloc] initWithProvisions:self];
+    __dataUtils = [[CoreDataUtils alloc]
+        initWithStoreCoordinator:[self persistentStoreCoordinator]
+    ];
     __dataUtils.mergesWhenAnyContextSaves = YES;
 
     __bmaController = [BMAController new];
