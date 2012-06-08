@@ -23,6 +23,13 @@
     Here you can assign text to UILabels or otherwise define the appearance of
     your cell based on the managed object's data.
 
+    Important: A top-level object like this will not be retained unless some
+    retained object retains it! You do this by creating a (retain) outlet
+    property (usually in the view controller), which points to the
+    FetchedResultsTableDataSource cube icon. It could be that your code has no
+    other use for this property, e.g., if you have no template substitution
+    variables, yet it is necessary.
+
     Below, we've assumed you've already defined an appropriate entity and fetch
     request in Xcode's data modeling tool.
 */

@@ -132,7 +132,7 @@
                         <outlet property="fetchedResultsTableDataSource" destination="b3Y-Op-tSG" id="jun-i8-Gfi"/>
                     </connections>
                 </tableViewController>
-                <customObject id="b3Y-Op-tSG" userLabel="startAt" customClass="FetchedResultsTableDataSource">
+                <customObject id="b3Y-Op-tSG" customClass="FetchedResultsTableDataSource">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="allEvents"/>
                         <userDefinedRuntimeAttribute type="string" keyPath="keySortedFirst" value="startAt"/>
@@ -188,6 +188,7 @@ Long, Long, Long, Long, Long Title</string>
                     <connections>
                         <outlet property="dateRangeLabel" destination="0zU-Mf-5hq" id="CDl-Wt-kts"/>
                         <outlet property="descriptionWebView" destination="PjT-Ua-kTH" id="Ymi-Zz-Ug2"/>
+                        <outlet property="linkingWebViewDelegate" destination="6Hb-Ph-0Br" id="TLA-Q3-RMz"/>
                         <outlet property="titleLabel" destination="LdP-TY-XBE" id="xv9-2M-5Ao"/>
                         <segue destination="21" kind="push" identifier="TrailDetailSegue" id="mWf-m4-2he"/>
                     </connections>
@@ -420,6 +421,7 @@ Long, Long, Long, Long, Long Title</string>
                         <outlet property="coolRatingImageView" destination="wwx-Kc-VA3" id="Pq9-xH-0Vk"/>
                         <outlet property="descriptionWebView" destination="0JK-o2-vxg" id="mXk-oA-q1b"/>
                         <outlet property="infoView" destination="02S-eM-U4b" id="odw-2g-CVE"/>
+                        <outlet property="linkingWebViewDelegate" destination="UZn-iW-nME" id="Do1-ac-SIE"/>
                         <outlet property="segmentedControl" destination="4aS-Ey-zlu" id="qmb-hL-StU"/>
                         <outlet property="statsLabel" destination="c8D-wU-N9W" id="WPN-WU-wJE"/>
                         <outlet property="techRatingImageView" destination="WJF-Mw-bbu" id="aJR-t6-2M8"/>
@@ -467,64 +469,6 @@ Long, Long, Long, Long, Long Title</string>
             <point key="canvasLocation" x="434" y="761"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="ConditionTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConditionTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="authorLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="commentLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ratingImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="updatedAtLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="dateRangeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="EventsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="fetchedResultsTableDataSource" candidateClass="FetchedResultsTableDataSource"/>
-            </relationships>
-        </class>
-        <class className="FetchedResultsTableDataSource" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FetchedResultsTableDataSource.h"/>
-            <relationships>
-                <relationship kind="outlet" name="delegate" candidateClass="NSObject"/>
-            </relationships>
-        </class>
-        <class className="LinkingWebViewDelegate" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkingWebViewDelegate.h"/>
-            <relationships>
-                <relationship kind="outlet" name="viewController" candidateClass="UIViewController"/>
-            </relationships>
-        </class>
-        <class className="TrailDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrailDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="segmentedControlChanged:"/>
-                <relationship kind="outlet" name="aerobicRatingImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="conditionView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="conditionsDataSource" candidateClass="FetchedResultsTableDataSource"/>
-                <relationship kind="outlet" name="coolRatingImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="infoView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="statsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="techRatingImageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="TrailsTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrailsTableViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="fetchedResultsTableDataSource" candidateClass="FetchedResultsTableDataSource"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -30,6 +30,11 @@ static const NSTimeInterval RecentEnoughInterval = 180.0;   // Three min.
 */
 static const NSTimeInterval ConditionLifeSpan = 2419200.0;  // Four weeks.
 
+/** An Event will be deleted if its endedAt field is a date more than this many
+    seconds in the past.
+*/
+static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
+
 @class Area;
 
 

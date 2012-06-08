@@ -39,6 +39,7 @@
 @synthesize coolRatingImageView = __coolRatingImageView;
 @synthesize descriptionWebView = __descriptionWebView;
 @synthesize conditionsDataSource = __conditionsDataSource;
+@synthesize linkingWebViewDelegate = __linkingWebViewDelegate;
 @synthesize trail = __trail;
 @synthesize viewsToSelect = __viewsToSelect;
 @synthesize selectedViewIndex = __selectedViewIndex;
@@ -56,6 +57,7 @@
     [__coolRatingImageView release];     __coolRatingImageView = nil;
     [__descriptionWebView release];      __descriptionWebView = nil;
     [__conditionsDataSource release];    __conditionsDataSource = nil;
+    [__linkingWebViewDelegate release];  __linkingWebViewDelegate = nil;
     [__trail release];                   __trail = nil;
     [__viewsToSelect release];           __viewsToSelect = nil;
     [__expandedCellIndexPath release];   __expandedCellIndexPath = nil;
@@ -96,6 +98,7 @@
     self.coolRatingImageView = nil;
     self.descriptionWebView = nil;
     self.conditionsDataSource = nil;
+    self.linkingWebViewDelegate = nil;
 
     [super viewDidUnload];
 }
@@ -112,11 +115,9 @@
     [super viewWillAppear:animated];
 
     //  Show trail name at top of screen.
-    //
     self.navigationItem.title = self.trail.name;
 
     //  Show trail length and elevation gain if we have data.
-    //
     self.statsLabel.text =  self.trail.length.floatValue > 0.0
     ?   [NSString
             stringWithFormat:@"%.1f miles    gain: %d feet",
@@ -126,12 +127,10 @@
     :   @"";
 
     //  Show or hide info or condition views.
-    //
     self.segmentedControl.selectedSegmentIndex = self.selectedViewIndex;
     [self showViewForIndex:self.selectedViewIndex];
 
     //  Draw the rating dots.
-    //
     self.techRatingImageView.image = [APP_DELEGATE
         imageForRating:self.trail.techRating.longValue inRange:0 through:10
     ];
@@ -143,7 +142,6 @@
     ];
 
     //  Render the description of the trail, which is HTML.
-    //
     NSString* bmaBaseUrl = [[NSBundle mainBundle]
         objectForInfoDictionaryKey:@"BmaBaseUrl"
     ];
@@ -154,7 +152,6 @@
 
     //  Tell the data source for the table of conditions which trail we're
     //  viewing, so it can generate the list of Condition objects for it.
-    //
     self.conditionsDataSource.templateSubstitutionVariables = [NSDictionary
         dictionaryWithObject:self.trail.id forKey:@"id"
     ];
@@ -187,13 +184,11 @@
     //  indexPath will not be nil, but expandedCellIndexPath will be nil if no
     //  other cell is expanded. Also, expandedCellIndexPath may be the same as
     //  indexPath, hence the use of an NSSet.
-    //
     NSSet* changingCellIndexes = [NSSet
         setWithObjects:indexPath, self.expandedCellIndexPath, nil
     ];
 
     //  Record the at-most-one cell to be expanded in height.
-    //
     ConditionTableViewCell* cell = (ConditionTableViewCell*)[tableView
         cellForRowAtIndexPath:indexPath
     ];
@@ -205,7 +200,6 @@
     ];
 
     //  Reload the one or two rows whose cells have changed height.
-    //
     [self.conditionView
         reloadRowsAtIndexPaths:[changingCellIndexes allObjects]
               withRowAnimation:UITableViewRowAnimationNone

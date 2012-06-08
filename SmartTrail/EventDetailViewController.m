@@ -15,40 +15,26 @@
 @synthesize titleLabel = __titleLabel;
 @synthesize dateRangeLabel = __dateRangeLabel;
 @synthesize descriptionWebView = __descriptionWebView;
+@synthesize linkingWebViewDelegate = __linkingWebViewDelegate;
 @synthesize event = __event;
 
 
 - (void)dealloc {
-    [__titleLabel release];         __titleLabel = nil;
-    [__dateRangeLabel release];     __dateRangeLabel = nil;
-    [__descriptionWebView release]; __descriptionWebView = nil;
-    [__event release];              __event = nil;
+    [__titleLabel release];             __titleLabel = nil;
+    [__dateRangeLabel release];         __dateRangeLabel = nil;
+    [__descriptionWebView release];     __descriptionWebView = nil;
+    [__linkingWebViewDelegate release]; __linkingWebViewDelegate = nil;
+    [__event release];                  __event = nil;
 
     [super dealloc];
 }
 
 
-- (id) initWithNibName:(NSString*)nibNameOrNil
-                bundle:(NSBundle*)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if ( self ) {
-        // Custom initialization
-    }
-    return  self;
-}
-
-
-- (void) viewDidLoad {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-
 - (void) viewDidUnload {
-    [self setTitleLabel:nil];
-    [self setDateRangeLabel:nil];
-    [self setDescriptionWebView:nil];
+    self.titleLabel = nil;
+    self.dateRangeLabel = nil;
+    self.descriptionWebView = nil;
+    self.linkingWebViewDelegate = nil;
 
     [super viewDidUnload];
 }

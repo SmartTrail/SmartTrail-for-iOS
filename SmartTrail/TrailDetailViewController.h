@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Trail.h"
 #import "FetchedResultsTableDataSource.h"
+#import "LinkingWebViewDelegate.h"
 
 
 @interface TrailDetailViewController :
@@ -24,6 +25,8 @@
 @property (retain,nonatomic) IBOutlet UIWebView*          descriptionWebView;
 @property (retain,nonatomic) IBOutlet FetchedResultsTableDataSource*
                                                           conditionsDataSource;
+@property (retain,nonatomic) IBOutlet LinkingWebViewDelegate*
+                                                          linkingWebViewDelegate;
 @property (retain,nonatomic)          Trail*              trail;
 
 - (IBAction) segmentedControlChanged:(id)sender;

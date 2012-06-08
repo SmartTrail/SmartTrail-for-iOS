@@ -57,17 +57,15 @@
 }
 
 
-/** This method is called if the receiver was created from a nib or storyboard.
-    As this class is normally used, the receiver instance does not need
-    anything referring to it except the UITableView for which it is the
-    dataSource. It just sits as a top-level object with a connection from the
-    UITableView's dataSource outlet. But since UITableView's dataSource property
-    does not retain its object, the receiver will not have an owner and will be
-    released. Therefore, we retain it here, causing it to live for the lifetime
-    of the app.
-*/
 - (void) awakeFromNib {
-    [self retain];
+    NSAssert(
+        [self.keySortedFirst isNotBlank],
+        @"FetchedResultsTableDataSource's keySortedFirst property is nil or empty. You can define its value in IB's Identity Inspector for this FetchedResultsTableDataSource object. Add it in the 'User Defined Runtime Attributes' section."
+    );
+    NSAssert(
+        [self.requestTemplateName isNotBlank],
+        @"FetchedResultsTableDataSource's requestTemplateName property is nil or empty. You can define its value in IB's Identity Inspector for this FetchedResultsTableDataSource object. Add it in the 'User Defined Runtime Attributes' section."
+    );
 }
 
 
@@ -282,7 +280,9 @@
                   tableView:(UITableView*)tableView
     titleForHeaderInSection:(NSInteger)sectIndex
 {
-    return  [[self.fetchedResults.sections objectAtIndex:sectIndex] name];
+    return  [[self.fetchedResults.sections objectAtIndex:(NSUInteger)sectIndex]
+        name
+    ];
 }
 
 

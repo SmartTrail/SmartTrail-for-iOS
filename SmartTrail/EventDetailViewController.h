@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Event+Display.h"
+#import "LinkingWebViewDelegate.h"
 
 @interface EventDetailViewController : UIViewController
 
-@property (retain,nonatomic) IBOutlet UILabel*   titleLabel;
-@property (retain,nonatomic) IBOutlet UILabel*   dateRangeLabel;
-@property (retain,nonatomic) IBOutlet UIWebView* descriptionWebView;
-@property (retain,nonatomic)          Event*     event;
+@property (retain,nonatomic) IBOutlet UILabel*      titleLabel;
+@property (retain,nonatomic) IBOutlet UILabel*      dateRangeLabel;
+@property (retain,nonatomic) IBOutlet UIWebView*    descriptionWebView;
+@property (retain,nonatomic) IBOutlet LinkingWebViewDelegate*
+                                                    linkingWebViewDelegate;
+@property (retain,nonatomic)          Event*        event;
 
 @end

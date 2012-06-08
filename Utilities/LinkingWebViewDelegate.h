@@ -22,6 +22,16 @@
     matching the one in destinationIdentifier to the desired destination view
     controller or segue object.
 
+    Important: A top-level object like this will not be retained unless some
+    retained object retains it! You do this by creating a (retain) outlet
+    property (usually in the view controller), which points to the
+    LinkingWebViewDelegate cube icon. It's likely that your code will have no
+    other use for this property, yet it is necessary. Yes, you had to connect
+    the web view's delegate outlet to this object, as indicated above, but
+    this does not mean we don't need to create the outlet. Since the web view
+    has no need to take ownership, the delegate property does not retain its
+    contents.
+
     This class implements the method of protocol UIWebViewDelegate called
     webView:shouldStartLoadWithRequest:navigationType:. The method returns YES
     unless the given navigation type is UIWebViewNavigationTypeLinkClicked, when
@@ -71,24 +81,29 @@
 #pragma mark - Properties assigned in Interface Builder
 
 
-/** The UIViewController of the scene containing the web view whose link the
-    user will tap. If its identifier is equal to the string in property
+/** Required. The UIViewController of the scene containing the web view whose
+    link the user will tap. If its identifier is equal to the string in property
     destinationIdentifier, then another instance of it can be pushed onto its
     navigation controller.
 */
 @property (assign,nonatomic) IBOutlet UIViewController* viewController;
 
 
-/**
+/** Required. The name of the fetch request template as defined in the Xcode
+    data modeling tool. The fetch request must take a single substitution
+    variable, $url, which will be assigned a URL string in order to identify a
+    single managed object associated with that URL. Assign the value for this
+    property in the User Defined Runtime Attributes section of the Identity
+    Inspector in Interface Builder.
 */
 @property (copy,nonatomic)            NSString*         requestTemplateName;
 
 
-/** Unless you override method destinationIdentifierForURL:, the identifers of
-    view controllers and segues of self.viewController's storyboard will be
-    searched for the string in this property to find the scene we are taken to.
-    Assign its value in the User Defined Runtime Attributes section of the
-    Identity Inspector in Interface Builder.
+/** Required, unless you override method destinationIdentifierForURL:. The
+    identifiers of view controllers and segues of self.viewController's
+    storyboard will be searched (in that order) for the string in this property
+    to find the scene we are taken to. Assign its value in the User Defined
+    Runtime Attributes section of the Identity Inspector in Interface Builder.
 */
 @property (copy,nonatomic)            NSString*         destinationIdentifier;
 
@@ -113,6 +128,7 @@
 /** The CoreDataUtils object used by method managedObjectForURL: to find the
     managed object associated with the tapped link's URL. The
     NSManagedObjectContext used is thus available in self.dataUtils.context.
+    The default value is obtained using the THE macro defined in APP_DELEGATE_H.
 */
 @property (retain,nonatomic)          CoreDataUtils*    dataUtils;
 

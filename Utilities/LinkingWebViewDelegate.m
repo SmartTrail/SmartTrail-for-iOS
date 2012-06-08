@@ -30,36 +30,26 @@
 
 
 - (void) dealloc {
-    //  (__viewController is not retained)
-                                        __viewController = nil;
-    [__requestTemplateName release];    __requestTemplateName = nil;
-    [__destinationIdentifier release];  __destinationIdentifier = nil;
-    [__managedObjectForURL release];    __managedObjectForURL = nil;
-    [__webView release];                __webView = nil;
-    [__dataUtils release];              __dataUtils = nil;
+    /*  (__viewController was not retained) */   __viewController = nil;
+    [__requestTemplateName release];            __requestTemplateName = nil;
+    [__destinationIdentifier release];          __destinationIdentifier = nil;
+    [__managedObjectForURL release];            __managedObjectForURL = nil;
+    /*  (__webView was not retained) */          __webView = nil;
+    [__dataUtils release];                      __dataUtils = nil;
 
     [super dealloc];
 }
 
 
-/** This method is called if the receiver was created from a storyboard.
-    As this class is normally used, the receiver instance does not need
-    anything referring to it except the UIWebView for which it is the delegate.
-    It just sits as a top-level object with a connection from the UIWebView's
-    delegate outlet. But since UIWebView's delegate property does not retain its
-    object, the receiver will not have an owner and will be released. Therefore,
-    we retain it here, causing it to live for the lifetime of the app.
-*/
 - (void) awakeFromNib {
     NSAssert(
         self.viewController,
-        @"WebViewDelegate's viewController outlet must be connected to a UIViewController."
+        @"LinkingWebViewDelegate's viewController outlet must be connected to a UIViewController."
     );
     NSAssert(
         [self.requestTemplateName isNotBlank],
-        @"WebViewDelegate's requestTemplateName property is nil or empty. You can define its value in IB's Identity Inspector for this FetchedResultsTableDataSource object. Add it in the 'User Defined Runtime Attributes' section."
+        @"LinkingWebViewDelegate's requestTemplateName property is nil or empty. You can define its value in IB's Identity Inspector for this FetchedResultsTableDataSource object. Add it in the 'User Defined Runtime Attributes' section."
     );
-    [self retain];
 }
 
 

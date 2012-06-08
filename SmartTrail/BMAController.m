@@ -284,9 +284,12 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
         } else {
             [self setServerTimeDeltaFromDate:[eventClient serverTime]];
-            //  Delete all events whose endAt date has passed.
+            //  Delete all events that expired at least ExpiredEventLifespan ago.
+            NSDate* whileAgo = [[eventClient serverTime]
+                dateByAddingTimeInterval:-ExpiredEventLifespan
+            ];
             deleteUsing(
-                utils, @"eventsEndedBefore", [eventClient serverTime]
+                utils, @"eventsEndedBefore", whileAgo
             );
             [utils save];
         }
