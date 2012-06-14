@@ -12,13 +12,13 @@
 
 @interface Event : NSManagedObject
 
-@property (nonatomic, retain) NSString * descriptionFull;
-@property (nonatomic, retain) NSDate * downloadedAt;
-@property (nonatomic, retain) NSDate * endAt;
-@property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSDate * startAt;
-@property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) NSString * url;
+@property (nonatomic) NSString * descriptionFull;
+@property (nonatomic) NSDate * downloadedAt;
+@property (nonatomic) NSDate * endAt;
+@property (nonatomic) NSString * id;
+@property (nonatomic) NSString * name;
+@property (nonatomic) NSDate * startAt;
+@property (nonatomic) NSDate * updatedAt;
+@property (nonatomic) NSString * url;
 
 @end

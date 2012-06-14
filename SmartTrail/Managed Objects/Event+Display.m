@@ -27,7 +27,7 @@ BOOL isReasonableHour( NSDate* date );
     if ( self.endAt  ||  self.startAt ) {
         //  At least one date is provided.
 
-        NSDateFormatter* formatter = [[NSDateFormatter new] autorelease];
+        NSDateFormatter* formatter = [NSDateFormatter new];
 
         if ( ! self.endAt  ||  ! self.startAt ) {
             //  One of the dates is nil. Use the other.

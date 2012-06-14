@@ -16,8 +16,8 @@
 #import "Area.h"
 
 @interface BMAController ()
-@property (retain,nonatomic) NSTimer*   eventDownloadTimer;
-@property (retain,nonatomic) NSNumber*  serverTimeDelta;
+@property (nonatomic) NSTimer*   eventDownloadTimer;
+@property (nonatomic) NSNumber*  serverTimeDelta;
 - (void) downloadTrailsEtc:(NSTimer*)timer;
 - (void) downloadConditions:(NSTimer*)timer;
 - (void) downloadEvents:(NSTimer*)timer;
@@ -42,13 +42,10 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
 
 - (void) dealloc {
-    [__eventDownloadTimer release];     __eventDownloadTimer = nil;
-    [__serverTimeDelta release];        __serverTimeDelta = nil;
     dispatch_release( __areaTrailQ );
     dispatch_release( __conditionQ );
     dispatch_release( __eventQ );
 
-    [super dealloc];
 }
 
 
@@ -226,9 +223,6 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
                 [self downloadConditionsInArea:nil];
             }
         }
-        [trailClient release];
-        [areaClient release];
-        [utils release];
     } );
 }
 
@@ -294,8 +288,6 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
             [utils save];
         }
 
-        [eventClient release];
-        [utils release];
     } );
 }
 
@@ -379,8 +371,6 @@ void deleteUsing(
         }
         [utils save];
 
-        [condClient release];
-        [utils release];
     } );
 }
 

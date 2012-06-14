@@ -19,15 +19,6 @@
 @synthesize event = __event;
 
 
-- (void)dealloc {
-    [__titleLabel release];             __titleLabel = nil;
-    [__dateRangeLabel release];         __dateRangeLabel = nil;
-    [__descriptionWebView release];     __descriptionWebView = nil;
-    [__linkingWebViewDelegate release]; __linkingWebViewDelegate = nil;
-    [__event release];                  __event = nil;
-
-    [super dealloc];
-}
 
 
 - (void) viewDidUnload {

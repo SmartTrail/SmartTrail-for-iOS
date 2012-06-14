@@ -12,7 +12,7 @@ NSMutableArray* mutableArrayFor( NSObject<NSFastEnumeration>* xs );
 
 
 id reduce( id (^f)(id,id), id x0, NSObject<NSFastEnumeration>* xs ) {
-    void* result = x0;
+    id result = x0;
     for ( id x in xs ) {
         result = f( result, x );
     }

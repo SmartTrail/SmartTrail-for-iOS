@@ -10,8 +10,8 @@
 #import APP_DELEGATE_H
 
 @interface LinkingWebViewDelegate ()
-@property (readwrite,retain,nonatomic)  NSManagedObject*  managedObjectForURL;
-@property (readwrite,assign,nonatomic)  UIWebView*        webView;
+@property (readwrite,nonatomic)         NSManagedObject*  managedObjectForURL;
+@property (readwrite,weak,nonatomic)    UIWebView*        webView;
 - (void)
     pushControllerOrSegueForIdentifier:(NSString*)ident
                      withManagedObject:(NSManagedObject*)manObj;
@@ -27,18 +27,6 @@
 @synthesize managedObjectForURL = __managedObjectForURL;
 @synthesize webView = __webView;
 @synthesize dataUtils = __dataUtils;
-
-
-- (void) dealloc {
-    /*  (__viewController was not retained) */   __viewController = nil;
-    [__requestTemplateName release];            __requestTemplateName = nil;
-    [__destinationIdentifier release];          __destinationIdentifier = nil;
-    [__managedObjectForURL release];            __managedObjectForURL = nil;
-    /*  (__webView was not retained) */          __webView = nil;
-    [__dataUtils release];                      __dataUtils = nil;
-
-    [super dealloc];
-}
 
 
 - (void) awakeFromNib {

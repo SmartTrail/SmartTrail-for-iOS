@@ -22,8 +22,8 @@
                 regionId
         ];
 
-        __block TrailWebClient* unretained_self = self; // Avoid retain cycle.
-        __block CoreDataUtils* unretained_utils = utils;
+        __weak TrailWebClient* unretained_self = self; // Avoid retain cycle.
+        __weak CoreDataUtils* unretained_utils = utils;
         self.propConverter = [utils
             dataDictToPropDictConverterForEntityName:@"Trail"
                                 usingFuncsByPropName:[NSDictionary
@@ -44,20 +44,20 @@
                     //  updateOrInsertThe:withProperties: method, serverTime
                     //  will contain the response's Date. So just report it.
                     //
-                    [[^(id _1, id _2) {
+                    [^(id _1, id _2) {
                         return  unretained_self.serverTime;
-                    } copy] autorelease],                    @"downloadedAt",
+                    } copy],                                 @"downloadedAt",
 
                     //  All that remains is to populate the "area" relationship.
                     //  For this to work, The Area entities must already have
                     //  been loaded.
                     //
-                    [[^( NSDictionary* dataDict, id _ ){
+                    [^( NSDictionary* dataDict, id _ ){
                         return  [unretained_utils
                             findThe:@"AreaForId"
                                  at:[dataDict objectForKey:@"area"]
                         ];
-                    } copy] autorelease],                    @"area",
+                    } copy],                                 @"area",
 
                     fnCoerceDataKey(nil),                    AnyOtherProperty,
 

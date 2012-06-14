@@ -4,9 +4,7 @@
 // To change the template use AppCode | Preferences | File Templates.
 //
 
-
 #import <Foundation/Foundation.h>
-#import "CoreDataUtils.h"
 
 static NSString* const WebClientErrorDomain = @"WebClientErrorDomain";
 enum { WebClientErrorNoDataInResponse };
@@ -25,21 +23,21 @@ enum { WebClientErrorNoDataInResponse };
 /** The complete URL for the request. Assign to this property before calling a
     "send..." method.
 */
-@property (copy,nonatomic)            NSString*           urlString;
+@property (copy,nonatomic)      NSString*   urlString;
 
 /** Has value YES iff a "send..." method has been called.
 */
-@property (readonly,nonatomic)        BOOL                isUsed;
+@property (readonly,nonatomic)  BOOL        isUsed;
 
 /** The time found in the response to the request initiated by a "send..."
     method.
 */
-@property (readonly,retain,nonatomic) NSDate*             serverTime;
+@property (readonly,nonatomic)  NSDate*     serverTime;
 
 /** If the request initiated by a "send..." is unsuccessful, an error is stored
     in this property. Otherwise it is nil.
 */
-@property (readonly,retain,nonatomic) NSError*            error;
+@property (readonly,nonatomic)  NSError*    error;
 
 /** Sends a HEAD request to the URL defined by property urlString. This method
     does not return until a response is obtained. Once this method is called,

@@ -12,11 +12,11 @@
 
 @interface EventDetailViewController : UIViewController
 
-@property (retain,nonatomic) IBOutlet UILabel*      titleLabel;
-@property (retain,nonatomic) IBOutlet UILabel*      dateRangeLabel;
-@property (retain,nonatomic) IBOutlet UIWebView*    descriptionWebView;
-@property (retain,nonatomic) IBOutlet LinkingWebViewDelegate*
+@property (nonatomic) IBOutlet UILabel*      titleLabel;
+@property (nonatomic) IBOutlet UILabel*      dateRangeLabel;
+@property (nonatomic) IBOutlet UIWebView*    descriptionWebView;
+@property (nonatomic) IBOutlet LinkingWebViewDelegate*
                                                     linkingWebViewDelegate;
-@property (retain,nonatomic)          Event*        event;
+@property (nonatomic)          Event*        event;
 
 @end

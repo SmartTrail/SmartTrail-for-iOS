@@ -22,13 +22,6 @@ static NSDateFormatter* ConditionDateFormatter;
 @synthesize ratingImageView = __ratingImageView;
 
 
-- (void) dealloc {
-    [__updatedAtLabel release];   __updatedAtLabel = nil;
-    [__authorLabel release];      __authorLabel = nil;
-    [__commentLabel release];     __commentLabel = nil;
-    [__ratingImageView release];  __ratingImageView = nil;
-    [super dealloc];
-}
 
 
 + (void) initialize {

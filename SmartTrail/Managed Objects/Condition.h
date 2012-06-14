@@ -13,12 +13,12 @@
 
 @interface Condition : NSManagedObject
 
-@property (nonatomic, retain) NSString * authorName;
-@property (nonatomic, retain) NSString * comment;
-@property (nonatomic, retain) NSDate * downloadedAt;
-@property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSNumber * rating;
-@property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) Trail *trail;
+@property (nonatomic) NSString * authorName;
+@property (nonatomic) NSString * comment;
+@property (nonatomic) NSDate * downloadedAt;
+@property (nonatomic) NSString * id;
+@property (nonatomic) NSNumber * rating;
+@property (nonatomic) NSDate * updatedAt;
+@property (nonatomic) Trail *trail;
 
 @end

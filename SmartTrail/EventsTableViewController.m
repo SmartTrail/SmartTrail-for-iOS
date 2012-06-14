@@ -18,11 +18,6 @@
 @synthesize fetchedResultsTableDataSource = __fetchedResultsTableDataSource;
 
 
-- (void) dealloc {
-    [__fetchedResultsTableDataSource release]; __fetchedResultsTableDataSource = nil;
-
-    [super dealloc];
-}
 
 
 - (id) initWithStyle:(UITableViewStyle)style {

@@ -32,7 +32,7 @@
 
 
 - (NSString*) decapitalizedString {
-    NSMutableString* mStr = [[self mutableCopy] autorelease];
+    NSMutableString* mStr = [self mutableCopy];
     NSRange entireRng;
     entireRng.location = 0;
     entireRng.length = [mStr length];

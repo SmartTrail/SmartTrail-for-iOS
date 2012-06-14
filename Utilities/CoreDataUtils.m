@@ -8,28 +8,24 @@
 #import "CoreDataUtils.h"
 #import "NSString+Utils.h"
 
-@interface CoreDataUtils ()
-@property (retain,nonatomic) id contextSaveObserver;
-@end
-
 static id descriptionOfValueIn(
     NSDictionary* dataDict, NSString* key, NSPropertyDescription* prop
 );
 
 
 @implementation CoreDataUtils
+{
+    id __contextSaveObserver;
+}
 
 
 @synthesize context = __context;
-@synthesize contextSaveObserver = __contextSaveObserver;
 
 
 - (void) dealloc {
-    self.mergesWhenAnyContextSaves = NO;    // Removes notification from center.
-
-    [__context release];                __context = nil;
-    [__contextSaveObserver release];    __contextSaveObserver = nil;
-    [super dealloc];
+    //  Remove notification from center. See doc. for NSNotificationCenter.
+    self.mergesWhenAnyContextSaves = NO;
+    //  (ARC handles [super dealloc] automatically.)
 }
 
 
@@ -39,7 +35,7 @@ static id descriptionOfValueIn(
 /** Convenience class method for instantiation.
 */
 + (id) coreDataUtilsWithStoreCoordinator:(NSPersistentStoreCoordinator*)coord {
-    return  [[[self alloc] initWithStoreCoordinator:coord] autorelease];
+    return  [[self alloc] initWithStoreCoordinator:coord];
 }
 
 
@@ -69,23 +65,23 @@ static id descriptionOfValueIn(
 
 
 - (BOOL) mergesWhenAnyContextSaves {
-    return  self.contextSaveObserver != nil;
+    return  __contextSaveObserver != nil;
 }
 
 
 - (void) setMergesWhenAnyContextSaves:(BOOL)shouldListen {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
 
-    if ( shouldListen  &&  ! self.contextSaveObserver ) {
+    if ( shouldListen  &&  ! __contextSaveObserver ) {
 
         //  Register a block to handle context save events. The returned
         //  observer id is needed only to deregister. See the "else if", below.
         //  We could have instead used method addObserver:selector:name:object:,
         //  for which we PROVIDE the observer, self.context, obviating the need
-        //  for property contextSaveObserver. However, using a block has proven
+        //  for ivar __contextSaveObserver. However, using a block has proven
         //  to be more flexible and easier to debug, since additional statements
         //  like NSLog(...) can be executed in the block.
-        self.contextSaveObserver = [center
+        __contextSaveObserver = [center
             addObserverForName:NSManagedObjectContextDidSaveNotification
                         object:nil
                          queue:nil
@@ -96,9 +92,9 @@ static id descriptionOfValueIn(
                     }
         ];
 
-    } else if ( ! shouldListen  &&  self.contextSaveObserver ) {
-        [center removeObserver:self.contextSaveObserver];
-        self.contextSaveObserver = nil;
+    } else if ( ! shouldListen  &&  __contextSaveObserver ) {
+        [center removeObserver:__contextSaveObserver];
+        __contextSaveObserver = nil;
     }
 }
 
@@ -252,10 +248,10 @@ static id descriptionOfValueIn(
     if ( mustInsert ) {
         //  No managed object with the given id was found. Create one.
         NSEntityDescription* entity = [self entityForName:[req entityName]];
-        obj = [[(NSManagedObject*)[NSClassFromString([entity name]) alloc]
+        obj = [(NSManagedObject*)[NSClassFromString([entity name]) alloc]
                             initWithEntity:entity
             insertIntoManagedObjectContext:self.context
-        ] autorelease];
+        ];
     }
 
     //  Populate the managed object with the given properties.
@@ -309,7 +305,7 @@ static id descriptionOfValueIn(
     NSDictionary* propertiesByName = [entity propertiesByName];
     NSArray* propertyNames = [propertiesByName allKeys];
 
-    return  [[ ^(NSDictionary* dataDict) {
+    return  [ ^(NSDictionary* dataDict) {
 
         //  The dictionary to be returned.
         NSMutableDictionary* newDataByPropName = [NSMutableDictionary
@@ -349,7 +345,7 @@ static id descriptionOfValueIn(
 
         return  newDataByPropName;
 
-    } copy ] autorelease];
+    } copy ];
 }
 
 
@@ -395,55 +391,55 @@ static id descriptionOfValueIn(
 
 
 DataDictToPropVal fnRawForDataKey( NSString *dataKey ) {
-    return  [[^(NSDictionary* dataDict, NSPropertyDescription* prop) {
+    return  [^(NSDictionary* dataDict, NSPropertyDescription* prop) {
         return  [dataDict objectForKey:dataKey?dataKey:[prop name]];
-    } copy] autorelease];
+    } copy];
 }
 
 
 DataDictToPropVal fnBoolForDataKey( NSString *dataKey ) {
-    return  [[^(NSDictionary* dataDict, NSPropertyDescription* prop) {
+    return  [^(NSDictionary* dataDict, NSPropertyDescription* prop) {
         NSString* str = descriptionOfValueIn( dataDict, dataKey, prop );
         return  [NSNumber numberWithBool:[str boolValue]];
-    } copy] autorelease];
+    } copy];
 }
 
 
 DataDictToPropVal fnIntegerForDataKey( NSString *dataKey ) {
-    return  [[^(NSDictionary* dataDict, NSPropertyDescription* prop) {
+    return  [^(NSDictionary* dataDict, NSPropertyDescription* prop) {
         NSString* str = descriptionOfValueIn( dataDict, dataKey, prop );
         return  [NSNumber numberWithInt:[str integerValue]];
-    } copy] autorelease];
+    } copy];
 }
 
 
 DataDictToPropVal fnStringForDataKey( NSString *dataKey ) {
-    return  [[^(NSDictionary* dataDict, NSPropertyDescription* prop) {
+    return  [^(NSDictionary* dataDict, NSPropertyDescription* prop) {
         return  descriptionOfValueIn( dataDict, dataKey, prop );
-    } copy] autorelease];
+    } copy];
 }
 
 
 DataDictToPropVal fnFloatForDataKey( NSString *dataKey ) {
-    return  [[^(NSDictionary* dataDict, NSPropertyDescription* prop) {
+    return  [^(NSDictionary* dataDict, NSPropertyDescription* prop) {
         NSString* str = descriptionOfValueIn( dataDict, dataKey, prop );
         return  [NSNumber numberWithFloat:[str floatValue]];
-    } copy] autorelease];
+    } copy];
 }
 
 
 DataDictToPropVal fnDateSince1970ForDataKey( NSString *dataKey ) {
-    return  [[^(NSDictionary* dataDict, NSPropertyDescription* prop) {
+    return  [^(NSDictionary* dataDict, NSPropertyDescription* prop) {
         NSString* str = descriptionOfValueIn( dataDict, dataKey, prop );
         return  [NSDate dateWithTimeIntervalSince1970:[str doubleValue]];
-    } copy] autorelease];
+    } copy];
 }
 
 
 DataDictToPropVal fnCoerceDataKey( NSString *dataKey ) {
-    NSNumberFormatter* numberFormatter = [[NSNumberFormatter new] autorelease];
+    NSNumberFormatter* numberFormatter = [NSNumberFormatter new];
 
-    return  [[^(NSDictionary* dataDict, NSPropertyDescription* prop) {
+    return  [^(NSDictionary* dataDict, NSPropertyDescription* prop) {
         id propVal = nil;
 
         if ( [prop isKindOfClass:[NSAttributeDescription class]] ) {
@@ -473,12 +469,12 @@ DataDictToPropVal fnCoerceDataKey( NSString *dataKey ) {
             }
         }
         return  propVal;
-    } copy] autorelease];
+    } copy];
 }
 
 
 DataDictToPropVal fnConstant( id valueToReturn ) {
-    return  [[^(id _1, id _2) { return valueToReturn; } copy] autorelease];
+    return  [^(id _1, id _2) { return valueToReturn; } copy];
 }
 
 

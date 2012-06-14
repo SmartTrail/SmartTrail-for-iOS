@@ -8,14 +8,13 @@
 
 #import "AppDelegate.h"
 
-
-@interface AppDelegate ()
-@property (retain,nonatomic) NSArray* ratingImages;
 UIImage* imageForPngNamed( NSString* filename );
-@end
 
 
 @implementation AppDelegate
+{
+    NSArray* __ratingImages;
+}
 
 
 @synthesize window = __window;
@@ -23,7 +22,6 @@ UIImage* imageForPngNamed( NSString* filename );
 @synthesize dataUtils = __dataUtils;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
-@synthesize ratingImages = __ratingImages;
 
 
 - (BOOL)
@@ -37,7 +35,7 @@ UIImage* imageForPngNamed( NSString* filename );
 
     __bmaController = [BMAController new];
 
-    self.ratingImages = [NSArray
+    __ratingImages = [NSArray
         arrayWithObjects:
             imageForPngNamed(@"rating_dots_0"),
             imageForPngNamed(@"rating_dots_1"),
@@ -47,7 +45,7 @@ UIImage* imageForPngNamed( NSString* filename );
             imageForPngNamed(@"rating_dots_5"),
             nil
     ];
-    NSAssert( self.ratingImages.count == 6, @"Couldn't load all five rating_dots_*.png files" );
+    NSAssert( __ratingImages.count == 6, @"Couldn't load all five rating_dots_*.png files" );
 
     return YES;
 }
@@ -176,11 +174,11 @@ UIImage* imageForPngNamed( NSString* filename );
 {
     //  E.g., rating is in interval [0,10] & array index must be in [0,5]
 
-    NSInteger topIndex = self.ratingImages.count - 1;
+    NSInteger topIndex = __ratingImages.count - 1;
     NSInteger idx = lround( (rating - lo)*topIndex / ((float)(hi - lo)) );
-    NSInteger highest = [self.ratingImages count] - 1;
+    NSInteger highest = [__ratingImages count] - 1;
     NSInteger index0Thru5 =  idx > highest  ?  highest  :  idx;
-    return  [self.ratingImages objectAtIndex:index0Thru5];
+    return  [__ratingImages objectAtIndex:index0Thru5];
 }
 
 

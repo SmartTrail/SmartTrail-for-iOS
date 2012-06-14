@@ -13,10 +13,10 @@
 
 @interface Area : NSManagedObject
 
-@property (nonatomic, retain) NSDate * downloadedAt;
-@property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSSet *trails;
+@property (nonatomic) NSDate * downloadedAt;
+@property (nonatomic) NSString * id;
+@property (nonatomic) NSString * name;
+@property (nonatomic) NSSet *trails;
 @end
 
 @interface Area (CoreDataGeneratedAccessors)

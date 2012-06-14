@@ -11,10 +11,10 @@
 
 @interface ConditionTableViewCell : UITableViewCell
 
-@property (retain,nonatomic) IBOutlet UILabel*     updatedAtLabel;
-@property (retain,nonatomic) IBOutlet UILabel*     authorLabel;
-@property (retain,nonatomic) IBOutlet UILabel*     commentLabel;
-@property (retain,nonatomic) IBOutlet UIImageView* ratingImageView;
+@property (nonatomic) IBOutlet UILabel*     updatedAtLabel;
+@property (nonatomic) IBOutlet UILabel*     authorLabel;
+@property (nonatomic) IBOutlet UILabel*     commentLabel;
+@property (nonatomic) IBOutlet UIImageView* ratingImageView;
 
 - (void) willShowManagedObject:(Condition*)condition;
 

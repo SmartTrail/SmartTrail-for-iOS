@@ -22,7 +22,7 @@
                 regionId
         ];
 
-        __block EventWebClient* unretained_self = self; // Avoid retain cycle.
+        __weak EventWebClient* unretained_self = self; // Avoid retain cycle.
         self.propConverter = [utils
             dataDictToPropDictConverterForEntityName:@"Event"
                                 usingFuncsByPropName:[NSDictionary
@@ -39,9 +39,9 @@
                     //  updateOrInsertThe:withProperties: method, serverTime
                     //  will contain the response's Date. So just report it.
                     //
-                    [[^(id _1, id _2) {
+                    [^(id _1, id _2) {
                         return  unretained_self.serverTime;
-                    } copy] autorelease],                         @"downloadedAt",
+                    } copy],                                      @"downloadedAt",
 
                     fnCoerceDataKey(nil),                         AnyOtherProperty,
 

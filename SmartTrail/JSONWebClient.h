@@ -6,6 +6,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WebClient.h"
+#import "CoreDataUtils.h"
 
 
 /** A DataDictsExtractor is a block taking a dictionary of all the data parsed

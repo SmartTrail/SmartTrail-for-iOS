@@ -43,7 +43,7 @@
     different than the one provided by the app delegate. If you do set it,
     you must do so before any UITableViewDataSource methods are called.
 */
-@property (nonatomic,retain)   CoreDataUtils*  dataUtils;
+@property (nonatomic)   CoreDataUtils*  dataUtils;
 
 
 /** The NSFetchedResultsController used by the receiver to obtain data for each
@@ -51,7 +51,7 @@
     needed or when the templateSubstitutionVariables dictionary changes. The
     CoreDataUtils in dataUtils is used to obtain the instance.
 */
-@property (nonatomic,readonly,retain) NSFetchedResultsController* fetchedResults;
+@property (nonatomic,readonly) NSFetchedResultsController* fetchedResults;
 
 
 /** If you need to specify a subclass of the NSFetchedResultsController used by
@@ -73,7 +73,7 @@
     repeatedly set new values to variables, and the new results will be
     reflected in the generated table.
 */
-@property (nonatomic,retain)   NSDictionary*   templateSubstitutionVariables;
+@property (nonatomic)   NSDictionary*   templateSubstitutionVariables;
 
 
 #pragma mark - Properties assigned in IB
@@ -168,7 +168,7 @@
     fetchedResults is called, which happens when any of the
     UITableViewDataSource methods are called by the UITableView.
 */
-@property (nonatomic,retain)   IBOutlet NSObject<NSFetchedResultsControllerDelegate>*
+@property (nonatomic)   IBOutlet NSObject<NSFetchedResultsControllerDelegate>*
                                                delegate;
 
 

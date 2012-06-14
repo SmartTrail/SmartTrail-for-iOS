@@ -12,22 +12,23 @@
 #import "UILabel+Utils.h"
 
 @interface TrailDetailViewController ()
-
-//  These two properties maintain the views selected by the Segmented Control
-//  (radio buttons).
-@property (retain,nonatomic) NSArray*     viewsToSelect;
-@property (assign,nonatomic) NSUInteger   selectedViewIndex;
-
-//  These two properties maintain the height of the cell to be expanded, if any,
-//  and the index of its row in the table view.
-@property (retain,nonatomic) NSIndexPath* expandedCellIndexPath;
-@property (assign,nonatomic) CGFloat expandedCellHeight;
-
 - (void) showViewForIndex:(NSUInteger)idx;
+- (void) toggleCellForIndexPath:(NSIndexPath*)idxPath toHeight:(CGFloat)hght;
 @end
 
 
 @implementation TrailDetailViewController
+{
+    //  These two ivars maintain the views selected by the Segmented Control
+    //  (radio buttons).
+    NSArray*     __viewsToSelect;
+    NSUInteger   __selectedViewIndex;
+
+    //  These two ivars maintain the height of the cell to be expanded, if any,
+    //  and the index of its row in the table view.
+    NSIndexPath* __expandedCellIndexPath;
+    CGFloat      __expandedCellHeight;
+}
 
 
 @synthesize statsLabel = __statsLabel;
@@ -41,33 +42,9 @@
 @synthesize conditionsDataSource = __conditionsDataSource;
 @synthesize linkingWebViewDelegate = __linkingWebViewDelegate;
 @synthesize trail = __trail;
-@synthesize viewsToSelect = __viewsToSelect;
-@synthesize selectedViewIndex = __selectedViewIndex;
-@synthesize expandedCellIndexPath = __expandedCellIndexPath;
-@synthesize expandedCellHeight = __expandedCellHeight;
 
 
-- (void) dealloc {
-    [__statsLabel release];              __statsLabel = nil;
-    [__segmentedControl release];        __segmentedControl = nil;
-    [__infoView release];                __infoView = nil;
-    [__conditionView release];           __conditionView = nil;
-    [__techRatingImageView release];     __techRatingImageView = nil;
-    [__aerobicRatingImageView release];  __aerobicRatingImageView = nil;
-    [__coolRatingImageView release];     __coolRatingImageView = nil;
-    [__descriptionWebView release];      __descriptionWebView = nil;
-    [__conditionsDataSource release];    __conditionsDataSource = nil;
-    [__linkingWebViewDelegate release];  __linkingWebViewDelegate = nil;
-    [__trail release];                   __trail = nil;
-    [__viewsToSelect release];           __viewsToSelect = nil;
-    [__expandedCellIndexPath release];   __expandedCellIndexPath = nil;
-
-    [super dealloc];
-}
-
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
 
@@ -81,10 +58,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //  Set up the collection of views to select using the segmented controller.
-    self.viewsToSelect = [NSArray
+    __viewsToSelect = [NSArray
         arrayWithObjects:self.infoView, self.conditionView, nil
     ];
-    self.selectedViewIndex = 0;     // Initially show infoView.
+    __selectedViewIndex = 0;     // Initially show infoView.
 }
 
 
@@ -127,8 +104,8 @@
     :   @"";
 
     //  Show or hide info or condition views.
-    self.segmentedControl.selectedSegmentIndex = self.selectedViewIndex;
-    [self showViewForIndex:self.selectedViewIndex];
+    self.segmentedControl.selectedSegmentIndex = __selectedViewIndex;
+    [self showViewForIndex:__selectedViewIndex];
 
     //  Draw the rating dots.
     self.techRatingImageView.image = [APP_DELEGATE
@@ -185,7 +162,7 @@
     //  other cell is expanded. Also, expandedCellIndexPath may be the same as
     //  indexPath, hence the use of an NSSet.
     NSSet* changingCellIndexes = [NSSet
-        setWithObjects:indexPath, self.expandedCellIndexPath, nil
+        setWithObjects:indexPath, __expandedCellIndexPath, nil
     ];
 
     //  Record the at-most-one cell to be expanded in height.
@@ -213,8 +190,8 @@
                   tableView:(UITableView*)tableView
     heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    return  [indexPath isEqual:self.expandedCellIndexPath]
-    ?   self.expandedCellHeight         // New height of selected row.
+    return  [indexPath isEqual:__expandedCellIndexPath]
+    ?   __expandedCellHeight            // New height of selected row.
     :   self.conditionView.rowHeight;   // Default for all other rows.
 }
 
@@ -236,15 +213,15 @@
     given index in array viewsToSelect.
 */
 - (void) showViewForIndex:(NSUInteger)idx {
-    UIView* selectedView = [self.viewsToSelect objectAtIndex:idx];
-    UIView* deSelectedView = [self.viewsToSelect
-        objectAtIndex:self.selectedViewIndex
+    UIView* selectedView = [__viewsToSelect objectAtIndex:idx];
+    UIView* deSelectedView = [__viewsToSelect
+        objectAtIndex:__selectedViewIndex
     ];
 
     deSelectedView.hidden = YES;
     selectedView.hidden = NO;
 
-    self.selectedViewIndex = idx;
+    __selectedViewIndex = idx;
 }
 
 
@@ -254,9 +231,9 @@
     tableView:heightForRowAtIndexPath: delegate method.
 */
 - (void) toggleCellForIndexPath:(NSIndexPath*)idxPath toHeight:(CGFloat)hght {
-    self.expandedCellIndexPath =
-        [idxPath isEqual:self.expandedCellIndexPath]  ?  nil  :  idxPath;
-    self.expandedCellHeight = hght;
+    __expandedCellIndexPath =
+        [idxPath isEqual:__expandedCellIndexPath]  ?  nil  :  idxPath;
+    __expandedCellHeight = hght;
 }
 
 

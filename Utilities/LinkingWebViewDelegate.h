@@ -86,7 +86,7 @@
     destinationIdentifier, then another instance of it can be pushed onto its
     navigation controller.
 */
-@property (assign,nonatomic) IBOutlet UIViewController* viewController;
+@property (weak,nonatomic) IBOutlet UIViewController* viewController;
 
 
 /** Required. The name of the fetch request template as defined in the Xcode
@@ -96,7 +96,7 @@
     property in the User Defined Runtime Attributes section of the Identity
     Inspector in Interface Builder.
 */
-@property (copy,nonatomic)            NSString*         requestTemplateName;
+@property (copy,nonatomic)          NSString*         requestTemplateName;
 
 
 /** Required, unless you override method destinationIdentifierForURL:. The
@@ -105,7 +105,7 @@
     to find the scene we are taken to. Assign its value in the User Defined
     Runtime Attributes section of the Identity Inspector in Interface Builder.
 */
-@property (copy,nonatomic)            NSString*         destinationIdentifier;
+@property (copy,nonatomic)          NSString*         destinationIdentifier;
 
 
 #pragma mark - Data available to self.viewController when segue is performed
@@ -117,12 +117,12 @@
 /** The managed object associated with the URL of the link the user tapped,
     assigned by method managedObjectForURL:.
 */
-@property (readonly,retain,nonatomic) NSManagedObject*  managedObjectForURL;
+@property (readonly,nonatomic)      NSManagedObject*  managedObjectForURL;
 
 
 /** The UIWebView in which the user tapped a link.
 */
-@property (readonly,assign,nonatomic) UIWebView*        webView;
+@property (readonly,weak,nonatomic) UIWebView*        webView;
 
 
 /** The CoreDataUtils object used by method managedObjectForURL: to find the
@@ -130,7 +130,7 @@
     NSManagedObjectContext used is thus available in self.dataUtils.context.
     The default value is obtained using the THE macro defined in APP_DELEGATE_H.
 */
-@property (retain,nonatomic)          CoreDataUtils*    dataUtils;
+@property (nonatomic)               CoreDataUtils*    dataUtils;
 
 
 #pragma mark - Calculating where to go and what data to show

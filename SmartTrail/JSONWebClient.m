@@ -9,36 +9,22 @@
 #import "JSONKit.h"
 
 
-@interface JSONWebClient ()
-@property (retain,nonatomic)          CoreDataUtils*   dataUtils;
-@property (copy,nonatomic)            NSString*        entityName;
-@end
-
-
 @implementation JSONWebClient
+{
+    CoreDataUtils* __dataUtils;
+    NSString*      __entityName;
+}
 
 
 @synthesize dataDictsExtractor = __dataDictsExtractor;
 @synthesize propConverter = __propConverter;
-@synthesize dataUtils = __dataUtils;
-@synthesize entityName = __entityName;
-
-
-- (void) dealloc {
-    [__dataDictsExtractor release];  __dataDictsExtractor = nil;
-    [__propConverter release];       __propConverter = nil;
-    [__dataUtils release];           __dataUtils = nil;
-    [__entityName release];          __entityName = nil;
-
-    [super dealloc];
-}
 
 
 - (id) initWithDataUtils:(CoreDataUtils*)dataUtils entityName:(NSString*)name {
     self = [super init];
     if ( self ) {
-        self.dataUtils = dataUtils;
-        self.entityName = name;
+        __dataUtils = dataUtils;
+        __entityName = name;
     }
     return  self;
 }
@@ -59,7 +45,7 @@
 */
 - (DataDictsExtractor) dataDictsExtractor {
     if ( ! __dataDictsExtractor ) {
-         NSString* entityNamePlural = [[self.entityName lowercaseString]
+         NSString* entityNamePlural = [[__entityName lowercaseString]
             stringByAppendingString:@"s"
         ];
 
@@ -77,8 +63,8 @@
 */
 - (PropConverter) propConverter {
     if ( ! __propConverter ) {
-        self.propConverter = [self.dataUtils
-            dataDictToPropDictConverterForEntityName:self.entityName
+        self.propConverter = [__dataUtils
+            dataDictToPropDictConverterForEntityName:__entityName
                                 usingFuncsByPropName:[NSDictionary
                 dictionaryWithObjectsAndKeys:
                     fnCoerceDataKey(nil), AnyOtherProperty,
@@ -87,6 +73,9 @@
     }
     return  __propConverter;
 }
+
+
+#pragma mark - Overriding WebClient methods
 
 
 - (BOOL) isOKToSendRequest {
@@ -117,21 +106,18 @@
         NSAssert(
             parsedData,
             @"Received JSON data could not be parsed. Data as ASCII:\n\n%@\n",
-            [[[NSString alloc]
-                initWithData:json
-                    encoding:NSASCIIStringEncoding
-            ] autorelease]
+            [[NSString alloc] initWithData:json encoding:NSASCIIStringEncoding]
         );
 
         //  By convention, the name of the fetch request template that finds an
         //  object by its ID is "<entity name>ForId".
-        NSString* fetchReqName = [self.entityName stringByAppendingString:@"ForId"];
+        NSString* fetchReqName = [__entityName stringByAppendingString:@"ForId"];
 
         //  Drill down to the data array and process each data dictionary in it.
         //
         for ( NSDictionary* dataDict in self.dataDictsExtractor(parsedData) ) {
             //  Create or update a managed object loaded with data from dataDict.
-            [self.dataUtils
+            [__dataUtils
                 updateOrInsertThe:fetchReqName
                    withProperties:self.propConverter(dataDict)
             ];

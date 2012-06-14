@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0351099414B212F600487B8B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351099314B212F600487B8B /* JSONKit.m */; };
+		0351099414B212F600487B8B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0351099314B212F600487B8B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0356470D14A1065100208A47 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356470C14A1065100208A47 /* SystemConfiguration.framework */; };
 		0356471014A106DA00208A47 /* BMANetworkUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356470F14A106DA00208A47 /* BMANetworkUtilities.m */; };
-		0356471314A108E500208A47 /* BMAWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356471214A108E500208A47 /* BMAWebClient.m */; };
+		0356471314A108E500208A47 /* BMAWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0356471214A108E500208A47 /* BMAWebClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2F03AE8A151FEC38000A5688 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE89151FEC38000A5688 /* EventDetailViewController.m */; };
 		2F03AE8E1520D988000A5688 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE8D1520D988000A5688 /* Event.m */; };
 		2F03AE911520DBD4000A5688 /* Event+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE901520DBD4000A5688 /* Event+Display.m */; };
@@ -607,6 +607,7 @@
 		2FF002DD1493E23500BF3668 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
 				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
@@ -619,6 +620,7 @@
 		2FF002DE1493E23500BF3668 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
 				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
@@ -632,6 +634,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SmartTrail.app/SmartTrail";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
@@ -649,6 +652,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SmartTrail.app/SmartTrail";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",

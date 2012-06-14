@@ -12,7 +12,7 @@
 @interface EventsTableViewController :
     UITableViewController<NSFetchedResultsControllerDelegate>
 
-@property (retain,nonatomic) IBOutlet
+@property (nonatomic) IBOutlet
     FetchedResultsTableDataSource* fetchedResultsTableDataSource;
 
 @end

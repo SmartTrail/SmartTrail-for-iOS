@@ -15,19 +15,19 @@
 @interface TrailDetailViewController :
     UIViewController<UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
-@property (retain,nonatomic) IBOutlet UILabel*            statsLabel;
-@property (retain,nonatomic) IBOutlet UISegmentedControl* segmentedControl;
-@property (retain,nonatomic) IBOutlet UIView*             infoView;
-@property (retain,nonatomic) IBOutlet UITableView*        conditionView;
-@property (retain,nonatomic) IBOutlet UIImageView*        techRatingImageView;
-@property (retain,nonatomic) IBOutlet UIImageView*        aerobicRatingImageView;
-@property (retain,nonatomic) IBOutlet UIImageView*        coolRatingImageView;
-@property (retain,nonatomic) IBOutlet UIWebView*          descriptionWebView;
-@property (retain,nonatomic) IBOutlet FetchedResultsTableDataSource*
-                                                          conditionsDataSource;
-@property (retain,nonatomic) IBOutlet LinkingWebViewDelegate*
-                                                          linkingWebViewDelegate;
-@property (retain,nonatomic)          Trail*              trail;
+@property (nonatomic) IBOutlet UILabel*            statsLabel;
+@property (nonatomic) IBOutlet UISegmentedControl* segmentedControl;
+@property (nonatomic) IBOutlet UIView*             infoView;
+@property (nonatomic) IBOutlet UITableView*        conditionView;
+@property (nonatomic) IBOutlet UIImageView*        techRatingImageView;
+@property (nonatomic) IBOutlet UIImageView*        aerobicRatingImageView;
+@property (nonatomic) IBOutlet UIImageView*        coolRatingImageView;
+@property (nonatomic) IBOutlet UIWebView*          descriptionWebView;
+@property (nonatomic) IBOutlet FetchedResultsTableDataSource*
+                                                   conditionsDataSource;
+@property (nonatomic) IBOutlet LinkingWebViewDelegate*
+                                                   linkingWebViewDelegate;
+@property (nonatomic)          Trail*              trail;
 
 - (IBAction) segmentedControlChanged:(id)sender;
 

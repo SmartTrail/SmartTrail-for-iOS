@@ -10,43 +10,28 @@
 
 
 @interface WebClient ()
-@property (retain,nonatomic)           CoreDataUtils*   dataUtils;
-@property (copy,nonatomic)             NSString*        entityName;
-@property (retain,nonatomic)           NSURLConnection* urlConnection;
-@property (readwrite,assign,nonatomic) BOOL             isUsed;
-@property (readwrite,retain,nonatomic) NSDate*          serverTime;
-@property (readwrite,retain,nonatomic) NSError*         error;
-@property (retain,nonatomic)           NSMutableData*   receivedData;
-NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
+@property (readwrite,assign,nonatomic)  BOOL            isUsed;
+@property (readwrite,nonatomic)         NSDate*         serverTime;
+@property (readwrite,nonatomic)         NSError*        error;
+@property (nonatomic)                   NSMutableData*  receivedData;
 - (BOOL) checkAndSetUsed;
 - (NSData*) dataFromSynchronous:(NSString*)httpMethod;
 @end
 
+NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
+
 
 @implementation WebClient
+{
+    NSURLConnection* __urlConnection;
+}
 
 
-@synthesize dataUtils = __dataUtils;
-@synthesize entityName = __entityName;
-@synthesize urlConnection = __urlConnection;
 @synthesize urlString = __urlString;
 @synthesize isUsed = __isUsed;
 @synthesize serverTime = __serverTime;
 @synthesize error = __error;
 @synthesize receivedData = __receivedData;
-
-
-- (void) dealloc {
-    [__dataUtils release];          __dataUtils = nil;
-    [__entityName release];         __entityName = nil;
-    [__urlConnection release];      __urlConnection = nil;
-    [__urlString release];          __urlString = nil;
-    [__serverTime release];         __serverTime = nil;
-    [__error release];              __error = nil;
-    [__receivedData release];       __receivedData = nil;
-
-    [super dealloc];
-}
 
 
 #pragma mark - Requesting the data
@@ -67,7 +52,7 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
     if ( ! [self isOKToSendRequest] )  return;
 
     //  Send off the asynchronous request now.
-    self.urlConnection = [NSURLConnection
+    __urlConnection = [NSURLConnection
         connectionWithRequest:makeRequest( @"GET", self.urlString )
                      delegate:self
     ];
@@ -75,7 +60,7 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 
 
 - (void) cancel {
-    [self.urlConnection cancel];
+    [__urlConnection cancel];
 }
 
 
@@ -108,7 +93,7 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 #pragma mark - NSURLConnection delegate methods
 
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData*)data {
+- (void)connection:(NSURLConnection*)connection didReceiveData:(NSData*)data {
     [self.receivedData appendData:data];
 }
 
@@ -121,7 +106,7 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 }
 
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+- (void)connectionDidFinishLoading:(NSURLConnection*)connection {
     [self processReceivedData:self.receivedData];
 //  TODO  Use KVO to notify listeners.
 }
@@ -142,7 +127,7 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 /** Makes an autoreleased "GET" request with a URL from the given string.
 */
 NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString ) {
-    NSMutableURLRequest* request = [[NSMutableURLRequest new] autorelease];
+    NSMutableURLRequest* request = [NSMutableURLRequest new];
     [request setURL:[NSURL URLWithString:urlString]];
     [request setHTTPMethod:method];
     return  request;

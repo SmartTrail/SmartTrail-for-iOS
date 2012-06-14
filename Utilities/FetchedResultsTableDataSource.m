@@ -11,14 +11,16 @@
 
 @interface FetchedResultsTableDataSource ()
 //  Make fetchedResults writable within this file.
-@property (nonatomic,readwrite,retain) NSFetchedResultsController* fetchedResults;
-@property (nonatomic,retain)           NSDictionary*               prevSubstVars;
+@property (nonatomic,readwrite) NSFetchedResultsController* fetchedResults;
 - (void) validateState;
 - (Class) fetchedResultsClassWithName:(NSString*)name;
 @end
 
 
 @implementation FetchedResultsTableDataSource
+{
+    NSDictionary* __prevSubstVars;
+}
 
 
 @synthesize dataUtils = __dataUtils;
@@ -36,25 +38,8 @@
 @synthesize cellReuseIdentifier = __cellReuseIdentifier;
 @synthesize numSectionsForShowingIndex = __numSectionsForShowingIndex;
 @synthesize delegate = __delegate;
-@synthesize prevSubstVars = __prevSubstVars;
 
 
-- (void) dealloc {
-    [__dataUtils release];                     __dataUtils = nil;
-    [__fetchedResults release];                __fetchedResults = nil;
-    [__fetchedResultsClassName release];       __fetchedResultsClassName = nil;
-    [__requestTemplateName release];           __requestTemplateName = nil;
-    [__templateSubstitutionVariables release]; __templateSubstitutionVariables = nil;
-    [__keySortedFirst release];                __keySortedFirst = nil;
-    [__keySortedSecond release];               __keySortedSecond = nil;
-    [__cellTextAttributePath release];         __cellTextAttributePath = nil;
-    [__cellDetailTextAttributePath release];   __cellDetailTextAttributePath = nil;
-    [__cellReuseIdentifier release];           __cellReuseIdentifier = nil;
-    [__delegate release];                      __delegate = nil;
-    [__prevSubstVars release];                 __prevSubstVars = nil;
-
-    [super dealloc];
-}
 
 
 - (void) awakeFromNib {
@@ -106,20 +91,21 @@
     //  templateSubstitutionVariables causes setValue:forKey: to reset
     //  fetchedResults. (See above.)
     //
-    //  Also note that oldVars holds a COPY of templateSubstitutionVariables,
-    //  not a reference to it. So a change will be detected even if
-    //  the latter is mutable and only its contents have changed.
+    //  Also note that __prevSubstVars holds a COPY of
+    //  templateSubstitutionVariables, not a reference to it. So a change will
+    //  be detected even if the latter is mutable and only its contents have
+    //  changed.
     //
-    id vars = self.templateSubstitutionVariables;
+    NSDictionary* vars = self.templateSubstitutionVariables;
     if (
         ! __fetchedResults || (
-            vars  &&  ! [vars isEqualToDictionary:self.prevSubstVars]
+            vars  &&  ! [vars isEqualToDictionary:__prevSubstVars]
         )
     ) {
         [self validateState];
 
         //  Save substitution vars. in order to compare (above) the next time.
-        self.prevSubstVars = [[vars copy] autorelease];
+        __prevSubstVars = vars;
 
         //  Configure a new fetch request for the new NSFetchedResultsController
         //  we will create below.
@@ -146,14 +132,14 @@
         //  Create the new NSFetchedResultsController, which may be a subclass
         //  designated by name in self.fetchedResultsClassName.
         //
-        self.fetchedResults = [[[[self
+        self.fetchedResults = [[[self
             fetchedResultsClassWithName:self.fetchedResultsClassName
         ] alloc]
             initWithFetchRequest:req
             managedObjectContext:self.dataUtils.context
               sectionNameKeyPath:(self.hasSections ? self.keySortedFirst : nil)
                        cacheName:nil
-        ] autorelease];
+        ];
 
         __fetchedResults.delegate = self.delegate;
     }
@@ -220,12 +206,14 @@
         ] description];
     }
 
-    SEL willShowManagedObjectSEL = @selector( willShowManagedObject: );
-    if ( [cell respondsToSelector:willShowManagedObjectSEL] ) {
+    if ( [cell respondsToSelector:@selector( willShowManagedObject: )] ) {
         //  Here we accommodate a custom table view cell by sending it the
         //  managed object data. Presumably, it would assign values to labels
         //  it manages, etc.
-        [cell performSelector:willShowManagedObjectSEL withObject:dataObj];
+        [cell
+            performSelector:@selector( willShowManagedObject: )
+                 withObject:dataObj
+        ];
     }
 
     return  cell;
