@@ -12,13 +12,13 @@
 
 
 @implementation EventDetailViewController
+
+
 @synthesize titleLabel = __titleLabel;
 @synthesize dateRangeLabel = __dateRangeLabel;
 @synthesize descriptionWebView = __descriptionWebView;
 @synthesize linkingWebViewDelegate = __linkingWebViewDelegate;
 @synthesize event = __event;
-
-
 
 
 - (void) viewDidUnload {

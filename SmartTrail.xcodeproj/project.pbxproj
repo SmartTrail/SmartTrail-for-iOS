@@ -102,7 +102,6 @@
 		2F2D148914EE9D4C00E982C5 /* BMAController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMAController.m; sourceTree = "<group>"; };
 		2F2D148C14EEA9A700E982C5 /* CollectionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionUtils.h; sourceTree = "<group>"; };
 		2F2D148D14EEA9A700E982C5 /* CollectionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionUtils.m; sourceTree = "<group>"; };
-		2F2D148E14EEA9A700E982C5 /* CoreDataProvisions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataProvisions.h; sourceTree = "<group>"; };
 		2F2D148F14EEA9A700E982C5 /* CoreDataUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataUtils.h; sourceTree = "<group>"; };
 		2F2D149014EEA9A700E982C5 /* CoreDataUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataUtils.m; sourceTree = "<group>"; };
 		2F2D149314EEA9A700E982C5 /* FetchedResultsTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedResultsTableDataSource.h; sourceTree = "<group>"; };
@@ -224,7 +223,6 @@
 				2F2D14A714EEAC9100E982C5 /* README.org */,
 				2F2D148C14EEA9A700E982C5 /* CollectionUtils.h */,
 				2F2D148D14EEA9A700E982C5 /* CollectionUtils.m */,
-				2F2D148E14EEA9A700E982C5 /* CoreDataProvisions.h */,
 				2F2D148F14EEA9A700E982C5 /* CoreDataUtils.h */,
 				2F2D149014EEA9A700E982C5 /* CoreDataUtils.m */,
 				2F2D149314EEA9A700E982C5 /* FetchedResultsTableDataSource.h */,

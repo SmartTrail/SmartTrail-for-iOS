@@ -177,7 +177,7 @@ UIImage* imageForPngNamed( NSString* filename );
     NSInteger topIndex = __ratingImages.count - 1;
     NSInteger idx = lround( (rating - lo)*topIndex / ((float)(hi - lo)) );
     NSInteger highest = [__ratingImages count] - 1;
-    NSInteger index0Thru5 =  idx > highest  ?  highest  :  idx;
+    NSUInteger index0Thru5 = (NSUInteger)( idx > highest  ?  highest  :  idx );
     return  [__ratingImages objectAtIndex:index0Thru5];
 }
 

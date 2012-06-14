@@ -16,8 +16,6 @@
 #import "Area.h"
 
 @interface BMAController ()
-@property (nonatomic) NSTimer*   eventDownloadTimer;
-@property (nonatomic) NSNumber*  serverTimeDelta;
 - (void) downloadTrailsEtc:(NSTimer*)timer;
 - (void) downloadConditions:(NSTimer*)timer;
 - (void) downloadEvents:(NSTimer*)timer;
@@ -30,15 +28,13 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
 
 @implementation BMAController
-
-
-{   //  These ivars don't store NSObjects, so don't need to be properties.
+{
+    NSTimer* __eventDownloadTimer;
+    NSNumber* __serverTimeDelta;
     dispatch_queue_t __areaTrailQ;
     dispatch_queue_t __conditionQ;
     dispatch_queue_t __eventQ;
 }
-@synthesize eventDownloadTimer = __eventDownloadTimer;
-@synthesize serverTimeDelta = __serverTimeDelta;
 
 
 - (void) dealloc {
@@ -80,14 +76,14 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
         ];
         //  No need to fire now, since conditions were downloaded w/ trail info.
 
-        self.eventDownloadTimer = [NSTimer
+        __eventDownloadTimer = [NSTimer
             scheduledTimerWithTimeInterval:EventInterval
                                     target:self
                                   selector:@selector(downloadEvents:)
                                   userInfo:nil
                                    repeats:YES
         ];
-        [self.eventDownloadTimer fire];
+        [__eventDownloadTimer fire];
     }
     return  self;
 }
@@ -130,7 +126,7 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
                               ]
     ];
     //  If we haven't checked in a while, download now and reset the timer.
-    if ( count )  [self.eventDownloadTimer fire];
+    if ( count )  [__eventDownloadTimer fire];
 }
 
 
@@ -138,7 +134,7 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
 
 - (NSDate*) serverTimeEstimate {
-    NSNumber* delta = self.serverTimeDelta;
+    NSNumber* delta = __serverTimeDelta;
     return  delta
     ?   [NSDate dateWithTimeIntervalSinceNow:[delta doubleValue]]
     :   nil;
@@ -382,7 +378,7 @@ void deleteUsing(
 */
 - (void) setServerTimeDeltaFromDate:(NSDate*)now {
     if ( now ) {
-        self.serverTimeDelta = [NSNumber numberWithDouble:
+        __serverTimeDelta = [NSNumber numberWithDouble:
             [now timeIntervalSince1970] - [[NSDate date] timeIntervalSince1970]
         ];
     } else {

@@ -10,12 +10,14 @@
 #import "BMAController.h"
 #import "CoreDataUtils.h"
 
-@interface AppDelegate :
-    NSObject<UIApplicationDelegate,CoreDataProvisions>
+@interface AppDelegate : NSObject<UIApplicationDelegate>
 
-@property (strong,nonatomic)   UIWindow*      window;
-@property (readonly,nonatomic) BMAController* bmaController;
-@property (readonly,nonatomic) CoreDataUtils* dataUtils;
+@property (strong,nonatomic)   UIWindow*             window;
+@property (strong,nonatomic)   NSManagedObjectModel* managedObjectModel;
+@property (strong,nonatomic)   NSPersistentStoreCoordinator*
+                                                     persistentStoreCoordinator;
+@property (readonly,nonatomic) BMAController*        bmaController;
+@property (readonly,nonatomic) CoreDataUtils*        dataUtils;
 
 - (NSURL*) applicationDocumentsDirectory;
 - (UIImage*)

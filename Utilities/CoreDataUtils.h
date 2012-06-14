@@ -5,7 +5,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CoreDataProvisions.h"
 
 
 /** Dictionaries of DataDictToPropVal function blocks keyed by property name
