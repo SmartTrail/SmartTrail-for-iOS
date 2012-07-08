@@ -16,12 +16,33 @@ static NSString* DateHeaderFormat = @"%a, %d %b %Y %T %Z";
 @implementation NSHTTPURLResponse (NSHTTPURLResponse_Utils)
 
 
-- (NSDate*) date {
-    //  Get the text of the time of the response from the Date header, which
-    //  looks like "Wed, 07 Mar 2012 15:50:44 GMT".
-    NSString* nowStr = [[self allHeaderFields] objectForKey:@"Date"];
+#pragma mark - Private methods and functions
 
-    return  [NSDate dateFromString:nowStr inFormat:DateHeaderFormat];
+
+- (NSDate*) dateForHeader:(NSString*)headerStr {
+    //  Get the text of the time in the indicated response header, which
+    //  looks like "Wed, 07 Mar 2012 15:50:44 GMT".
+    NSString* dateStr = [[self allHeaderFields] objectForKey:headerStr];
+
+    return  [NSDate dateFromString:dateStr inFormat:DateHeaderFormat];
+}
+
+
+#pragma mark - Methods for easy access to date fields
+
+
+- (NSDate*) date {
+    return  [self dateForHeader:@"Date"];
+}
+
+
+- (NSDate*) lastModifiedDate {
+    return  [self dateForHeader:@"Last-Modified"];
+}
+
+
+- (NSDate*) expiresDate {
+    return  [self dateForHeader:@"Expires"];
 }
 
 

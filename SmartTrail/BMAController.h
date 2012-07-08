@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Trail.h"
 
 /** Seconds between downloads of areas and trails. */
 static const NSTimeInterval TrailInfoInterval = 86400.0;    // One day.
@@ -76,6 +77,22 @@ static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
     server time is returned.
 */
 - (NSDate*) serverTimeEstimate;
+
+
+/** This method downloads and unzips the KMZ file whose URL is found in the
+    given trail's kmzURL field, if non-nil. After download of the KMZ file, it
+    then queues-up the given block in the main dispatch queue. The given block
+    will be called with an NSURL argument representing the new directory
+    containing the uncompressed KML file and any resources accompanying it. If
+    no download was done, e.g., when the device is off line, or if the
+    downloaded data could not be unzipped to a file, then the given block is not
+    called.
+
+    The given trail is never modified, but you should probably update its
+    kmlDirPath field (and maybe save its managed context) in the block using the
+    provided path argument.
+*/
+- (void) downloadKMZForTrail:(Trail*)trail thenDo:(void(^)(NSURL*))block;
 
 
 @end

@@ -10,11 +10,27 @@
 
 @interface NSHTTPURLResponse (NSHTTPURLResponse_Utils)
 
-/** Returns an (autoreleased) NSDate parsed from the text in the Date header
-    of the receiver. It is assumed this text is in strftime-format
-    @"%a, %d %b %Y %T %Z".
+
+/** Returns an NSDate parsed from the text in the Date header of the receiver.
+    It is assumed this text is in strftime-format, @"%a, %d %b %Y %T %Z". This
+    is supposed to represent the date and time, according to the server, that
+    the response was sent.
 */
 - (NSDate*) date;
+
+
+/** Returns an NSDate parsed from the text in the Last-Modified header of the
+    receiver. It is assumed this text is in strftime-format,
+    @"%a, %d %b %Y %T %Z".
+*/
+- (NSDate*) lastModifiedDate;
+
+
+/** Returns an NSDate parsed from the text in the Expires header of the
+    receiver. It is assumed this text is in strftime-format,
+    @"%a, %d %b %Y %T %Z".
+*/
+- (NSDate*) expiresDate;
 
 
 @end

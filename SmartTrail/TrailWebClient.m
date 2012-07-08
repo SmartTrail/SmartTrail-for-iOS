@@ -36,6 +36,7 @@
                     fnIntegerForDataKey(@"coolRating"),      @"coolRating",
                     fnRawForDataKey(@"description"),         @"descriptionPartial",
                     fnIntegerForDataKey(@"elevationGain"),   @"elevationGain",
+                    fnRawForDataKey(@"kmz"),                 @"kmzURL",
                     fnFloatForDataKey(@"length"),            @"length",
                     fnIntegerForDataKey(@"techRating"),      @"techRating",
                     fnDateSince1970ForDataKey(@"updatedAt"), @"updatedAt",

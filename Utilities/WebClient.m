@@ -11,27 +11,76 @@
 
 @interface WebClient ()
 @property (readwrite,assign,nonatomic)  BOOL            isUsed;
-@property (readwrite,nonatomic)         NSDate*         serverTime;
-@property (readwrite,nonatomic)         NSError*        error;
-@property (nonatomic)                   NSMutableData*  receivedData;
+@property (readwrite,strong,nonatomic)  NSDate*         serverTime;
+@property (readwrite,strong,nonatomic)  NSError*        error;
+@property (strong,nonatomic)            NSMutableData*  receivedData;
+- (NSMutableURLRequest*) requestWithMethod:(NSString*)method;
 - (BOOL) checkAndSetUsed;
 - (NSData*) dataFromSynchronous:(NSString*)httpMethod;
 @end
 
-NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 
 
 @implementation WebClient
 {
+    NSURL* __url;
+    NSString* __urlString;
     NSURLConnection* __urlConnection;
 }
 
 
-@synthesize urlString = __urlString;
+@synthesize baseURLString = __baseURLString;
 @synthesize isUsed = __isUsed;
 @synthesize serverTime = __serverTime;
 @synthesize error = __error;
+@synthesize processData = __processData;
 @synthesize receivedData = __receivedData;
+
+
+#pragma mark - Getters and Setters
+
+
+- (NSURL*) url {
+    if ( ! __url ) {
+        __url = [NSURL
+            URLWithString:self.urlString
+            relativeToURL:[NSURL URLWithString:self.baseURLString]
+        ];
+    }
+    return  __url;
+}
+
+
+- (void) setUrl:(NSURL*)url {
+    __url = url;
+    __urlString = nil;
+}
+
+
+- (NSString*) urlString {
+    if ( ! __urlString ) {
+        //  Must use __url here, not self.url, to avoid infinite trampolining
+        //  when both __urlString and __url are nil.
+        __urlString = [__url absoluteString];
+    }
+    return  __urlString;
+}
+
+
+- (void) setUrlString:(NSString*)urlString {
+    __urlString = [urlString
+        stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding
+    ];
+    __url = nil;
+}
+
+
+- (NSMutableData*) receivedData {
+    if ( !__receivedData) {
+        self.receivedData = [NSMutableData dataWithCapacity:2048];
+    }
+    return __receivedData;
+}
 
 
 #pragma mark - Requesting the data
@@ -53,7 +102,7 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 
     //  Send off the asynchronous request now.
     __urlConnection = [NSURLConnection
-        connectionWithRequest:makeRequest( @"GET", self.urlString )
+        connectionWithRequest:[self requestWithMethod:@"GET"]
                      delegate:self
     ];
 }
@@ -71,7 +120,12 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 
 
 - (void) processReceivedData:(NSData*)data {
-    if ( ! data ) {
+
+    //  We process even if there is no data, since the client may need to know.
+    if ( self.processData )  self.processData( data );
+
+    if ( ! [data length] ) {
+        //  data is nil (say, no response) or has no bytes. Log a warning.
         NSString* msg = [NSString
             stringWithFormat:@"WebClient received no data from %@", self.urlString
         ];
@@ -124,23 +178,15 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString );
 #pragma mark - Private methods and functions
 
 
-/** Makes an autoreleased "GET" request with a URL from the given string.
+/** Makes a request with the given method ("GET", "POST", etc.) and a URL which
+    is self.url. No cached response will be returned by the request.
 */
-NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString ) {
+- (NSMutableURLRequest*) requestWithMethod:(NSString*)method {
     NSMutableURLRequest* request = [NSMutableURLRequest new];
-    [request setURL:[NSURL URLWithString:urlString]];
+    [request setURL:self.url];
     [request setHTTPMethod:method];
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     return  request;
-}
-
-
-/** Getter for private property receivedData that initializes it on first call.
-*/
-- (NSMutableData*) receivedData {
-    if ( !__receivedData) {
-        self.receivedData = [NSMutableData dataWithCapacity:2048];
-    }
-    return __receivedData;
 }
 
 
@@ -171,10 +217,10 @@ NSMutableURLRequest* makeRequest( NSString* method, NSString* urlString ) {
     NSError* err = nil;
 
     NSData* data = [NSURLConnection
-        sendSynchronousRequest:makeRequest( httpMethod, self.urlString )
+        sendSynchronousRequest:[self requestWithMethod:httpMethod]
              returningResponse:&response
                          error:&err
-    ];
+        ];
     self.error = err;
     self.serverTime = [response date];
     return  data;

@@ -91,6 +91,14 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    //  Initiate download of trail's KMZ data, if necessary.
+    [THE(bmaController)
+        downloadKMZForTrail:self.trail
+                     thenDo:^(NSURL* url) {
+                                self.trail.kmlDirPath = [url absoluteURL];
+                            }
+    ];
+
     //  Show trail name at top of screen.
     self.navigationItem.title = self.trail.name;
 

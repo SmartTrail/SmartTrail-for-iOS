@@ -2,7 +2,7 @@
 //  Trail.h
 //  SmartTrail
 //
-//  Created by Tyler Perkins on 2012-03-04.
+//  Created by Tyler Perkins on 2012-07-05.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,21 +13,23 @@
 
 @interface Trail : NSManagedObject
 
-@property (nonatomic) NSNumber * aerobicRating;
-@property (nonatomic) NSNumber * coolRating;
-@property (nonatomic) NSString * descriptionFull;
-@property (nonatomic) NSString * descriptionPartial;
-@property (nonatomic) NSDate * downloadedAt;
-@property (nonatomic) NSNumber * elevationGain;
-@property (nonatomic) NSString * id;
-@property (nonatomic) NSNumber * isFavorite;
-@property (nonatomic) NSNumber * length;
-@property (nonatomic) NSString * name;
-@property (nonatomic) NSNumber * techRating;
-@property (nonatomic) NSDate * updatedAt;
-@property (nonatomic) NSString * url;
-@property (nonatomic) Area *area;
-@property (nonatomic) NSSet *conditions;
+@property (nonatomic, retain) NSNumber * aerobicRating;
+@property (nonatomic, retain) NSNumber * coolRating;
+@property (nonatomic, retain) NSString * descriptionFull;
+@property (nonatomic, retain) NSString * descriptionPartial;
+@property (nonatomic, retain) NSDate * downloadedAt;
+@property (nonatomic, retain) NSNumber * elevationGain;
+@property (nonatomic, retain) NSString * id;
+@property (nonatomic, retain) NSNumber * isFavorite;
+@property (nonatomic, retain) NSNumber * length;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * techRating;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSString * kmzURL;
+@property (nonatomic, retain) NSString * kmlDirPath;
+@property (nonatomic, retain) Area *area;
+@property (nonatomic, retain) NSSet *conditions;
 @end
 
 @interface Trail (CoreDataGeneratedAccessors)

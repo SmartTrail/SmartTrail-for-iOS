@@ -14,6 +14,7 @@
 #import "ConditionWebClient.h"
 #import "EventWebClient.h"
 #import "Area.h"
+#import "NSFileManager+Utils.h"
 
 @interface BMAController ()
 - (void) downloadTrailsEtc:(NSTimer*)timer;
@@ -41,7 +42,6 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
     dispatch_release( __areaTrailQ );
     dispatch_release( __conditionQ );
     dispatch_release( __eventQ );
-
 }
 
 
@@ -141,6 +141,63 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 }
 
 
+#pragma mark - Obtaining KML files for maps
+
+
+- (void) downloadKMZForTrail:(Trail*)trail thenDo:(void(^)(NSURL*))block {
+  dispatch_async( __areaTrailQ, ^{
+    [NetActivityIndicatorController aNetActivityDidStop];
+
+    WebClient* client = [WebClient new];
+    client.urlString = trail.kmzURL;
+    client.baseURLString = [[NSBundle mainBundle]   // kmzURL is relative.
+        objectForInfoDictionaryKey:@"BmaBaseUrl"
+    ];
+    client.processData = ^( NSData* zipData ){
+
+      if ( [zipData length] ) {
+        NSFileManager* fileMgr = [NSFileManager defaultManager];
+        //  (NSFileManager is thread-safe, since we're not using a delegate.)
+
+        NSString* kmlDirName = [trail.id stringByAppendingString:@".kmz.d"];
+        NSURL* kmlDirTmpURL = [fileMgr tmpURLEndingInPathComponent:kmlDirName];
+        NSURL* kmzTmpURL = [fileMgr
+            tmpURLEndingInPathComponent:[trail.id stringByAppendingString:@".kmz"]
+        ];
+
+        if(
+            [zipData writeToURL:kmzTmpURL atomically:YES]  &&
+            [fileMgr unzip:kmzTmpURL intoNewDirAtURL:kmlDirTmpURL]
+        ) {
+            //  Succeeded in unzipping kmzTmpURL into dir. kmlDirTmpURL.
+            //  Move the dir. into the cache dir.
+            NSURL* kmlDirURL = [fileMgr cacheURLEndingInPathComponent:kmlDirName];
+            [fileMgr removeItemAtURL:kmlDirURL error:nil];
+            if (
+                [fileMgr moveItemAtURL:kmlDirTmpURL toURL:kmlDirURL error:nil]
+            ) {
+                //  Succeeded in moving the dir. Now call the given block in
+                //  the main dispatch queue.
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    block(kmlDirURL);
+                } );
+
+            } else {
+                NSAssert( NO, @"Couldn't move directory %@ to %@.", kmlDirTmpURL, kmlDirURL );
+            }
+
+        } else {
+            NSAssert( NO, @"Could not write unzip data to URL %@", kmzTmpURL );
+        }
+      }
+    };
+
+    [NetActivityIndicatorController aNetActivityDidStart];
+    [client sendSynchronousGet];
+  });
+}
+
+
 #pragma mark - Timer handlers (private)
 
 
@@ -148,12 +205,12 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
     method requests data from the BMA server, parses the returned JSON, and
     creates or updates suitable Area, Trail, and Condition managed objects
     representing the data, and persists the objects. Although this method
-    returns immediately while its work is performed asynchronously in a
-    concurrent dispatch queue, the managed objects are populated in an order
-    that ensures relationships between them are correct. In case this method
-    was unable to be called at the scheduled time, this method resets the given
-    timer to next fire in TrailInfoInterval seconds. This is so the start of
-    these downloads will be be separated by at least that interval.
+    returns immediately while its work is performed asynchronously in a serial
+    dispatch queue, the managed objects are populated in an order that ensures
+    relationships between them are correct. In case this method was unable to be
+    called at the scheduled time, this method resets the given timer to next
+    fire in TrailInfoInterval seconds. This is so the start of these downloads
+    will be be separated by at least that interval.
 */
 - (void) downloadTrailsEtc:(NSTimer*)timer {
     rescheduleTimerToNext( timer, TrailInfoInterval );

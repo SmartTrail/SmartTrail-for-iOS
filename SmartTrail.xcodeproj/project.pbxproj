@@ -35,6 +35,16 @@
 		2F9A04E7150174A7001638BC /* Condition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E6150174A7001638BC /* Condition.m */; };
 		2F9B471F1503ED2B00111062 /* Trail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B471E1503ED2B00111062 /* Trail.m */; };
 		2FCE73F8150AA06300524848 /* ConditionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE73F7150AA06300524848 /* ConditionTableViewCell.m */; };
+		2FE56B5D15990B72002C5308 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B4A15990B72002C5308 /* ioapi.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B5E15990B72002C5308 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B4C15990B72002C5308 /* mztools.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B5F15990B72002C5308 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B4E15990B72002C5308 /* unzip.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B6015990B72002C5308 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B5015990B72002C5308 /* zip.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B6115990B72002C5308 /* FileInZipInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B5415990B72002C5308 /* FileInZipInfo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B6215990B72002C5308 /* ZipException.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B5615990B72002C5308 /* ZipException.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B6315990B72002C5308 /* ZipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B5815990B72002C5308 /* ZipFile.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B6415990B72002C5308 /* ZipReadStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B5A15990B72002C5308 /* ZipReadStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B6515990B72002C5308 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE56B5C15990B72002C5308 /* ZipWriteStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2FE56B74159FCDD7002C5308 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FE56B73159FCDD7002C5308 /* libz.dylib */; };
 		2FF002A01493E23400BF3668 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF0029F1493E23400BF3668 /* UIKit.framework */; };
 		2FF002A21493E23400BF3668 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A11493E23400BF3668 /* Foundation.framework */; };
 		2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF002A31493E23400BF3668 /* CoreGraphics.framework */; };
@@ -60,6 +70,7 @@
 		2FF17C2B1507DE9000881CC4 /* EventWebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC3 /* EventWebClient.m */; };
 		2FF17C2B1507DE9000881CC7 /* WebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC6 /* WebClient.m */; };
 		2FF17C2B1507DE9000881CCA /* NetActivityIndicatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */; };
+		2FF17C2B1507DE9000881CCD /* NSFileManager+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +133,25 @@
 		2F9B471E1503ED2B00111062 /* Trail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trail.m; sourceTree = "<group>"; };
 		2FCE73F6150AA06300524848 /* ConditionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionTableViewCell.h; sourceTree = "<group>"; };
 		2FCE73F7150AA06300524848 /* ConditionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConditionTableViewCell.m; sourceTree = "<group>"; };
+		2FE56B4A15990B72002C5308 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		2FE56B4B15990B72002C5308 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		2FE56B4C15990B72002C5308 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		2FE56B4D15990B72002C5308 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		2FE56B4E15990B72002C5308 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		2FE56B4F15990B72002C5308 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		2FE56B5015990B72002C5308 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		2FE56B5115990B72002C5308 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		2FE56B5315990B72002C5308 /* FileInZipInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileInZipInfo.h; sourceTree = "<group>"; };
+		2FE56B5415990B72002C5308 /* FileInZipInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileInZipInfo.m; sourceTree = "<group>"; };
+		2FE56B5515990B72002C5308 /* ZipException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipException.h; sourceTree = "<group>"; };
+		2FE56B5615990B72002C5308 /* ZipException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipException.m; sourceTree = "<group>"; };
+		2FE56B5715990B72002C5308 /* ZipFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipFile.h; sourceTree = "<group>"; };
+		2FE56B5815990B72002C5308 /* ZipFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipFile.m; sourceTree = "<group>"; };
+		2FE56B5915990B72002C5308 /* ZipReadStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipReadStream.h; sourceTree = "<group>"; };
+		2FE56B5A15990B72002C5308 /* ZipReadStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipReadStream.m; sourceTree = "<group>"; };
+		2FE56B5B15990B72002C5308 /* ZipWriteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipWriteStream.h; sourceTree = "<group>"; };
+		2FE56B5C15990B72002C5308 /* ZipWriteStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipWriteStream.m; sourceTree = "<group>"; };
+		2FE56B73159FCDD7002C5308 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2FF0029B1493E23400BF3668 /* SmartTrail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartTrail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF0029F1493E23400BF3668 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2FF002A11493E23400BF3668 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -163,6 +193,8 @@
 		2FF17C2B1507DE9000881CC8 /* WebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebClient.h; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetActivityIndicatorController.m; path = Utilities/NetActivityIndicatorController.m; sourceTree = SOURCE_ROOT; };
 		2FF17C2B1507DE9000881CCB /* NetActivityIndicatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetActivityIndicatorController.h; path = Utilities/NetActivityIndicatorController.h; sourceTree = SOURCE_ROOT; };
+		2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Utils.m"; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CCE /* NSFileManager+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Utils.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +207,7 @@
 				2FF002A21493E23400BF3668 /* Foundation.framework in Frameworks */,
 				2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */,
 				2FF09DB814EB197C0050552B /* CoreData.framework in Frameworks */,
+				2FE56B74159FCDD7002C5308 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,18 +289,53 @@
 				2F9A04E5150174A7001638BC /* Condition.h */,
 				2F9A04E6150174A7001638BC /* Condition.m */,
 				2F03AE8C1520D988000A5688 /* Event.h */,
+				2F03AE8D1520D988000A5688 /* Event.m */,
 				2F03AE8F1520DBD4000A5688 /* Event+Display.h */,
 				2F03AE901520DBD4000A5688 /* Event+Display.m */,
-				2F03AE8D1520D988000A5688 /* Event.m */,
 			);
 			path = "Managed Objects";
+			sourceTree = "<group>";
+		};
+		2FE56B4915990B72002C5308 /* MiniZip */ = {
+			isa = PBXGroup;
+			children = (
+				2FE56B4A15990B72002C5308 /* ioapi.c */,
+				2FE56B4B15990B72002C5308 /* ioapi.h */,
+				2FE56B4C15990B72002C5308 /* mztools.c */,
+				2FE56B4D15990B72002C5308 /* mztools.h */,
+				2FE56B4E15990B72002C5308 /* unzip.c */,
+				2FE56B4F15990B72002C5308 /* unzip.h */,
+				2FE56B5015990B72002C5308 /* zip.c */,
+				2FE56B5115990B72002C5308 /* zip.h */,
+			);
+			path = MiniZip;
+			sourceTree = "<group>";
+		};
+		2FE56B5215990B72002C5308 /* Objective-Zip */ = {
+			isa = PBXGroup;
+			children = (
+				2FE56B5315990B72002C5308 /* FileInZipInfo.h */,
+				2FE56B5415990B72002C5308 /* FileInZipInfo.m */,
+				2FE56B5515990B72002C5308 /* ZipException.h */,
+				2FE56B5615990B72002C5308 /* ZipException.m */,
+				2FE56B5715990B72002C5308 /* ZipFile.h */,
+				2FE56B5815990B72002C5308 /* ZipFile.m */,
+				2FE56B5915990B72002C5308 /* ZipReadStream.h */,
+				2FE56B5A15990B72002C5308 /* ZipReadStream.m */,
+				2FE56B5B15990B72002C5308 /* ZipWriteStream.h */,
+				2FE56B5C15990B72002C5308 /* ZipWriteStream.m */,
+			);
+			path = "Objective-Zip";
 			sourceTree = "<group>";
 		};
 		2FF002901493E23400BF3668 = {
 			isa = PBXGroup;
 			children = (
+				2FE56B73159FCDD7002C5308 /* libz.dylib */,
 				2FF09DB714EB197C0050552B /* CoreData.framework */,
 				0351098D14B211F200487B8B /* JSONParser */,
+				2FE56B4915990B72002C5308 /* MiniZip */,
+				2FE56B5215990B72002C5308 /* Objective-Zip */,
 				2F2D148B14EEA9A600E982C5 /* Utilities */,
 				2FF002A51493E23400BF3668 /* SmartTrail */,
 				2FF002D11493E23500BF3668 /* SmartTrailTests */,
@@ -332,6 +400,8 @@
 				0356470F14A106DA00208A47 /* BMANetworkUtilities.m */,
 				0356471114A108E500208A47 /* BMAWebClient.h */,
 				0356471214A108E500208A47 /* BMAWebClient.m */,
+				2FF17C2B1507DE9000881CCE /* NSFileManager+Utils.h */,
+				2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */,
 			);
 			path = SmartTrail;
 			sourceTree = "<group>";
@@ -514,6 +584,16 @@
 				2FF17C2B1507DE9000881CC7 /* WebClient.m in Sources */,
 				2F71257915598D52008A8445 /* LinkingWebViewDelegate.m in Sources */,
 				2FF17C2B1507DE9000881CCA /* NetActivityIndicatorController.m in Sources */,
+				2FE56B5D15990B72002C5308 /* ioapi.c in Sources */,
+				2FE56B5E15990B72002C5308 /* mztools.c in Sources */,
+				2FE56B5F15990B72002C5308 /* unzip.c in Sources */,
+				2FE56B6015990B72002C5308 /* zip.c in Sources */,
+				2FE56B6115990B72002C5308 /* FileInZipInfo.m in Sources */,
+				2FE56B6215990B72002C5308 /* ZipException.m in Sources */,
+				2FE56B6315990B72002C5308 /* ZipFile.m in Sources */,
+				2FE56B6415990B72002C5308 /* ZipReadStream.m in Sources */,
+				2FE56B6515990B72002C5308 /* ZipWriteStream.m in Sources */,
+				2FF17C2B1507DE9000881CCD /* NSFileManager+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,8 +689,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
 				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -622,8 +703,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SmartTrail/SmartTrail-Prefix.pch";
 				INFOPLIST_FILE = "SmartTrail/SmartTrail-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
