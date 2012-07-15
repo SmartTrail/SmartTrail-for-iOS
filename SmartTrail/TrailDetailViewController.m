@@ -93,10 +93,11 @@
 
     //  Initiate download of trail's KMZ data, if necessary.
     [THE(bmaController)
-        downloadKMZForTrail:self.trail
-                     thenDo:^(NSURL* url) {
-                                self.trail.kmlDirPath = [url absoluteURL];
-                            }
+        checkKMZForTrail:self.trail
+                  thenDo:^(NSURL* url) {
+                             self.trail.kmlDirPath = [[url absoluteURL] path];
+NSLog( @"Downloaded %@", self.trail.kmlDirPath );
+                         }
     ];
 
     //  Show trail name at top of screen.

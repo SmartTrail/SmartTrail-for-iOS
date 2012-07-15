@@ -15,11 +15,13 @@
 #import "EventWebClient.h"
 #import "Area.h"
 #import "NSFileManager+Utils.h"
+#import "NSDate+Utils.h"
 
 @interface BMAController ()
 - (void) downloadTrailsEtc:(NSTimer*)timer;
 - (void) downloadConditions:(NSTimer*)timer;
 - (void) downloadEvents:(NSTimer*)timer;
+- (void) downloadKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block;
 static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 - (NSDate*) ago:(NSTimeInterval)age;
@@ -130,6 +132,25 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 }
 
 
+- (void) checkKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block {
+    if ( trail.kmzURL ) {
+        NSDate* downloadDate = nil;
+        NSString* path = trail.kmlDirPath;
+        if ( path ) {
+            //  Have downloaded and unzipped a KMZ previously. Check when.
+            NSDictionary* attrDict = [[NSFileManager defaultManager]
+                attributesOfItemAtPath:path error:nil
+            ];
+            downloadDate = [attrDict objectForKey:NSFileCreationDate];
+        }
+        if ( ! path  ||  [downloadDate isBefore:trail.updatedAt] ) {
+            //  There is a KMZ we haven't downloaded yet, or it's out of date.
+            [self downloadKMZForTrail:trail thenDo:block];
+        }
+    }
+}
+
+
 #pragma mark - Server time
 
 
@@ -138,63 +159,6 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
     return  delta
     ?   [NSDate dateWithTimeIntervalSinceNow:[delta doubleValue]]
     :   nil;
-}
-
-
-#pragma mark - Obtaining KML files for maps
-
-
-- (void) downloadKMZForTrail:(Trail*)trail thenDo:(void(^)(NSURL*))block {
-  dispatch_async( __areaTrailQ, ^{
-    [NetActivityIndicatorController aNetActivityDidStop];
-
-    WebClient* client = [WebClient new];
-    client.urlString = trail.kmzURL;
-    client.baseURLString = [[NSBundle mainBundle]   // kmzURL is relative.
-        objectForInfoDictionaryKey:@"BmaBaseUrl"
-    ];
-    client.processData = ^( NSData* zipData ){
-
-      if ( [zipData length] ) {
-        NSFileManager* fileMgr = [NSFileManager defaultManager];
-        //  (NSFileManager is thread-safe, since we're not using a delegate.)
-
-        NSString* kmlDirName = [trail.id stringByAppendingString:@".kmz.d"];
-        NSURL* kmlDirTmpURL = [fileMgr tmpURLEndingInPathComponent:kmlDirName];
-        NSURL* kmzTmpURL = [fileMgr
-            tmpURLEndingInPathComponent:[trail.id stringByAppendingString:@".kmz"]
-        ];
-
-        if(
-            [zipData writeToURL:kmzTmpURL atomically:YES]  &&
-            [fileMgr unzip:kmzTmpURL intoNewDirAtURL:kmlDirTmpURL]
-        ) {
-            //  Succeeded in unzipping kmzTmpURL into dir. kmlDirTmpURL.
-            //  Move the dir. into the cache dir.
-            NSURL* kmlDirURL = [fileMgr cacheURLEndingInPathComponent:kmlDirName];
-            [fileMgr removeItemAtURL:kmlDirURL error:nil];
-            if (
-                [fileMgr moveItemAtURL:kmlDirTmpURL toURL:kmlDirURL error:nil]
-            ) {
-                //  Succeeded in moving the dir. Now call the given block in
-                //  the main dispatch queue.
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    block(kmlDirURL);
-                } );
-
-            } else {
-                NSAssert( NO, @"Couldn't move directory %@ to %@.", kmlDirTmpURL, kmlDirURL );
-            }
-
-        } else {
-            NSAssert( NO, @"Could not write unzip data to URL %@", kmzTmpURL );
-        }
-      }
-    };
-
-    [NetActivityIndicatorController aNetActivityDidStart];
-    [client sendSynchronousGet];
-  });
 }
 
 
@@ -346,6 +310,63 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
 
 #pragma mark - Other private methods and functions
+
+
+/** Performs the downloading and unzipping of a KMZ file required by method
+    checkKMZForTrail:thenDo:.
+*/
+- (void) downloadKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block {
+  dispatch_async( __areaTrailQ, ^{
+    [NetActivityIndicatorController aNetActivityDidStop];
+
+    WebClient* client = [WebClient new];
+    client.urlString = trail.kmzURL;
+    client.baseURLString = [[NSBundle mainBundle]   // kmzURL is relative.
+        objectForInfoDictionaryKey:@"BmaBaseUrl"
+    ];
+    client.processData = ^( NSData* zipData ){
+
+      if ( [zipData length] ) {
+        NSFileManager* fileMgr = [NSFileManager defaultManager];
+        //  (NSFileManager is thread-safe, since we're not using a delegate.)
+
+        NSString* kmlDirName = [trail.id stringByAppendingString:@".kmz.d"];
+        NSURL* kmlDirTmpURL = [fileMgr tmpURLEndingInPathComponent:kmlDirName];
+        NSURL* kmzTmpURL = [fileMgr
+            tmpURLEndingInPathComponent:[trail.id stringByAppendingString:@".kmz"]
+        ];
+
+        if(
+            [zipData writeToURL:kmzTmpURL atomically:YES]  &&
+            [fileMgr unzip:kmzTmpURL intoNewDirAtURL:kmlDirTmpURL]
+        ) {
+            //  Succeeded in unzipping kmzTmpURL into dir. kmlDirTmpURL.
+            //  Move the dir. into the cache dir.
+            NSURL* kmlDirURL = [fileMgr cacheURLEndingInPathComponent:kmlDirName];
+            [fileMgr removeItemAtURL:kmlDirURL error:nil];
+            if (
+                [fileMgr moveItemAtURL:kmlDirTmpURL toURL:kmlDirURL error:nil]
+            ) {
+                //  Succeeded in moving the dir. Now call the given block in
+                //  the main dispatch queue.
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    block(kmlDirURL);
+                } );
+
+            } else {
+                NSAssert( NO, @"Couldn't move directory %@ to %@.", kmlDirTmpURL, kmlDirURL );
+            }
+
+        } else {
+            NSAssert( NO, @"Could not write unzip data to URL %@", kmzTmpURL );
+        }
+      }
+    };
+
+    [NetActivityIndicatorController aNetActivityDidStart];
+    [client sendSynchronousGet];
+  });
+}
 
 
 /** Resets the fire date on the given timer to the time anInterval from now.
