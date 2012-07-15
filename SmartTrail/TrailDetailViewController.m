@@ -8,12 +8,9 @@
 
 #import "TrailDetailViewController.h"
 #import "AppDelegate.h"
-#import "ConditionTableViewCell.h"
-#import "UILabel+Utils.h"
 
 @interface TrailDetailViewController ()
 - (void) showViewForIndex:(NSUInteger)idx;
-- (void) toggleCellForIndexPath:(NSIndexPath*)idxPath toHeight:(CGFloat)hght;
 @end
 
 
@@ -23,24 +20,18 @@
     //  (radio buttons).
     NSArray*     __viewsToSelect;
     NSUInteger   __selectedViewIndex;
-
-    //  These two ivars maintain the height of the cell to be expanded, if any,
-    //  and the index of its row in the table view.
-    NSIndexPath* __expandedCellIndexPath;
-    CGFloat      __expandedCellHeight;
 }
 
 
 @synthesize statsLabel = __statsLabel;
 @synthesize segmentedControl = __segmentedControl;
 @synthesize infoView = __infoView;
-@synthesize conditionView = __conditionView;
 @synthesize techRatingImageView = __techRatingImageView;
 @synthesize aerobicRatingImageView = __aerobicRatingImageView;
 @synthesize coolRatingImageView = __coolRatingImageView;
 @synthesize descriptionWebView = __descriptionWebView;
-@synthesize conditionsDataSource = __conditionsDataSource;
 @synthesize linkingWebViewDelegate = __linkingWebViewDelegate;
+@synthesize trailConditionsController = __trailConditionsController;
 @synthesize trail = __trail;
 
 
@@ -59,7 +50,7 @@
     [super viewDidLoad];
     //  Set up the collection of views to select using the segmented controller.
     __viewsToSelect = [NSArray
-        arrayWithObjects:self.infoView, self.conditionView, nil
+        arrayWithObjects:self.infoView, self.trailConditionsController.tableView, nil
     ];
     __selectedViewIndex = 0;     // Initially show infoView.
 }
@@ -69,13 +60,12 @@
     self.statsLabel = nil;
     self.segmentedControl = nil;
     self.infoView = nil;
-    self.conditionView = nil;
     self.techRatingImageView = nil;
     self.aerobicRatingImageView = nil;
     self.coolRatingImageView = nil;
     self.descriptionWebView = nil;
-    self.conditionsDataSource = nil;
     self.linkingWebViewDelegate = nil;
+    self.trailConditionsController = nil;
 
     [super viewDidUnload];
 }
@@ -99,6 +89,13 @@
 NSLog( @"Downloaded %@", self.trail.kmlDirPath );
                          }
     ];
+
+    //  Update the list of all conditions for trails in this trail's area,
+    //  if they have not already been updated recently.
+    [THE(bmaController) checkConditionsForArea:self.trail.area];
+
+    //  Inform the conditions table's controller which trail we're examining.
+    self.trailConditionsController.trail = self.trail;
 
     //  Show trail name at top of screen.
     self.navigationItem.title = self.trail.name;
@@ -135,16 +132,6 @@ NSLog( @"Downloaded %@", self.trail.kmlDirPath );
         loadHTMLString:self.trail.descriptionFull
                baseURL:[NSURL URLWithString:bmaBaseUrl]
     ];
-
-    //  Tell the data source for the table of conditions which trail we're
-    //  viewing, so it can generate the list of Condition objects for it.
-    self.conditionsDataSource.templateSubstitutionVariables = [NSDictionary
-        dictionaryWithObject:self.trail.id forKey:@"id"
-    ];
-
-    //  Update the list of all conditions for trails in this trail's area,
-    //  if they have not already been updated recently.
-    [THE(bmaController) checkConditionsForArea:self.trail.area];
 }
 
 
@@ -156,62 +143,6 @@ NSLog( @"Downloaded %@", self.trail.kmlDirPath );
 */
 - (IBAction) segmentedControlChanged:(id)sender {
     [self showViewForIndex:(NSUInteger)[sender selectedSegmentIndex]];
-}
-
-
-#pragma mark - UITableViewDelegate implementation for the table of conditions
-
-
-- (NSIndexPath*)
-                   tableView:(UITableView*)tableView
-    willSelectRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    //  Set of indexes of rows whose cells will change their height. The given
-    //  indexPath will not be nil, but expandedCellIndexPath will be nil if no
-    //  other cell is expanded. Also, expandedCellIndexPath may be the same as
-    //  indexPath, hence the use of an NSSet.
-    NSSet* changingCellIndexes = [NSSet
-        setWithObjects:indexPath, __expandedCellIndexPath, nil
-    ];
-
-    //  Record the at-most-one cell to be expanded in height.
-    ConditionTableViewCell* cell = (ConditionTableViewCell*)[tableView
-        cellForRowAtIndexPath:indexPath
-    ];
-    [self
-        toggleCellForIndexPath:indexPath
-                      toHeight:(   cell.bounds.size.height
-                               +   [cell.commentLabel moreHeightWanted]
-                               )
-    ];
-
-    //  Reload the one or two rows whose cells have changed height.
-    [self.conditionView
-        reloadRowsAtIndexPaths:[changingCellIndexes allObjects]
-              withRowAnimation:UITableViewRowAnimationNone
-    ];
-
-    return  indexPath;
-}
-
-
-- (CGFloat)
-                  tableView:(UITableView*)tableView
-    heightForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    return  [indexPath isEqual:__expandedCellIndexPath]
-    ?   __expandedCellHeight            // New height of selected row.
-    :   self.conditionView.rowHeight;   // Default for all other rows.
-}
-
-
-#pragma mark - NSFetchedResultsControllerDelegate implementation for the table of conditions
-
-
-- (void) controllerDidChangeContent:(NSFetchedResultsController*)sender {
-    //  Some managed object known by the results controller has been added,
-    //  removed, moved, or updated.
-    [self.conditionView reloadData];
 }
 
 
@@ -231,18 +162,6 @@ NSLog( @"Downloaded %@", self.trail.kmlDirPath );
     selectedView.hidden = NO;
 
     __selectedViewIndex = idx;
-}
-
-
-/** Record the new height of the single cell to be expanded in the table of
-    conditions, along with the index of its row. The stored data will be
-    accessed by the table view when it calls the
-    tableView:heightForRowAtIndexPath: delegate method.
-*/
-- (void) toggleCellForIndexPath:(NSIndexPath*)idxPath toHeight:(CGFloat)hght {
-    __expandedCellIndexPath =
-        [idxPath isEqual:__expandedCellIndexPath]  ?  nil  :  idxPath;
-    __expandedCellHeight = hght;
 }
 
 

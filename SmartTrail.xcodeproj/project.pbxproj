@@ -71,6 +71,7 @@
 		2FF17C2B1507DE9000881CC7 /* WebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC6 /* WebClient.m */; };
 		2FF17C2B1507DE9000881CCA /* NetActivityIndicatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */; };
 		2FF17C2B1507DE9000881CCD /* NSFileManager+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */; };
+		2FF17C2B1507DE9000881CD0 /* TrailConditionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCF /* TrailConditionsController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,6 +196,8 @@
 		2FF17C2B1507DE9000881CCB /* NetActivityIndicatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetActivityIndicatorController.h; path = Utilities/NetActivityIndicatorController.h; sourceTree = SOURCE_ROOT; };
 		2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Utils.m"; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CCE /* NSFileManager+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Utils.h"; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CCF /* TrailConditionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailConditionsController.m; sourceTree = "<group>"; };
+		2FF17C2B1507DE9000881CD1 /* TrailConditionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailConditionsController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +371,8 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
+				2FF17C2B1507DE9000881CD1 /* TrailConditionsController.h */,
+				2FF17C2B1507DE9000881CCF /* TrailConditionsController.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
 				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
@@ -594,6 +599,7 @@
 				2FE56B6415990B72002C5308 /* ZipReadStream.m in Sources */,
 				2FE56B6515990B72002C5308 /* ZipWriteStream.m in Sources */,
 				2FF17C2B1507DE9000881CCD /* NSFileManager+Utils.m in Sources */,
+				2FF17C2B1507DE9000881CD0 /* TrailConditionsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

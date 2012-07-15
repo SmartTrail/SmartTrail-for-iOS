@@ -280,7 +280,7 @@ Long, Long, Long, Long, Long Title</string>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="4aS-Ey-zlu">
-                                <rect key="frame" x="52" y="30" width="217" height="30"/>
+                                <rect key="frame" x="52" y="4" width="217" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Info"/>
@@ -292,57 +292,57 @@ Long, Long, Long, Long, Long Title</string>
                                 </connections>
                             </segmentedControl>
                             <view hidden="YES" contentMode="scaleToFill" id="02S-eM-U4b" userLabel="Info view">
-                                <rect key="frame" x="0.0" y="65" width="320" height="351"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="36" width="320" height="331"/>
+                                <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                 <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="26.2    gain: 5280" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="c8D-wU-N9W">
+                                        <rect key="frame" x="20" y="3" width="280" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Technical:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="eOj-kH-Ksl">
-                                        <rect key="frame" x="79" y="0.0" width="78" height="21"/>
+                                        <rect key="frame" x="79" y="29" width="78" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Aerobic:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="MoZ-gH-w2H">
-                                        <rect key="frame" x="79" y="21" width="78" height="21"/>
+                                        <rect key="frame" x="79" y="50" width="78" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Cool:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="5Uh-Q1-6Lu">
-                                        <rect key="frame" x="79" y="42" width="78" height="21"/>
+                                        <rect key="frame" x="79" y="71" width="78" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <webView contentMode="scaleToFill" id="0JK-o2-vxg">
-                                        <rect key="frame" x="0.0" y="85" width="320" height="219"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="0.0" y="92" width="320" height="239"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="delegate" destination="UZn-iW-nME" id="MOC-Th-2Eo"/>
                                         </connections>
                                     </webView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Description" lineBreakMode="tailTruncation" minimumFontSize="10" id="26S-09-qSj">
-                                        <rect key="frame" x="8" y="67" width="94" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="WJF-Mw-bbu">
-                                        <rect key="frame" x="162" y="0.0" width="73" height="21"/>
+                                        <rect key="frame" x="162" y="29" width="73" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="UBi-9P-OE9">
-                                        <rect key="frame" x="162" y="21" width="73" height="21"/>
+                                        <rect key="frame" x="162" y="50" width="73" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="wwx-Kc-VA3">
-                                        <rect key="frame" x="162" y="42" width="73" height="21"/>
+                                        <rect key="frame" x="162" y="71" width="73" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                     </imageView>
@@ -350,7 +350,7 @@ Long, Long, Long, Long, Long Title</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="uC8-Md-yBF" userLabel="Conditions table view">
-                                <rect key="frame" x="0.0" y="65" width="320" height="302"/>
+                                <rect key="frame" x="0.0" y="36" width="320" height="331"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -400,24 +400,15 @@ Long, Long, Long, Long, Long Title</string>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="lsT-jN-fua" id="mgt-i0-OKo"/>
-                                    <outlet property="delegate" destination="21" id="xhH-0h-fei"/>
+                                    <outlet property="delegate" destination="Wtw-UM-Gj2" id="0Fg-Vn-DXn"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="26.2    gain: 5280" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" adjustsFontSizeToFit="NO" id="c8D-wU-N9W">
-                                <rect key="frame" x="20" y="4" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Trail Detail" id="26"/>
                     <connections>
                         <outlet property="aerobicRatingImageView" destination="UBi-9P-OE9" id="tA8-Qc-gBq"/>
-                        <outlet property="conditionView" destination="uC8-Md-yBF" id="7XY-Dd-jjh"/>
-                        <outlet property="conditionsDataSource" destination="lsT-jN-fua" id="mRg-O0-I8s"/>
                         <outlet property="coolRatingImageView" destination="wwx-Kc-VA3" id="Pq9-xH-0Vk"/>
                         <outlet property="descriptionWebView" destination="0JK-o2-vxg" id="mXk-oA-q1b"/>
                         <outlet property="infoView" destination="02S-eM-U4b" id="odw-2g-CVE"/>
@@ -425,8 +416,15 @@ Long, Long, Long, Long, Long Title</string>
                         <outlet property="segmentedControl" destination="4aS-Ey-zlu" id="qmb-hL-StU"/>
                         <outlet property="statsLabel" destination="c8D-wU-N9W" id="WPN-WU-wJE"/>
                         <outlet property="techRatingImageView" destination="WJF-Mw-bbu" id="aJR-t6-2M8"/>
+                        <outlet property="trailConditionsController" destination="Wtw-UM-Gj2" id="jaT-sb-pyD"/>
                     </connections>
                 </viewController>
+                <customObject id="Wtw-UM-Gj2" customClass="TrailConditionsController">
+                    <connections>
+                        <outlet property="conditionsDataSource" destination="lsT-jN-fua" id="761-mo-kFJ"/>
+                        <outlet property="tableView" destination="uC8-Md-yBF" id="LdD-2F-oq1"/>
+                    </connections>
+                </customObject>
                 <customObject id="lsT-jN-fua" customClass="FetchedResultsTableDataSource">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="ConditionsForTrailId"/>
@@ -434,7 +432,7 @@ Long, Long, Long, Long, Long Title</string>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="sortFirstAscending" value="NO"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <outlet property="delegate" destination="21" id="rsf-vn-zaE"/>
+                        <outlet property="delegate" destination="Wtw-UM-Gj2" id="2LH-vh-cz7"/>
                     </connections>
                 </customObject>
                 <customObject id="UZn-iW-nME" customClass="LinkingWebViewDelegate">
@@ -469,6 +467,72 @@ Long, Long, Long, Long, Long Title</string>
             <point key="canvasLocation" x="434" y="761"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="ConditionTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConditionTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="authorLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="commentLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ratingImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="updatedAtLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EventDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="dateRangeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="linkingWebViewDelegate" candidateClass="LinkingWebViewDelegate"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="EventsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventsTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="fetchedResultsTableDataSource" candidateClass="FetchedResultsTableDataSource"/>
+            </relationships>
+        </class>
+        <class className="FetchedResultsTableDataSource" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FetchedResultsTableDataSource.h"/>
+            <relationships>
+                <relationship kind="outlet" name="delegate" candidateClass="NSObject"/>
+            </relationships>
+        </class>
+        <class className="LinkingWebViewDelegate" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkingWebViewDelegate.h"/>
+            <relationships>
+                <relationship kind="outlet" name="viewController" candidateClass="UIViewController"/>
+            </relationships>
+        </class>
+        <class className="TrailConditionsViewController" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrailConditionsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="conditionsDataSource" candidateClass="FetchedResultsTableDataSource"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="TrailDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrailDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="segmentedControlChanged:"/>
+                <relationship kind="outlet" name="aerobicRatingImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="coolRatingImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="descriptionWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="infoView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="linkingWebViewDelegate" candidateClass="LinkingWebViewDelegate"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="statsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="techRatingImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="trailConditionsController" candidateClass="TrailConditionsViewController"/>
+            </relationships>
+        </class>
+        <class className="TrailsTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrailsTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="fetchedResultsTableDataSource" candidateClass="FetchedResultsTableDataSource"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
