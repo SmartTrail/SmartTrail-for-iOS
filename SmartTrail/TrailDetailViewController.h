@@ -8,25 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import "Trail.h"
+#import "TrailInfoController.h"
 #import "TrailConditionsController.h"
-#import "LinkingWebViewDelegate.h"
 
 
+/** Responsible for display and interaction with a single trail.
+*/
 @interface TrailDetailViewController : UIViewController
 
-@property (nonatomic) IBOutlet UILabel*            statsLabel;
-@property (nonatomic) IBOutlet UISegmentedControl* segmentedControl;
-@property (nonatomic) IBOutlet UIView*             infoView;
-@property (nonatomic) IBOutlet UIImageView*        techRatingImageView;
-@property (nonatomic) IBOutlet UIImageView*        aerobicRatingImageView;
-@property (nonatomic) IBOutlet UIImageView*        coolRatingImageView;
-@property (nonatomic) IBOutlet UIWebView*          descriptionWebView;
-@property (strong,nonatomic) IBOutlet LinkingWebViewDelegate*
-                                                   linkingWebViewDelegate;
+
+@property (nonatomic)        IBOutlet UISegmentedControl*
+                                                    segmentedControl;
+
+@property (strong,nonatomic) IBOutlet TrailInfoController*
+                                                    trailInfoController;
+
 @property (strong,nonatomic) IBOutlet TrailConditionsController*
-                                                   trailConditionsController;
-@property (strong,nonatomic)   Trail*              trail;
+                                                    trailConditionsController;
+
+@property (strong,nonatomic)          Trail*        trail;
 
 - (IBAction) segmentedControlChanged:(id)sender;
+
 
 @end

@@ -23,24 +23,10 @@
 }
 
 
-@synthesize statsLabel = __statsLabel;
 @synthesize segmentedControl = __segmentedControl;
-@synthesize infoView = __infoView;
-@synthesize techRatingImageView = __techRatingImageView;
-@synthesize aerobicRatingImageView = __aerobicRatingImageView;
-@synthesize coolRatingImageView = __coolRatingImageView;
-@synthesize descriptionWebView = __descriptionWebView;
-@synthesize linkingWebViewDelegate = __linkingWebViewDelegate;
+@synthesize trailInfoController = __trailInfoController;
 @synthesize trailConditionsController = __trailConditionsController;
 @synthesize trail = __trail;
-
-
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-
-    // Release any cached data, images, etc that aren't in use.
-}
 
 
 #pragma mark - View lifecycle
@@ -49,32 +35,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //  Set up the collection of views to select using the segmented controller.
-    __viewsToSelect = [NSArray
-        arrayWithObjects:self.infoView, self.trailConditionsController.tableView, nil
+    __viewsToSelect = [NSArray arrayWithObjects:
+        self.trailInfoController.view,
+        self.trailConditionsController.tableView,
+        nil
     ];
     __selectedViewIndex = 0;     // Initially show infoView.
 }
 
 
 - (void)viewDidUnload {
-    self.statsLabel = nil;
     self.segmentedControl = nil;
-    self.infoView = nil;
-    self.techRatingImageView = nil;
-    self.aerobicRatingImageView = nil;
-    self.coolRatingImageView = nil;
-    self.descriptionWebView = nil;
-    self.linkingWebViewDelegate = nil;
+    self.trailInfoController = nil;
     self.trailConditionsController = nil;
 
     [super viewDidUnload];
-}
-
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orient
-{
-    // Return YES for supported orientations
-    return (orient == UIInterfaceOrientationPortrait);
 }
 
 
@@ -82,56 +57,39 @@
     [super viewWillAppear:animated];
 
     //  Initiate download of trail's KMZ data, if necessary.
+if ( self.trail.kmzURL )  NSLog( @"Checking KMZ URL %@.", self.trail.kmzURL );
+else  NSLog( @"No KMZ URL to download.");
     [THE(bmaController)
         checkKMZForTrail:self.trail
                   thenDo:^(NSURL* url) {
                              self.trail.kmlDirPath = [[url absoluteURL] path];
-NSLog( @"Downloaded %@", self.trail.kmlDirPath );
+if ( url )  NSLog( @"Using uzipped KML dir. %@", url );
+else  NSLog( @"Couldn't download & unzip %@", self.trail.kmzURL );
                          }
     ];
+
 
     //  Update the list of all conditions for trails in this trail's area,
     //  if they have not already been updated recently.
     [THE(bmaController) checkConditionsForArea:self.trail.area];
 
-    //  Inform the conditions table's controller which trail we're examining.
+    //  Inform the info and conditions controllers which trail we're examining.
+    self.trailInfoController.trail = self.trail;
     self.trailConditionsController.trail = self.trail;
 
     //  Show trail name at top of screen.
     self.navigationItem.title = self.trail.name;
 
-    //  Show trail length and elevation gain if we have data.
-    self.statsLabel.text =  self.trail.length.floatValue > 0.0
-    ?   [NSString
-            stringWithFormat:@"%.1f miles    gain: %d feet",
-                self.trail.length.floatValue,
-                self.trail.elevationGain.intValue
-        ]
-    :   @"";
-
     //  Show or hide info or condition views.
     self.segmentedControl.selectedSegmentIndex = __selectedViewIndex;
     [self showViewForIndex:__selectedViewIndex];
+}
 
-    //  Draw the rating dots.
-    self.techRatingImageView.image = [APP_DELEGATE
-        imageForRating:self.trail.techRating.longValue inRange:0 through:10
-    ];
-    self.aerobicRatingImageView.image = [APP_DELEGATE
-        imageForRating:self.trail.aerobicRating.longValue inRange:0 through:10
-    ];
-    self.coolRatingImageView.image = [APP_DELEGATE
-        imageForRating:self.trail.coolRating.longValue inRange:0 through:10
-    ];
 
-    //  Render the description of the trail, which is HTML.
-    NSString* bmaBaseUrl = [[NSBundle mainBundle]
-        objectForInfoDictionaryKey:@"BmaBaseUrl"
-    ];
-    [self.descriptionWebView
-        loadHTMLString:self.trail.descriptionFull
-               baseURL:[NSURL URLWithString:bmaBaseUrl]
-    ];
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orient
+{
+    // Return YES for supported orientations
+    return (orient == UIInterfaceOrientationPortrait);
 }
 
 
