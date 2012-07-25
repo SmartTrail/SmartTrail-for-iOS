@@ -48,6 +48,8 @@
 
 
 - (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
     //  Tell the data source for the table of conditions which trail we're
     //  viewing, so it can generate the list of Condition objects for it.
     self.conditionsDataSource.templateSubstitutionVariables = [NSDictionary

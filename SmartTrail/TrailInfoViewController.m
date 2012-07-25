@@ -39,6 +39,7 @@
 
 
 - (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 
     //  Show trail length and elevation gain if we have data.
     self.statsLabel.text =  self.trail.length.floatValue > 0.0
