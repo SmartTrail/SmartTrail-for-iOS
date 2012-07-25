@@ -8,25 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "Trail.h"
-#import "TrailInfoController.h"
-#import "TrailConditionsController.h"
 
 
-/** Responsible for display and interaction with a single trail.
+/** This class is a container view controller responsible for the display of and
+    interaction with a single trail. Its child view controllers can be laid out
+    in Interface Builder, and must have identifiers "TrailInfo",
+    "TrailConditions", and "TrailMap" corresponding to the respective buttons
+    in the UISegmentedControl.
 */
 @interface TrailDetailViewController : UIViewController
 
 
 @property (nonatomic)        IBOutlet UISegmentedControl*
                                                     segmentedControl;
+@property (nonatomic)        IBOutlet UIView*       contentView;
 
-@property (strong,nonatomic) IBOutlet TrailInfoController*
-                                                    trailInfoController;
 
-@property (strong,nonatomic) IBOutlet TrailConditionsController*
-                                                    trailConditionsController;
-
+/** The trail being examined.
+*/
 @property (strong,nonatomic)          Trail*        trail;
+
 
 - (IBAction) segmentedControlChanged:(id)sender;
 

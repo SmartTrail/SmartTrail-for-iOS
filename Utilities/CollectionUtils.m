@@ -63,4 +63,13 @@ NSMutableArray* mutableArrayFor( NSObject<NSFastEnumeration>* xs ) {
 
 
 @implementation NSArray (CollectionUtils)
+
+
+- (void) each:(void(^)(id))toDo {
+    [self enumerateObjectsUsingBlock:^( id obj, NSUInteger idx, BOOL* stop ){
+        toDo(obj);
+    }];
+}
+
+
 @end
