@@ -20,7 +20,7 @@
         @try {                                                              \
             NSError* ERR = nil;                                             \
             expr;                                                           \
-            NSAssert( ! ERR, @"Error description: %@", &ERR );              \
+            NSAssert( ! ERR, @"Error description: %@", ERR );               \
         } @catch ( NSException* e ) {                                       \
             NSAssert( NO, @"\n\nException thrown in ERR_ASSERT: %@\n", e ); \
         }                                                                   \

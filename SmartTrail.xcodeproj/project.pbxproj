@@ -343,16 +343,13 @@
 		2FF002901493E23400BF3668 = {
 			isa = PBXGroup;
 			children = (
-				2FDB881415B9F6B1007EFD02 /* MapKit.framework */,
-				2FE56B73159FCDD7002C5308 /* libz.dylib */,
-				2FF09DB714EB197C0050552B /* CoreData.framework */,
+				2FF002A51493E23400BF3668 /* SmartTrail */,
+				2F2D148B14EEA9A600E982C5 /* Utilities */,
 				0351098D14B211F200487B8B /* JSONParser */,
 				2FE56B4915990B72002C5308 /* MiniZip */,
 				2FE56B5215990B72002C5308 /* Objective-Zip */,
-				2F2D148B14EEA9A600E982C5 /* Utilities */,
-				2FF002A51493E23400BF3668 /* SmartTrail */,
-				2FF002D11493E23500BF3668 /* SmartTrailTests */,
 				2FF0029E1493E23400BF3668 /* Frameworks */,
+				2FF002D11493E23500BF3668 /* SmartTrailTests */,
 				2FF0029C1493E23400BF3668 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -369,11 +366,14 @@
 		2FF0029E1493E23400BF3668 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0356470C14A1065100208A47 /* SystemConfiguration.framework */,
-				2FF0029F1493E23400BF3668 /* UIKit.framework */,
 				2FF002A11493E23400BF3668 /* Foundation.framework */,
+				2FF0029F1493E23400BF3668 /* UIKit.framework */,
 				2FF002A31493E23400BF3668 /* CoreGraphics.framework */,
+				0356470C14A1065100208A47 /* SystemConfiguration.framework */,
+				2FF09DB714EB197C0050552B /* CoreData.framework */,
+				2FDB881415B9F6B1007EFD02 /* MapKit.framework */,
 				2FF002CB1493E23500BF3668 /* SenTestingKit.framework */,
+				2FE56B73159FCDD7002C5308 /* libz.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -381,28 +381,32 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
-				69B49173CFDAFC70AE61BC77 /* TrailMapViewController.h */,
-				69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */,
-				69B49E204B6263BC5A3CF3A1 /* TrailInfoViewController.h */,
-				69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */,
-				2FF17C2B1507DE9000881CD1 /* TrailConditionsViewController.h */,
-				2FF17C2B1507DE9000881CCF /* TrailConditionsViewController.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
-				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
+				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
 				2FF002AE1493E23400BF3668 /* AppDelegate.h */,
 				2FF002AF1493E23400BF3668 /* AppDelegate.m */,
 				2FF09E7614EC3DC90050552B /* TrailsTableViewController.h */,
 				2FF09E7714EC3DCA0050552B /* TrailsTableViewController.m */,
 				2F2D148514EE007900E982C5 /* TrailDetailViewController.h */,
 				2F2D148614EE007A00E982C5 /* TrailDetailViewController.m */,
+				69B49E204B6263BC5A3CF3A1 /* TrailInfoViewController.h */,
+				69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */,
+				2FF17C2B1507DE9000881CD1 /* TrailConditionsViewController.h */,
+				2FF17C2B1507DE9000881CCF /* TrailConditionsViewController.m */,
 				2FCE73F6150AA06300524848 /* ConditionTableViewCell.h */,
 				2FCE73F7150AA06300524848 /* ConditionTableViewCell.m */,
+				69B49173CFDAFC70AE61BC77 /* TrailMapViewController.h */,
+				69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */,
 				2F1F84E2151D3F59003D79A2 /* EventsTableViewController.h */,
 				2F1F84E3151D3F59003D79A2 /* EventsTableViewController.m */,
 				2F03AE88151FEC38000A5688 /* EventDetailViewController.h */,
 				2F03AE89151FEC38000A5688 /* EventDetailViewController.m */,
 				2F2D14A014EEAC1500E982C5 /* Managed Objects */,
+				2F2D148814EE9D4C00E982C5 /* BMAController.h */,
+				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
+				2FF17C2B1507DE9000881CCE /* NSFileManager+Utils.h */,
+				2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */,
 				2FF17C2B1507DE9000881CB9 /* JSONWebClient.h */,
 				2FF17C2B1507DE9000881CB7 /* JSONWebClient.m */,
 				2FF17C2B1507DE9000881CBC /* AreaWebClient.h */,
@@ -413,14 +417,10 @@
 				2FF17C2B1507DE9000881CC0 /* ConditionWebClient.m */,
 				2FF17C2B1507DE9000881CC5 /* EventWebClient.h */,
 				2FF17C2B1507DE9000881CC3 /* EventWebClient.m */,
-				2F2D148814EE9D4C00E982C5 /* BMAController.h */,
-				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
 				0356470E14A106DA00208A47 /* BMANetworkUtilities.h */,
 				0356470F14A106DA00208A47 /* BMANetworkUtilities.m */,
 				0356471114A108E500208A47 /* BMAWebClient.h */,
 				0356471214A108E500208A47 /* BMAWebClient.m */,
-				2FF17C2B1507DE9000881CCE /* NSFileManager+Utils.h */,
-				2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */,
 			);
 			path = SmartTrail;
 			sourceTree = "<group>";
