@@ -103,11 +103,12 @@
         //  Parse the JSON into a data structure consisting of nested dictionaries
         //  and arrays.
         NSDictionary *parsedData = [[JSONDecoder decoder] objectWithData:json];
-        NSAssert(
-            parsedData,
-            @"Received JSON data could not be parsed. Data as ASCII:\n\n%@\n",
+#ifdef DEBUG
+        if ( ! parsedData )  NSLog(
+            @"Warning: Received JSON data could not be parsed. Data as ASCII:\n\n%@\n",
             [[NSString alloc] initWithData:json encoding:NSASCIIStringEncoding]
         );
+#endif
 
         //  By convention, the name of the fetch request template that finds an
         //  object by its ID is "<entity name>ForId".
