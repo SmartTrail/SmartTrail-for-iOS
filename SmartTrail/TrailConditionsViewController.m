@@ -32,6 +32,7 @@
     [super viewDidLoad];
     //  For some reason, you can't set this in IB:
     self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+NSLog( @"The %@ did load.", [self class] );                     // DEBUG
 }
 
 
@@ -39,6 +40,7 @@
     self.tableView = nil;
     self.conditionsDataSource = nil;
     [super viewDidUnload];
+NSLog( @"The %@ did unload.", [self class] );                   // DEBUG
 }
 
 
@@ -55,6 +57,7 @@
     self.conditionsDataSource.templateSubstitutionVariables = [NSDictionary
         dictionaryWithObject:self.trail.id forKey:@"id"
     ];
+NSLog( @"The %@ will appear.", [self class] );                  // DEBUG
 }
 
 

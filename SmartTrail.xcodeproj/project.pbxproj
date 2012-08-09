@@ -14,6 +14,7 @@
 		2F03AE8A151FEC38000A5688 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE89151FEC38000A5688 /* EventDetailViewController.m */; };
 		2F03AE8E1520D988000A5688 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE8D1520D988000A5688 /* Event.m */; };
 		2F03AE911520DBD4000A5688 /* Event+Display.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F03AE901520DBD4000A5688 /* Event+Display.m */; };
+		2F1C79D415C4863A00A64605 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F1C79D315C4863A00A64605 /* CoreLocation.framework */; };
 		2F1F47811524F9ED002B2828 /* rating_dots_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F1F477B1524F9ED002B2828 /* rating_dots_0.png */; };
 		2F1F47821524F9ED002B2828 /* rating_dots_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F1F477C1524F9ED002B2828 /* rating_dots_1.png */; };
 		2F1F47831524F9ED002B2828 /* rating_dots_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F1F477D1524F9ED002B2828 /* rating_dots_2.png */; };
@@ -30,6 +31,7 @@
 		2F2D149C14EEA9A700E982C5 /* FetchedResultsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149414EEA9A700E982C5 /* FetchedResultsTableDataSource.m */; };
 		2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */; };
 		2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149814EEA9A700E982C5 /* NSString+Utils.m */; };
+		2F378E6915D18A70009D3495 /* CollectionUtilsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F378E6815D18A70009D3495 /* CollectionUtilsTest.m */; };
 		2F71257915598D52008A8445 /* LinkingWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */; };
 		2F9A04E4150174A7001638BC /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E3150174A7001638BC /* Area.m */; };
 		2F9A04E7150174A7001638BC /* Condition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E6150174A7001638BC /* Condition.m */; };
@@ -75,6 +77,7 @@
 		2FF17C2B1507DE9000881CD0 /* TrailConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCF /* TrailConditionsViewController.m */; };
 		69B49328A340E8B87449B3F1 /* TrailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */; };
 		69B49A6DCDE6324ADE315A38 /* TrailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */; };
+		69B49B675E645AC5CA42ADFA /* KMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B49946E8FA9259681484AE /* KMLParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +104,7 @@
 		2F03AE8D1520D988000A5688 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		2F03AE8F1520DBD4000A5688 /* Event+Display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Event+Display.h"; sourceTree = "<group>"; };
 		2F03AE901520DBD4000A5688 /* Event+Display.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Event+Display.m"; sourceTree = "<group>"; };
+		2F1C79D315C4863A00A64605 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2F1F477B1524F9ED002B2828 /* rating_dots_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rating_dots_0.png; sourceTree = "<group>"; };
 		2F1F477C1524F9ED002B2828 /* rating_dots_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rating_dots_1.png; sourceTree = "<group>"; };
 		2F1F477D1524F9ED002B2828 /* rating_dots_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rating_dots_2.png; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 		2F2D149814EEA9A700E982C5 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		2F2D14A714EEAC9100E982C5 /* README.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.org; sourceTree = "<group>"; };
 		2F2D14A914EEB0FC00E982C5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		2F378E6715D18A70009D3495 /* CollectionUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionUtilsTest.h; path = SmartTrailTests/CollectionUtilsTest.h; sourceTree = SOURCE_ROOT; };
+		2F378E6815D18A70009D3495 /* CollectionUtilsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionUtilsTest.m; path = SmartTrailTests/CollectionUtilsTest.m; sourceTree = SOURCE_ROOT; };
 		2F71257715598D52008A8445 /* LinkingWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkingWebViewDelegate.h; sourceTree = "<group>"; };
 		2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkingWebViewDelegate.m; sourceTree = "<group>"; };
 		2F9A04E2150174A7001638BC /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
@@ -202,8 +208,10 @@
 		2FF17C2B1507DE9000881CCE /* NSFileManager+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Utils.h"; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CCF /* TrailConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailConditionsViewController.m; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CD1 /* TrailConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailConditionsViewController.h; sourceTree = "<group>"; };
+		69B490A564DB82B9352DC534 /* KMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMLParser.h; sourceTree = "<group>"; };
 		69B49173CFDAFC70AE61BC77 /* TrailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailMapViewController.h; sourceTree = "<group>"; };
 		69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailInfoViewController.m; sourceTree = "<group>"; };
+		69B49946E8FA9259681484AE /* KMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMLParser.m; sourceTree = "<group>"; };
 		69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailMapViewController.m; sourceTree = "<group>"; };
 		69B49E204B6263BC5A3CF3A1 /* TrailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailInfoViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +227,7 @@
 				2FF002A41493E23400BF3668 /* CoreGraphics.framework in Frameworks */,
 				2FF09DB814EB197C0050552B /* CoreData.framework in Frameworks */,
 				2FDB881515B9F6B1007EFD02 /* MapKit.framework in Frameworks */,
+				2F1C79D415C4863A00A64605 /* CoreLocation.framework in Frameworks */,
 				2FE56B74159FCDD7002C5308 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,6 +352,7 @@
 		2FF002901493E23400BF3668 = {
 			isa = PBXGroup;
 			children = (
+				2F1C79D315C4863A00A64605 /* CoreLocation.framework */,
 				2FF002A51493E23400BF3668 /* SmartTrail */,
 				2F2D148B14EEA9A600E982C5 /* Utilities */,
 				0351098D14B211F200487B8B /* JSONParser */,
@@ -381,6 +391,8 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
+				69B490A564DB82B9352DC534 /* KMLParser.h */,
+				69B49946E8FA9259681484AE /* KMLParser.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
 				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
@@ -440,6 +452,8 @@
 		2FF002D11493E23500BF3668 /* SmartTrailTests */ = {
 			isa = PBXGroup;
 			children = (
+				2F378E6715D18A70009D3495 /* CollectionUtilsTest.h */,
+				2F378E6815D18A70009D3495 /* CollectionUtilsTest.m */,
 				2FF002D71493E23500BF3668 /* SmartTrailTests.h */,
 				2FF002D81493E23500BF3668 /* SmartTrailTests.m */,
 				2FF002D21493E23500BF3668 /* Supporting Files */,
@@ -616,6 +630,7 @@
 				2FF17C2B1507DE9000881CD0 /* TrailConditionsViewController.m in Sources */,
 				69B49A6DCDE6324ADE315A38 /* TrailInfoViewController.m in Sources */,
 				69B49328A340E8B87449B3F1 /* TrailMapViewController.m in Sources */,
+				69B49B675E645AC5CA42ADFA /* KMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,6 +639,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FF002D91493E23500BF3668 /* SmartTrailTests.m in Sources */,
+				2F378E6915D18A70009D3495 /* CollectionUtilsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

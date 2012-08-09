@@ -41,6 +41,7 @@
     __viewControllersToSelect = [NSArray arrayWithObjects:
         [self.storyboard instantiateViewControllerWithIdentifier:@"TrailInfo"],
         [self.storyboard instantiateViewControllerWithIdentifier:@"TrailConditions"],
+        [self.storyboard instantiateViewControllerWithIdentifier:@"TrailMap"],
         nil
     ];
 

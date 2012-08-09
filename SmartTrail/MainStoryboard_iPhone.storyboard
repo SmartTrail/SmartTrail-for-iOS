@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="oIx-41-Jav">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="oIx-41-Jav">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
-        <development defaultVersion="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Trails-->
@@ -205,6 +204,32 @@ Long, Long, Long, Long, Long Title</string>
             </objects>
             <point key="canvasLocation" x="2054" y="761"/>
         </scene>
+        <!--Trail Map View Controller-->
+        <scene sceneID="boT-g0-Cow">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K09-Ws-rvz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="TrailMap" id="8to-9M-odw" customClass="TrailMapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SCO-r7-6Id">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="bvb-4A-Mjx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="mapView" destination="bvb-4A-Mjx" id="vrl-T0-GC2"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="2426" y="139"/>
+        </scene>
         <!--Table View Controller - Favorites-->
         <scene sceneID="GLu-Wz-S3e">
             <objects>
@@ -285,6 +310,7 @@ Long, Long, Long, Long, Long Title</string>
                                 <segments>
                                     <segment title="Info"/>
                                     <segment title="Conditions"/>
+                                    <segment title="Map"/>
                                 </segments>
                                 <color key="tintColor" red="0.47058823529411764" green="0.63529411764705879" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -401,11 +427,11 @@ Long, Long, Long, Long, Long Title</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ocY-kK-AGa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="TrailConditions" id="fT0-HN-oeU" customClass="TrailConditionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2eU-Q4-bue">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="sB4-g0-0A5" userLabel="Conditions table view">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -461,6 +487,9 @@ Long, Long, Long, Long, Long Title</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="conditionsDataSource" destination="sZ3-AA-no9" id="OrX-Tx-6D2"/>
                         <outlet property="tableView" destination="sB4-g0-0A5" id="BXa-fY-1Wi"/>
@@ -477,7 +506,7 @@ Long, Long, Long, Long, Long Title</string>
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="2413" y="118"/>
+            <point key="canvasLocation" x="2411" y="118"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="LKZ-bg-2lK">
@@ -560,6 +589,12 @@ Long, Long, Long, Long, Long Title</string>
                 <relationship kind="outlet" name="linkingWebViewDelegate" candidateClass="LinkingWebViewDelegate"/>
                 <relationship kind="outlet" name="statsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="techRatingImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="TrailMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrailMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
             </relationships>
         </class>
         <class className="TrailsTableViewController" superclassName="UITableViewController">
