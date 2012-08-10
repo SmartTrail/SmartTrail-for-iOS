@@ -13,7 +13,7 @@
 /** This class encapsulates the display of and interaction with the map of a
     particular trail.
 */
-@interface TrailMapViewController : UIViewController
+@interface TrailMapViewController : UIViewController<MKMapViewDelegate>
 
 
 /** The map view which will be shown when the user taps the super-view's "Map"

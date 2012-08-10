@@ -23,6 +23,7 @@
     //  initially 0.
     NSArray*   __viewControllersToSelect;
     NSUInteger __selectedViewControllerIndex;
+    NSUInteger __mapIndex;
 }
 
 
@@ -44,6 +45,7 @@
         [self.storyboard instantiateViewControllerWithIdentifier:@"TrailMap"],
         nil
     ];
+    __mapIndex = 2;
 
     //  Initial selected index of the segmented control can be set in IB.
     __selectedViewControllerIndex = self.segmentedControl.selectedSegmentIndex;
@@ -61,13 +63,18 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    //  Initiate download of trail's KMZ data, if necessary.
 if ( self.trail.kmzURL )  NSLog( @"Checking KMZ URL %@.", self.trail.kmzURL );
 else  NSLog( @"No KMZ URL to download.");
+
+    [self setMapEnabled:NO];
+
+    //  Initiate download of trail's KMZ data, if necessary.
     [THE(bmaController)
         checkKMZForTrail:self.trail
                   thenDo:^(NSURL* url) {
                              self.trail.kmlDirPath = [[url absoluteURL] path];
+                             [self setMapEnabled:YES];
+
 if ( url )  NSLog( @"Using uzipped KML dir. %@", url );
 else  NSLog( @"Couldn't download & unzip %@", self.trail.kmzURL );
                          }
@@ -103,6 +110,14 @@ else  NSLog( @"Couldn't download & unzip %@", self.trail.kmzURL );
 
 
 #pragma mark - Private methods and functions
+
+
+- (void) setMapEnabled:(BOOL)enabled {
+    [self.segmentedControl
+               setEnabled:enabled
+        forSegmentAtIndex:__mapIndex
+     ];
+}
 
 
 /** Replace the existing child view controller and its view, if any, with the

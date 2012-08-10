@@ -25,7 +25,6 @@
     [super viewDidLoad];
     //  For some reason, you can't set this in IB:
     self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-NSLog( @"The %@ did load.", [self class] );                     // DEBUG
 }
 
 
@@ -37,7 +36,6 @@ NSLog( @"The %@ did load.", [self class] );                     // DEBUG
     self.descriptionWebView = nil;
     self.linkingWebViewDelegate = nil;
     [super viewDidUnload];
-NSLog( @"The %@ did unload.", [self class] );                   // DEBUG
 }
 
 
@@ -72,7 +70,6 @@ NSLog( @"The %@ did unload.", [self class] );                   // DEBUG
         loadHTMLString:self.trail.descriptionFull
                baseURL:[NSURL URLWithString:bmaBaseUrl]
     ];
-NSLog( @"The %@ will appear.", [self class] );                  // DEBUG
 }
 
 

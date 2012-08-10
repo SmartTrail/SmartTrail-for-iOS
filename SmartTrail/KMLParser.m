@@ -36,15 +36,23 @@
     self = [super init];
     if ( self ) {
         self.url = url;
+        __whenStrings    = [[NSMutableArray alloc] initWithCapacity:128];
+        __gxCoordStrings = [[NSMutableArray alloc] initWithCapacity:128];
     }
     return self;
 }
 
 
 - (BOOL) doParse {
-    NSXMLParser* parser = [[NSXMLParser alloc] initWithContentsOfURL:self.url];
-    parser.delegate = self;
-    return  [parser parse];
+    if ( [__whenStrings count]  ||  [__gxCoordStrings count] ) {
+        NSAssert( NO, @"This %@ instance is already used. Make a new one.", [self class] );
+        return  NO;
+
+    } else {
+        NSXMLParser* parser = [[NSXMLParser alloc] initWithContentsOfURL:self.url];
+        parser.delegate = self;
+        return  [parser parse];
+    }
 }
 
 
@@ -73,7 +81,9 @@
     );
 
     NSUInteger locationsCount = [self.locations count];
-    CLLocationCoordinate2D* buffPtr = malloc( sizeof(id) * locationsCount );
+    CLLocationCoordinate2D* buffPtr = malloc(
+        sizeof( CLLocationCoordinate2D ) * locationsCount
+    );
 
     [self.locations enumerateObjectsUsingBlock:^(id loc, NSUInteger idx, BOOL* stop){
         buffPtr[idx] = ((CLLocation*)loc).coordinate;
@@ -111,7 +121,7 @@
 
 
 - (void) parser:(NSXMLParser*)parser foundCharacters:(NSString*)string {
-    if ( __currentChars )  [__currentChars appendString:string];
+    [__currentChars appendString:string];
 }
 
 

@@ -6,10 +6,13 @@
 #import "TrailMapViewController.h"
 #import "KMLParser.h"
 
+static const CGFloat TrailColorRGBA[4] = {0.9569, 0.4824, 0.1255, 1.0};
+static const CGFloat TrailLineWidth = 3.0;  // Width in points.
+
 
 @implementation TrailMapViewController
 {
-    KMLParser* kmlParser;
+    MKPolylineView* __polylineView;
 }
 
 
@@ -23,26 +26,39 @@
     self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
     if ( self.trail.kmlDirPath ) {
-    }
+        KMLParser* kmlParser = [[KMLParser alloc]
+            initWithURL:[[NSURL fileURLWithPath:self.trail.kmlDirPath]
+                            URLByAppendingPathComponent:@"doc.kml"
+                        ]
+        ];
+        if ( [kmlParser doParse] ) {
+            __polylineView = [kmlParser trackOverlayView];
+            __polylineView.lineWidth = TrailLineWidth;
+            __polylineView.strokeColor = [UIColor
+                colorWithRed:TrailColorRGBA[0]
+                       green:TrailColorRGBA[1]
+                        blue:TrailColorRGBA[2]
+                       alpha:TrailColorRGBA[3]
+            ];
+            [self.mapView addOverlay:__polylineView.overlay];
+            self.mapView.visibleMapRect = __polylineView.overlay.boundingMapRect;
+            self.mapView.delegate = self;
 
-NSLog( @"The %@ did load.", [self class] );                     // DEBUG
+        } else{
+            NSAssert( NO, @"KMLParser could not parse file %@", kmlParser.url );
+        }
+    }
 }
 
 
 - (void) viewDidUnload {
-NSLog( @"The %@ did unload.", [self class] );                   // DEBUG
+    self.mapView = nil;
     [super viewDidUnload];
 }
 
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orient {
     return  orient == UIInterfaceOrientationPortrait;
-}
-
-
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-NSLog( @"The %@ will appear.", [self class] );                  // DEBUG
 }
 
 
@@ -53,7 +69,7 @@ NSLog( @"The %@ will appear.", [self class] );                  // DEBUG
            mapView:(MKMapView*)mapView
     viewForOverlay:(id<MKOverlay>)overlay
 {
-    return  nil;
+    return  __polylineView;
 }
 
 
