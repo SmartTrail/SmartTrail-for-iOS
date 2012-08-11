@@ -149,7 +149,7 @@ else  NSLog( @"Couldn't download & unzip %@", self.trail.kmzURL );
 
     if ( ! haveAChild) {
         //  Add selectedVC's view to the view heirarchy and notify we did it.
-        [self.view addSubview:selectedVC.view];
+        [self.contentView addSubview:selectedVC.view];
         [selectedVC didMoveToParentViewController:self];
 
     } else {

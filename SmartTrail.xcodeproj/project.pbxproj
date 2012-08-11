@@ -272,9 +272,9 @@
 		2F2D148B14EEA9A600E982C5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2F2D14A714EEAC9100E982C5 /* README.org */,
 				2FF17C2B1507DE9000881CC8 /* WebClient.h */,
 				2FF17C2B1507DE9000881CC6 /* WebClient.m */,
-				2F2D14A714EEAC9100E982C5 /* README.org */,
 				2F2D148C14EEA9A700E982C5 /* CollectionUtils.h */,
 				2F2D148D14EEA9A700E982C5 /* CollectionUtils.m */,
 				2F2D148F14EEA9A700E982C5 /* CoreDataUtils.h */,
@@ -391,8 +391,6 @@
 		2FF002A51493E23400BF3668 /* SmartTrail */ = {
 			isa = PBXGroup;
 			children = (
-				69B490A564DB82B9352DC534 /* KMLParser.h */,
-				69B49946E8FA9259681484AE /* KMLParser.m */,
 				2FF002A61493E23400BF3668 /* Supporting Files */,
 				2FF09D9C14EAF8F70050552B /* SmartTrail.xcdatamodeld */,
 				2FF09DB914EC15F00050552B /* MainStoryboard_iPhone.storyboard */,
@@ -414,6 +412,8 @@
 				2F1F84E3151D3F59003D79A2 /* EventsTableViewController.m */,
 				2F03AE88151FEC38000A5688 /* EventDetailViewController.h */,
 				2F03AE89151FEC38000A5688 /* EventDetailViewController.m */,
+				69B490A564DB82B9352DC534 /* KMLParser.h */,
+				69B49946E8FA9259681484AE /* KMLParser.m */,
 				2F2D14A014EEAC1500E982C5 /* Managed Objects */,
 				2F2D148814EE9D4C00E982C5 /* BMAController.h */,
 				2F2D148914EE9D4C00E982C5 /* BMAController.m */,
