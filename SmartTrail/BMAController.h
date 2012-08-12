@@ -85,16 +85,16 @@ static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
     given trail. If so, it downloads and unzips the KMZ file whose URL is found
     in the given trail's kmzURL field, if non-nil. After downloading and
     unzipping the file, it queues-up the given block in the main dispatch queue.
-    The given block will be called with an NSURL argument indicating the new
-    directory containing the uncompressed KML file and any resources
-    accompanying it.
+    The given block will be called with a non-nil NSURL argument indicating the
+    possibly-new directory containing the uncompressed KML file and any
+    resources accompanying it.
 
     It could happen that no such directory can be obtained. In this case, the
-    given block will not be invoked. This would happen, for example, if the
-    given trail's kmzURL field is nil. Another possibility is that the field is
-    not nil, but this method has not been called yet, and the device is off
-    line. If, for some reason, the downloaded KMZ file could not be unzipped
-    into a directory then the given block also is not called.
+    given block will simply not be invoked. This would happen, for example, if
+    the given trail's kmzURL field is nil. Another likely example is that this
+    method has not yet been called and the device is off line. It's also
+    possible that the downloaded KMZ file could not be unzipped because it was
+    somehow corrupted in transmission.
 
     The given trail is never modified, but you should probably update its
     kmlDirPath field (and maybe save its managed context) in the block using the

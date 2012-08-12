@@ -22,8 +22,9 @@
 - (void) downloadConditions:(NSTimer*)timer;
 - (void) downloadEvents:(NSTimer*)timer;
 - (void) downloadKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block;
+static NSURL* unzipDataForID( NSData* zipData, NSString* idStr );
 static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
-void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
+static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 - (NSDate*) ago:(NSTimeInterval)age;
 - (void) downloadConditionsInArea:(Area*)area;
 - (void) setServerTimeDeltaFromDate:(NSDate*)now;
@@ -146,7 +147,7 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
             if ( [downloadDate isAfter:trail.updatedAt] ) {
                 //  The unzipped KMZ is current. Run the continuation block.
-                block([NSURL fileURLWithPath:trail.kmlDirPath isDirectory:YES]);
+                block([NSURL fileURLWithPath:path isDirectory:YES]);
 
             } else {
                 //  The unzipped KMZ is out of date or no longer exists. (It was
@@ -337,47 +338,61 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
         objectForInfoDictionaryKey:@"BmaBaseUrl"
     ];
     client.processData = ^( NSData* zipData ){
-
-      if ( [zipData length] ) {
-        NSFileManager* fileMgr = [NSFileManager defaultManager];
-        //  (NSFileManager is thread-safe, since we're not using a delegate.)
-
-        NSString* kmlDirName = [trail.id stringByAppendingString:@".kmz.d"];
-        NSURL* kmlDirTmpURL = [fileMgr tmpURLEndingInPathComponent:kmlDirName];
-        NSURL* kmzTmpURL = [fileMgr
-            tmpURLEndingInPathComponent:[trail.id stringByAppendingString:@".kmz"]
-        ];
-
-        if(
-            [zipData writeToURL:kmzTmpURL atomically:YES]  &&
-            [fileMgr unzip:kmzTmpURL intoNewDirAtURL:kmlDirTmpURL]
-        ) {
-            //  Succeeded in unzipping kmzTmpURL into dir. kmlDirTmpURL.
-            //  Move the dir. into the cache dir.
-            NSURL* kmlDirURL = [fileMgr cacheURLEndingInPathComponent:kmlDirName];
-            [fileMgr removeItemAtURL:kmlDirURL error:nil];
-            if (
-                [fileMgr moveItemAtURL:kmlDirTmpURL toURL:kmlDirURL error:nil]
-            ) {
-                //  Succeeded in moving the dir. Now call the given block in
-                //  the main dispatch queue.
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    block(kmlDirURL);
-                } );
-
-            } else {
-                NSAssert( NO, @"Couldn't move directory %@ to %@.", kmlDirTmpURL, kmlDirURL );
-            }
-
-        } else {
-            NSAssert( NO, @"Could not write unzip data to URL %@", kmzTmpURL );
+        NSURL* kmlDirURL = unzipDataForID( zipData, trail.id );
+        if ( kmlDirURL ) {
+            //  Succeeded in unzipping the downloaded data and moving the
+            //  resulting dir. into the cache directory. Now call the given
+            //  block in the main dispatch queue.
+            dispatch_async( dispatch_get_main_queue(), ^{
+                block(kmlDirURL);
+            } );
         }
-      }
     };
 
     [NetActivityIndicatorController aNetActivityDidStart];
     [client sendSynchronousGet];
   });
+}
+
+
+/** Unzips the given zip-compressed data and stores it in a new directory whose
+    name is based on the given ID string. For example, if idStr is "42", the
+    directory will have name "42.kmz.d" located in the app's cache directory.
+    The file URL for the directory is returned, or nil if there was an error.
+    If either argument is nil or empty, this function just returns nil.
+*/
+NSURL* unzipDataForID( NSData* zipData, NSString* idStr ) {
+    NSURL* kmlDirURL = nil;
+
+    if ( [zipData length] && [idStr length] ) {
+        NSFileManager* fileMgr = [NSFileManager defaultManager];
+        //  (NSFileManager is thread-safe, since we're not using a delegate.)
+
+        NSString* kmlDirName = [idStr stringByAppendingString:@".kmz.d"];
+        NSURL* kmlDirTmpURL = [fileMgr tmpURLEndingInPathComponent:kmlDirName];
+        NSURL* kmzTmpURL = [fileMgr
+            tmpURLEndingInPathComponent:[idStr stringByAppendingString:@".kmz"]
+        ];
+
+        if ( ! [zipData writeToURL:kmzTmpURL atomically:YES] ) {
+            NSCAssert( NO, @"Couldn't write zip data to URL %@", kmzTmpURL );
+
+        } else if ( ! [fileMgr unzip:kmzTmpURL intoNewDirAtURL:kmlDirTmpURL] ) {
+            NSCAssert( NO, @"Couldn't unzip data %@ into directory %@", kmzTmpURL, kmlDirTmpURL );
+
+        } else if (
+            ! ( kmlDirURL = [fileMgr cacheURLEndingInPathComponent:kmlDirName] )
+        ) {
+            NSCAssert( NO, @"Couldn't create cache URL for %@", kmlDirName );
+
+        } else if (
+            [fileMgr removeItemAtURL:kmlDirURL error:nil],  // <-- OK to fail.
+            ! [fileMgr moveItemAtURL:kmlDirTmpURL toURL:kmlDirURL error:nil]
+        ) {
+            NSCAssert( NO, @"Couldn't move directory %@ to %@", kmlDirTmpURL, kmlDirURL );
+        }
+    }
+    return  kmlDirURL;
 }
 
 
