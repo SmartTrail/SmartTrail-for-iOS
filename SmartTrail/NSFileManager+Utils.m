@@ -56,9 +56,8 @@
             initWithFileName:[zipURL path]
                         mode:ZipFileModeUnzip
         ];
-        for (
-            FileInZipInfo *info in zipFile.listFileInZipInfos
-        ) {
+        for ( FileInZipInfo *info in zipFile.listFileInZipInfos ) {
+
             [zipFile locateFileInZip:info.name];
             ZipReadStream* reader = [zipFile readCurrentFileInZip];
             NSData* unzipData  = [reader

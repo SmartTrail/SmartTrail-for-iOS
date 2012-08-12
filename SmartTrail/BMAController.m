@@ -135,19 +135,24 @@ void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 - (void) checkKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block {
     if ( trail.kmzURL ) {
         NSString* path = trail.kmlDirPath;
+
         if ( path ) {
             //  Have downloaded and unzipped a KMZ previously. Check when.
             NSDictionary* attrDict = [[NSFileManager defaultManager]
                 attributesOfItemAtPath:path error:nil
             ];
             NSDate* downloadDate = [attrDict objectForKey:NSFileCreationDate];
+            //  Note downloadDate is nil if path indicates a missing directory.
 
-            if ( [downloadDate isBefore:trail.updatedAt] ) {
-                //  The unzipped KMZ is out of date. Replace it and run block.
-                [self downloadKMZForTrail:trail thenDo:block];
-            } else {
+            if ( [downloadDate isAfter:trail.updatedAt] ) {
                 //  The unzipped KMZ is current. Run the continuation block.
                 block([NSURL fileURLWithPath:trail.kmlDirPath isDirectory:YES]);
+
+            } else {
+                //  The unzipped KMZ is out of date or no longer exists. (It was
+                //  stored in the cache directory, after all.) Replace it and
+                //  run block.
+                [self downloadKMZForTrail:trail thenDo:block];
             }
 
         } else {

@@ -20,7 +20,7 @@ static const CGFloat TrailLineWidth = 3.0;  // Width in points.
 @synthesize trail = __trail;
 
 
-- (void)viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
     //  For some reason, you can't set this in IB:
     self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -44,7 +44,7 @@ static const CGFloat TrailLineWidth = 3.0;  // Width in points.
             self.mapView.visibleMapRect = __polylineView.overlay.boundingMapRect;
             self.mapView.delegate = self;
 
-        } else{
+        } else {
             NSAssert( NO, @"KMLParser could not parse file %@", kmlParser.url );
         }
     }

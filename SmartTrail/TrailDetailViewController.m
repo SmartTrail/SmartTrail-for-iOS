@@ -73,8 +73,8 @@ else  NSLog( @"No KMZ URL to download.");
         checkKMZForTrail:self.trail
                   thenDo:^(NSURL* url) {
                              self.trail.kmlDirPath = [[url absoluteURL] path];
+//  TODO: Need to persist kmlDirPath value!
                              [self setMapEnabled:YES];
-
 if ( url )  NSLog( @"Using uzipped KML dir. %@", url );
 else  NSLog( @"Couldn't download & unzip %@", self.trail.kmzURL );
                          }
