@@ -76,8 +76,10 @@
 		2FF17C2B1507DE9000881CCD /* NSFileManager+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */; };
 		2FF17C2B1507DE9000881CD0 /* TrailConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCF /* TrailConditionsViewController.m */; };
 		69B49328A340E8B87449B3F1 /* TrailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */; };
+		69B49357772D06142B7F6C7C /* TrailPolylineOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B493A39B2D7E137663D1DC /* TrailPolylineOverlay.m */; };
 		69B49A6DCDE6324ADE315A38 /* TrailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */; };
 		69B49B675E645AC5CA42ADFA /* KMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B49946E8FA9259681484AE /* KMLParser.m */; };
+		69B49D359B143A975B161740 /* Trail+Mapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B499308698290371C2D847 /* Trail+Mapping.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +135,8 @@
 		2F2D14A914EEB0FC00E982C5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		2F378E6715D18A70009D3495 /* CollectionUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionUtilsTest.h; path = SmartTrailTests/CollectionUtilsTest.h; sourceTree = SOURCE_ROOT; };
 		2F378E6815D18A70009D3495 /* CollectionUtilsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionUtilsTest.m; path = SmartTrailTests/CollectionUtilsTest.m; sourceTree = SOURCE_ROOT; };
+		2F5B1F0115E6B37500D9CA65 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trail.h; path = "SmartTrail/Managed Objects/Trail.h"; sourceTree = "<group>"; };
+		2F5B1F0215E6B37500D9CA65 /* Trail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trail.m; path = "SmartTrail/Managed Objects/Trail.m"; sourceTree = "<group>"; };
 		2F71257715598D52008A8445 /* LinkingWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkingWebViewDelegate.h; sourceTree = "<group>"; };
 		2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkingWebViewDelegate.m; sourceTree = "<group>"; };
 		2F9A04E2150174A7001638BC /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
@@ -211,7 +215,11 @@
 		69B490A564DB82B9352DC534 /* KMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMLParser.h; sourceTree = "<group>"; };
 		69B49173CFDAFC70AE61BC77 /* TrailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailMapViewController.h; sourceTree = "<group>"; };
 		69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailInfoViewController.m; sourceTree = "<group>"; };
+		69B493A39B2D7E137663D1DC /* TrailPolylineOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailPolylineOverlay.m; sourceTree = "<group>"; };
+		69B498FD1126E21B21358724 /* TrailPolylineOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailPolylineOverlay.h; sourceTree = "<group>"; };
+		69B499308698290371C2D847 /* Trail+Mapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Trail+Mapping.m"; sourceTree = "<group>"; };
 		69B49946E8FA9259681484AE /* KMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMLParser.m; sourceTree = "<group>"; };
+		69B49A518BBFF38C548FDB1A /* Trail+Mapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Trail+Mapping.h"; sourceTree = "<group>"; };
 		69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailMapViewController.m; sourceTree = "<group>"; };
 		69B49E204B6263BC5A3CF3A1 /* TrailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailInfoViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -307,6 +315,8 @@
 				2F9A04E3150174A7001638BC /* Area.m */,
 				2F9B471D1503ED2B00111062 /* Trail.h */,
 				2F9B471E1503ED2B00111062 /* Trail.m */,
+				69B49A518BBFF38C548FDB1A /* Trail+Mapping.h */,
+				69B499308698290371C2D847 /* Trail+Mapping.m */,
 				2F9A04E5150174A7001638BC /* Condition.h */,
 				2F9A04E6150174A7001638BC /* Condition.m */,
 				2F03AE8C1520D988000A5688 /* Event.h */,
@@ -352,6 +362,8 @@
 		2FF002901493E23400BF3668 = {
 			isa = PBXGroup;
 			children = (
+				2F5B1F0115E6B37500D9CA65 /* Trail.h */,
+				2F5B1F0215E6B37500D9CA65 /* Trail.m */,
 				2F1C79D315C4863A00A64605 /* CoreLocation.framework */,
 				2FF002A51493E23400BF3668 /* SmartTrail */,
 				2F2D148B14EEA9A600E982C5 /* Utilities */,
@@ -408,6 +420,8 @@
 				2FCE73F7150AA06300524848 /* ConditionTableViewCell.m */,
 				69B49173CFDAFC70AE61BC77 /* TrailMapViewController.h */,
 				69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */,
+				69B498FD1126E21B21358724 /* TrailPolylineOverlay.h */,
+				69B493A39B2D7E137663D1DC /* TrailPolylineOverlay.m */,
 				2F1F84E2151D3F59003D79A2 /* EventsTableViewController.h */,
 				2F1F84E3151D3F59003D79A2 /* EventsTableViewController.m */,
 				2F03AE88151FEC38000A5688 /* EventDetailViewController.h */,
@@ -631,6 +645,8 @@
 				69B49A6DCDE6324ADE315A38 /* TrailInfoViewController.m in Sources */,
 				69B49328A340E8B87449B3F1 /* TrailMapViewController.m in Sources */,
 				69B49B675E645AC5CA42ADFA /* KMLParser.m in Sources */,
+				69B49357772D06142B7F6C7C /* TrailPolylineOverlay.m in Sources */,
+				69B49D359B143A975B161740 /* Trail+Mapping.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

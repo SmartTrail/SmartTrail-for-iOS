@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Area" representedClassName="Area" syncable="YES">
         <attribute name="downloadedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
@@ -37,6 +37,12 @@
         <attribute name="kmlDirPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="kmzURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="length" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mapCoordLat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mapCoordLon" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mapRectHeight" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mapRectWidth" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mapRectX" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mapRectY" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="techRating" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -63,6 +69,6 @@
         <element name="Area" positionX="3240" positionY="882" width="128" height="90"/>
         <element name="Condition" positionX="3267" positionY="1020" width="128" height="150"/>
         <element name="Event" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="Trail" positionX="3033" positionY="885" width="128" height="300"/>
+        <element name="Trail" positionX="3033" positionY="885" width="128" height="390"/>
     </elements>
 </model>

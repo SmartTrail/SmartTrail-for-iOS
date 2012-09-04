@@ -146,8 +146,9 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
             //  Note downloadDate is nil if path indicates a missing directory.
 
             if ( [downloadDate isAfter:trail.updatedAt] ) {
-                //  The unzipped KMZ is current. Run the continuation block.
-                block([NSURL fileURLWithPath:path isDirectory:YES]);
+                //  The unzipped KMZ is current. Run the completion block
+                //  and indicate that the directory does not have new data.
+                block( [NSURL fileURLWithPath:path isDirectory:YES], NO );
 
             } else {
                 //  The unzipped KMZ is out of date or no longer exists. (It was
@@ -317,7 +318,6 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
             );
             [utils save];
         }
-
     } );
 }
 
@@ -326,7 +326,8 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
 
 /** Performs the downloading and unzipping of a KMZ file required by method
-    checkKMZForTrail:thenDo:.
+    checkKMZForTrail:thenDo:. This method returns immediately, doing its work
+    in the background.
 */
 - (void) downloadKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block {
   dispatch_async( __areaTrailQ, ^{
@@ -342,9 +343,11 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
         if ( kmlDirURL ) {
             //  Succeeded in unzipping the downloaded data and moving the
             //  resulting dir. into the cache directory. Now call the given
-            //  block in the main dispatch queue.
+            //  block in the main dispatch queue and indicate that the
+            //  downloaded data is fresh.
             dispatch_async( dispatch_get_main_queue(), ^{
-                block(kmlDirURL);
+NSLog( @"Downloaded & unzipped KML dir %@", kmlDirURL );
+                block( kmlDirURL, YES );
             } );
         }
     };

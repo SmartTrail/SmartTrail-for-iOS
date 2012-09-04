@@ -2,8 +2,8 @@
 //  Trail.m
 //  SmartTrail
 //
-//  Created by Tyler Perkins on 2012-07-05.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Tyler Perkins on 2012-08-23.
+//
 //
 
 #import "Trail.h"
@@ -21,13 +21,19 @@
 @dynamic elevationGain;
 @dynamic id;
 @dynamic isFavorite;
+@dynamic kmlDirPath;
+@dynamic kmzURL;
 @dynamic length;
 @dynamic name;
 @dynamic techRating;
 @dynamic updatedAt;
 @dynamic url;
-@dynamic kmzURL;
-@dynamic kmlDirPath;
+@dynamic mapCoordLat;
+@dynamic mapCoordLon;
+@dynamic mapRectX;
+@dynamic mapRectY;
+@dynamic mapRectWidth;
+@dynamic mapRectHeight;
 @dynamic area;
 @dynamic conditions;
 

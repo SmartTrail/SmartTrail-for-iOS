@@ -2,8 +2,8 @@
 //  Trail.h
 //  SmartTrail
 //
-//  Created by Tyler Perkins on 2012-07-05.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Tyler Perkins on 2012-08-23.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -21,13 +21,19 @@
 @property (nonatomic, retain) NSNumber * elevationGain;
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSNumber * isFavorite;
+@property (nonatomic, retain) NSString * kmlDirPath;
+@property (nonatomic, retain) NSString * kmzURL;
 @property (nonatomic, retain) NSNumber * length;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * techRating;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) NSString * url;
-@property (nonatomic, retain) NSString * kmzURL;
-@property (nonatomic, retain) NSString * kmlDirPath;
+@property (nonatomic, retain) NSNumber * mapCoordLat;
+@property (nonatomic, retain) NSNumber * mapCoordLon;
+@property (nonatomic, retain) NSNumber * mapRectX;
+@property (nonatomic, retain) NSNumber * mapRectY;
+@property (nonatomic, retain) NSNumber * mapRectWidth;
+@property (nonatomic, retain) NSNumber * mapRectHeight;
 @property (nonatomic, retain) Area *area;
 @property (nonatomic, retain) NSSet *conditions;
 @end

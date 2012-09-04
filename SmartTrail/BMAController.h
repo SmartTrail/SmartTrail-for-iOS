@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Trail.h"
 
-typedef void (^ActionWithURL)(NSURL*);
+typedef void (^ActionWithURL)(NSURL*,BOOL);
 
 /** Seconds between downloads of areas and trails. */
 static const NSTimeInterval TrailInfoInterval = 86400.0;    // One day.
@@ -83,18 +83,31 @@ static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
 
 /** This method determines whether a KMZ file needs to be downloaded for the
     given trail. If so, it downloads and unzips the KMZ file whose URL is found
-    in the given trail's kmzURL field, if non-nil. After downloading and
-    unzipping the file, it queues-up the given block in the main dispatch queue.
-    The given block will be called with a non-nil NSURL argument indicating the
-    possibly-new directory containing the uncompressed KML file and any
-    resources accompanying it.
+    in the given trail's kmzURL field, if non-nil.
+
+    If the kmzURL field is nil, this method just returns.
+
+    Otherwise, the directory designated by the trail's kmlDirPath field is
+    checked. If it is non-nil, the directory exists, and its creation date is
+    later than the trail's updatedAt field, then no download is performed.
+    Nonetheless, the given block is queued up in the main dispatch queue with
+    the directory's URL and NO as arguments. Here, the second argument indicates
+    that the data in the directory was not updated.
+
+    Otherwise, new data must be downloaded and unzipped. After doing so, the
+    given block is queued up in the main dispatch queue with the directory's URL
+    and YES as arguments. Here, the second argument indicates that the data in
+    the directory is fresh.
+
+    In all cases, if the block is invoked, its first (NSURL) argument will not
+    be nil and the directory it indicates is present.
 
     It could happen that no such directory can be obtained. In this case, the
     given block will simply not be invoked. This would happen, for example, if
-    the given trail's kmzURL field is nil. Another likely example is that this
-    method has not yet been called and the device is off line. It's also
-    possible that the downloaded KMZ file could not be unzipped because it was
-    somehow corrupted in transmission.
+    the given trail's kmzURL field is nil. Another likely example is when data
+    should be downloaded, but the device is off line. It's also possible that
+    the downloaded KMZ file could not be unzipped because it was somehow
+    corrupted in transmission.
 
     The given trail is never modified, but you should probably update its
     kmlDirPath field (and maybe save its managed context) in the block using the

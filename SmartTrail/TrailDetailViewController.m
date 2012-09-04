@@ -71,13 +71,17 @@ else  NSLog( @"No KMZ URL to download.");
     //  Initiate download of trail's KMZ data, if necessary.
     [THE(bmaController)
         checkKMZForTrail:self.trail
-                  thenDo:^(NSURL* url) {
+                  thenDo:^(NSURL* url, BOOL fresh) {
+                           if ( fresh ) {
+                             //  We have newly downloaded data, so we may need
+                             //  to update the trail and persist it.
                              NSString* newPath = [[url absoluteURL] path];
                              if ( ! [newPath isEqual:self.trail.kmlDirPath] ) {
                                  self.trail.kmlDirPath = newPath;
                                  [THE(dataUtils) save];
                              }
-                             [self setMapEnabled:YES];
+                           }
+                           [self setMapEnabled:YES];
 NSLog( @"Using uzipped KML dir. %@", url );
                          }
     ];
