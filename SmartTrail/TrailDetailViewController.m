@@ -145,7 +145,6 @@ NSLog( @"Using uzipped KML dir. %@", url );
     UIViewController* deselectedVC = [__viewControllersToSelect
         objectAtIndex:__selectedViewControllerIndex
     ];
-    BOOL haveAChild = (BOOL)[self.childViewControllers count];
 
     //  Need to tell selectedVC it will be added. Automatically calls
     //  willMoveToParentViewController:
@@ -153,7 +152,7 @@ NSLog( @"Using uzipped KML dir. %@", url );
     //  Make sure the view has the right size and position.
     selectedVC.view.frame = self.contentView.frame;
 
-    if ( ! haveAChild) {
+    if ( ! [self.childViewControllers count] ) {
         //  Add selectedVC's view to the view heirarchy and notify we did it.
         [self.contentView addSubview:selectedVC.view];
         [selectedVC didMoveToParentViewController:self];
