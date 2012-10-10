@@ -72,7 +72,6 @@ double interpolateBack( double portion, double beg, double end );
         KMLParser* parser = [[KMLParser alloc]
             initWithDirPath:self.trail.kmlDirPath
         ];
-NSLog( @"Parsing dir. %@", self.trail.kmlDirPath );
         __trackLocations = parser.locations;
     }
     return __trackLocations;

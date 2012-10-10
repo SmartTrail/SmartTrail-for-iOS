@@ -33,7 +33,6 @@ static const CGFloat TrailLineWidth = 3.0;  // Width in points.
         TrailPolylineOverlay* overlay = [[TrailPolylineOverlay alloc]
             initWithTrail:self.trail
         ];
-NSLog( @"Created overlay %@", overlay );
         [self.mapView addOverlay:overlay];
         self.mapView.visibleMapRect = overlay.boundingMapRect;
     }
@@ -68,7 +67,6 @@ NSLog( @"Created overlay %@", overlay );
            mapView:(MKMapView*)mapView
     viewForOverlay:(id<MKOverlay>)overlay
 {
-NSLog( @"Creating view for overlay %@", overlay );
     MKPolylineView* v = [[MKPolylineView alloc] initWithPolyline:(MKPolyline*)overlay];
     v.lineWidth = TrailLineWidth;
     v.strokeColor = [UIColor

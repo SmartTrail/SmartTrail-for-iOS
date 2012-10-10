@@ -149,7 +149,6 @@ void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
         NSString* path = trail.kmlDirPath;
 
         if ( path ) {
-NSLog( @"Previously downloaded a KMZ for %@, %@", trail.id, trail.name );
             //  Have downloaded and unzipped a KMZ previously. Check when.
             NSDictionary* attrDict = [[NSFileManager defaultManager]
                 attributesOfItemAtPath:path error:nil
@@ -160,19 +159,16 @@ NSLog( @"Previously downloaded a KMZ for %@, %@", trail.id, trail.name );
             if ( [downloadDate isAfter:trail.updatedAt] ) {
                 //  The unzipped KMZ is current. Run the completion block
                 //  and indicate that the directory does not have new data.
-NSLog( @"    It's OK, no need for download.");
                 blk( [NSURL fileURLWithPath:path isDirectory:YES], NO );
 
             } else {
                 //  The unzipped KMZ is out of date or no longer exists. (It was
                 //  stored in the cache directory, after all.) Replace it and
                 //  run block.
-NSLog( @"    It's been reclamed or it's out of date. Download again.");
                 [self downloadKMZForTrail:trail thenDo:blk async:asynchronously];
             }
 
         } else {
-NSLog( @"Submitting job for new KMZ of %@, %@", trail.id, trail.name );
             //  There is a KMZ we haven't downloaded yet.
             [self downloadKMZForTrail:trail thenDo:blk async:asynchronously];
         }
@@ -208,9 +204,7 @@ NSLog( @"Submitting job for new KMZ of %@, %@", trail.id, trail.name );
 
     [NetActivityIndicatorController aNetActivityDidStop];
 
-NSLog(@"Before save, context has changes?  %d", [utils.context hasChanges]);
     [utils save];
-NSLog(@"After save, context has changes?  %d", [utils.context hasChanges]);
 }
 
 
@@ -399,14 +393,12 @@ NSLog(@"After save, context has changes?  %d", [utils.context hasChanges]);
         objectForInfoDictionaryKey:@"BmaBaseUrl"
     ];
     client.processData = ^( NSData* zipData ){
-NSLog( @"Unzipping KMZ for %@", trailId );
         NSURL* kmlDirURL = unzipDataForID( zipData, trailId );
         if ( kmlDirURL ) {
             //  Succeeded in unzipping the downloaded data and moving the
             //  resulting dir. into the cache directory. Now call the given
             //  block in the original dispatch queue and indicate that the
             //  downloaded data is fresh.
-NSLog( @"Downloaded & unzipped KML dir %@", kmlDirURL );
             maybeDispatch( queueForBlock, ^{
                 block( kmlDirURL, YES );
             } );

@@ -63,9 +63,6 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-if ( self.trail.kmzURL )  NSLog( @"Checking KMZ URL %@.", self.trail.kmzURL );
-else  NSLog( @"No KMZ URL to download.");
-
     [self setMapEnabled:NO];
 
     //  Initiate download of trail's KMZ data, if necessary.
@@ -82,7 +79,6 @@ else  NSLog( @"No KMZ URL to download.");
                 }
             }
             [self setMapEnabled:YES];
-NSLog(@"Using uzipped KML dir. %@", url);
         }
                    async:YES
     ];
