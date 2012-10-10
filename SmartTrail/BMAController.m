@@ -21,7 +21,7 @@
 - (void) downloadTrailsEtc:(NSTimer*)timer;
 - (void) downloadConditions:(NSTimer*)timer;
 - (void) downloadEvents:(NSTimer*)timer;
-- (void) downloadKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block;
+- (void) downloadKMZForTrail:(Trail*)t thenDo:(ActionWithURL)b async:(BOOL)a;
 static NSURL* unzipDataForID( NSData* zipData, NSString* idStr );
 static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
@@ -30,6 +30,8 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 - (void) setServerTimeDeltaFromDate:(NSDate*)now;
 @end
 
+void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
+
 
 @implementation BMAController
 {
@@ -37,6 +39,7 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
     NSNumber* __serverTimeDelta;
     dispatch_queue_t __areaTrailQ;
     dispatch_queue_t __conditionQ;
+    dispatch_queue_t __kmzQ;
     dispatch_queue_t __eventQ;
 }
 
@@ -44,6 +47,7 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 - (void) dealloc {
     dispatch_release( __areaTrailQ );
     dispatch_release( __conditionQ );
+    dispatch_release( __kmzQ );
     dispatch_release( __eventQ );
 }
 
@@ -57,6 +61,9 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
         );
         __conditionQ = dispatch_queue_create(
             "BMAController_serial_conditionQ", DISPATCH_QUEUE_SERIAL
+        );
+        __kmzQ = dispatch_queue_create(
+            "BMAController_serial_kmzQ", DISPATCH_QUEUE_SERIAL
         );
         __eventQ = dispatch_queue_create(
             "BMAController_serial_eventQ", DISPATCH_QUEUE_SERIAL
@@ -133,11 +140,16 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 }
 
 
-- (void) checkKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block {
+- (void)
+    checkKMZForTrail:(Trail*)trail
+              thenDo:(ActionWithURL)blk
+               async:(BOOL)asynchronously
+{
     if ( trail.kmzURL ) {
         NSString* path = trail.kmlDirPath;
 
         if ( path ) {
+NSLog( @"Previously downloaded a KMZ for %@, %@", trail.id, trail.name );
             //  Have downloaded and unzipped a KMZ previously. Check when.
             NSDictionary* attrDict = [[NSFileManager defaultManager]
                 attributesOfItemAtPath:path error:nil
@@ -148,20 +160,57 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
             if ( [downloadDate isAfter:trail.updatedAt] ) {
                 //  The unzipped KMZ is current. Run the completion block
                 //  and indicate that the directory does not have new data.
-                block( [NSURL fileURLWithPath:path isDirectory:YES], NO );
+NSLog( @"    It's OK, no need for download.");
+                blk( [NSURL fileURLWithPath:path isDirectory:YES], NO );
 
             } else {
                 //  The unzipped KMZ is out of date or no longer exists. (It was
                 //  stored in the cache directory, after all.) Replace it and
                 //  run block.
-                [self downloadKMZForTrail:trail thenDo:block];
+NSLog( @"    It's been reclamed or it's out of date. Download again.");
+                [self downloadKMZForTrail:trail thenDo:blk async:asynchronously];
             }
 
         } else {
+NSLog( @"Submitting job for new KMZ of %@, %@", trail.id, trail.name );
             //  There is a KMZ we haven't downloaded yet.
-            [self downloadKMZForTrail:trail thenDo:block];
+            [self downloadKMZForTrail:trail thenDo:blk async:asynchronously];
         }
     }
+}
+
+
+- (void) checkAllKMZs {
+    CoreDataUtils* utils = [[CoreDataUtils alloc]
+        initWithStoreCoordinator:[APP_DELEGATE persistentStoreCoordinator]
+    ];
+    utils.context.mergePolicy = NSOverwriteMergePolicy;
+
+    //  Wrap the sequence of downloads in the display of the network
+    //  activity spinner. Otherwise, it flashes as each KMZ is downloaded.
+    [NetActivityIndicatorController aNetActivityDidStart];
+
+    for ( Trail* trail in [utils find:@"allTrails"] ) {
+        [self checkKMZForTrail:trail
+                        thenDo:^(NSURL* url, BOOL fresh) {
+                if ( fresh ) {
+                    //  We have newly downloaded data, so we may need to update the
+                    //  trail and persist it.
+                    NSString* newPath = [[url absoluteURL] path];
+                    if (![newPath isEqual:trail.kmlDirPath]) {
+                        trail.kmlDirPath = newPath;
+                    }
+                }
+            }
+                         async:NO
+        ];
+    }
+
+    [NetActivityIndicatorController aNetActivityDidStop];
+
+NSLog(@"Before save, context has changes?  %d", [utils.context hasChanges]);
+    [utils save];
+NSLog(@"After save, context has changes?  %d", [utils.context hasChanges]);
 }
 
 
@@ -252,6 +301,9 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
                 //  Trails are saved, now asynchronously download all conditions
                 //  for all trails.
                 [self downloadConditionsInArea:nil];
+
+                //  Check each trail and download its KMZ file if necessary.
+                [self checkAllKMZs];
             }
         }
     } );
@@ -326,35 +378,46 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 
 
 /** Performs the downloading and unzipping of a KMZ file required by method
-    checkKMZForTrail:thenDo:. This method returns immediately, doing its work
-    in the background.
+    checkKMZForTrail:thenDo:async:. This method returns immediately, doing its
+    work in the background on the __areaTrailQ serial queue. The given block is
+    executed on the main queue, so it can perform UI updates. The given Trail
+    is not modified.
 */
-- (void) downloadKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block {
-  dispatch_async( __areaTrailQ, ^{
-    [NetActivityIndicatorController aNetActivityDidStop];
-
+- (void)
+    downloadKMZForTrail:(Trail*)trail
+                 thenDo:(ActionWithURL)block
+                  async:(BOOL)asynchronously
+{
+    void (*maybeDispatch)(dispatch_queue_t, dispatch_block_t) =
+        asynchronously ? &dispatch_async : &dontDispatchJustCall;
+    dispatch_queue_t queueForBlock = dispatch_get_current_queue();
+    NSString* trailId = trail.id;
     WebClient* client = [WebClient new];
+
     client.urlString = trail.kmzURL;
     client.baseURLString = [[NSBundle mainBundle]   // kmzURL is relative.
         objectForInfoDictionaryKey:@"BmaBaseUrl"
     ];
     client.processData = ^( NSData* zipData ){
-        NSURL* kmlDirURL = unzipDataForID( zipData, trail.id );
+NSLog( @"Unzipping KMZ for %@", trailId );
+        NSURL* kmlDirURL = unzipDataForID( zipData, trailId );
         if ( kmlDirURL ) {
             //  Succeeded in unzipping the downloaded data and moving the
             //  resulting dir. into the cache directory. Now call the given
-            //  block in the main dispatch queue and indicate that the
+            //  block in the original dispatch queue and indicate that the
             //  downloaded data is fresh.
-            dispatch_async( dispatch_get_main_queue(), ^{
 NSLog( @"Downloaded & unzipped KML dir %@", kmlDirURL );
+            maybeDispatch( queueForBlock, ^{
                 block( kmlDirURL, YES );
             } );
         }
     };
 
-    [NetActivityIndicatorController aNetActivityDidStart];
-    [client sendSynchronousGet];
-  });
+    maybeDispatch( __kmzQ, ^{
+        [NetActivityIndicatorController aNetActivityDidStart];
+        [client sendSynchronousGet];
+        [NetActivityIndicatorController aNetActivityDidStop];
+    } );
 }
 
 
@@ -474,7 +537,6 @@ void deleteUsing(
             );
         }
         [utils save];
-
     } );
 }
 
@@ -494,6 +556,11 @@ void deleteUsing(
         NSLog( @"Warning: WebClient's setServerTimeDeltaFromDate: method did not receive the current time from the server." );
 #endif
     }
+}
+
+
+void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk ) {
+    blk();
 }
 
 

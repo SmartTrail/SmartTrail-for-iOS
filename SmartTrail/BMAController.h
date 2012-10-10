@@ -90,17 +90,16 @@ static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
     Otherwise, the directory designated by the trail's kmlDirPath field is
     checked. If it is non-nil, the directory exists, and its creation date is
     later than the trail's updatedAt field, then no download is performed.
-    Nonetheless, the given block is queued up in the main dispatch queue with
-    the directory's URL and NO as arguments. Here, the second argument indicates
-    that the data in the directory was not updated.
+    Nonetheless, the given block is called with the directory's URL and NO as
+    arguments. Here, the second argument indicates that the data in the
+    directory was not updated.
 
     Otherwise, new data must be downloaded and unzipped. After doing so, the
-    given block is queued up in the main dispatch queue with the directory's URL
-    and YES as arguments. Here, the second argument indicates that the data in
-    the directory is fresh.
+    given block is called with the directory's URL and YES as arguments. Here,
+    the second argument indicates that the data in the directory is fresh.
 
-    In all cases, if the block is invoked, its first (NSURL) argument will not
-    be nil and the directory it indicates is present.
+    In all cases, if the block is called, its first (NSURL) argument will not be
+    nil and the directory it designates is present.
 
     It could happen that no such directory can be obtained. In this case, the
     given block will simply not be invoked. This would happen, for example, if
@@ -109,11 +108,27 @@ static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
     the downloaded KMZ file could not be unzipped because it was somehow
     corrupted in transmission.
 
+    If the async: argument is NO, then the download and the call of the block
+    is performed synchronously in the current thread, so this method doesn't
+    return until both are complete. If it is YES, then this method submits the
+    download to a serial dispatch queue for this purpose, then returns. When
+    the download completes, a block is submitted to the dispatch queue that was
+    current when this method was called. It simply calls the given block with
+    arguments as described above. This is handy when your block needs to do UI
+    work: Just call this method from the main queue.
+
     The given trail is never modified, but you should probably update its
     kmlDirPath field (and maybe save its managed context) in the block using the
     provided path argument.
 */
-- (void) checkKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)block;
+- (void) checkKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)blk async:(BOOL)a;
 
+
+/** Runs method checkKMZForTrail:thenDo:async: for every trail, updates any
+    Trail managed objects as needed, and saves the changes. Manages the
+    network activity indicator. Runs synchronously, so returns only when
+    finished.
+*/
+- (void) checkAllKMZs;
 
 @end

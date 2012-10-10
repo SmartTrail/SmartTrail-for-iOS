@@ -11,7 +11,7 @@
 #import "CollectionUtils.h"
 
 @interface TrailDetailViewController ()
-- (void) transitionToVCNumber:(NSUInteger)idx;
+- (void) transitionToVCNumber:(NSInteger)idx;
 @end
 
 
@@ -22,7 +22,7 @@
     //  remember the selection even after self.view has been unloaded. It is
     //  initially 0.
     NSArray*   __viewControllersToSelect;
-    NSUInteger __selectedViewControllerIndex;
+    NSInteger  __selectedViewControllerIndex;
     NSUInteger __mapIndex;
 }
 
@@ -72,18 +72,19 @@ else  NSLog( @"No KMZ URL to download.");
     [THE(bmaController)
         checkKMZForTrail:self.trail
                   thenDo:^(NSURL* url, BOOL fresh) {
-                           if ( fresh ) {
-                             //  We have newly downloaded data, so we may need
-                             //  to update the trail and persist it.
-                             NSString* newPath = [[url absoluteURL] path];
-                             if ( ! [newPath isEqual:self.trail.kmlDirPath] ) {
-                                 self.trail.kmlDirPath = newPath;
-                                 [THE(dataUtils) save];
-                             }
-                           }
-                           [self setMapEnabled:YES];
-NSLog( @"Using uzipped KML dir. %@", url );
-                         }
+            if (fresh) {
+                //  We have newly downloaded data, so we may need
+                //  to update the trail and persist it.
+                NSString* newPath = [[url absoluteURL] path];
+                if (![newPath isEqual:self.trail.kmlDirPath]) {
+                    self.trail.kmlDirPath = newPath;
+                    [THE(dataUtils) save];
+                }
+            }
+            [self setMapEnabled:YES];
+NSLog(@"Using uzipped KML dir. %@", url);
+        }
+                   async:YES
     ];
 
     //  Update the list of all conditions for trails in this trail's area,
@@ -111,7 +112,7 @@ NSLog( @"Using uzipped KML dir. %@", url );
     view corresponding to the selected segment.
 */
 - (IBAction) segmentedControlChanged:(id)sender {
-    [self transitionToVCNumber:(NSUInteger)[sender selectedSegmentIndex]];
+    [self transitionToVCNumber:[sender selectedSegmentIndex]];
 }
 
 
@@ -139,11 +140,13 @@ NSLog( @"Using uzipped KML dir. %@", url );
     calls by the system. That way, you can work on a child view controller class
     without much concern about details of the other controllers.
 */
-- (void) transitionToVCNumber:(NSUInteger)idx {
+- (void) transitionToVCNumber:(NSInteger)idx {
 
-    UIViewController* selectedVC = [__viewControllersToSelect objectAtIndex:idx];
+    UIViewController* selectedVC = [__viewControllersToSelect
+        objectAtIndex:(NSUInteger)idx
+    ];
     UIViewController* deselectedVC = [__viewControllersToSelect
-        objectAtIndex:__selectedViewControllerIndex
+        objectAtIndex:(NSUInteger)__selectedViewControllerIndex
     ];
     BOOL haveAChild = (BOOL)[self.childViewControllers count];
 

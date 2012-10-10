@@ -75,6 +75,7 @@
 		2FF17C2B1507DE9000881CCA /* NetActivityIndicatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CC9 /* NetActivityIndicatorController.m */; };
 		2FF17C2B1507DE9000881CCD /* NSFileManager+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCC /* NSFileManager+Utils.m */; };
 		2FF17C2B1507DE9000881CD0 /* TrailConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF17C2B1507DE9000881CCF /* TrailConditionsViewController.m */; };
+		2FF9448E1617B1AE00AB0822 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF9448D1617B1AE00AB0822 /* Default-568h@2x.png */; };
 		69B49328A340E8B87449B3F1 /* TrailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */; };
 		69B49357772D06142B7F6C7C /* TrailPolylineOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B493A39B2D7E137663D1DC /* TrailPolylineOverlay.m */; };
 		69B49A6DCDE6324ADE315A38 /* TrailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */; };
@@ -135,8 +136,6 @@
 		2F2D14A914EEB0FC00E982C5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		2F378E6715D18A70009D3495 /* CollectionUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionUtilsTest.h; path = SmartTrailTests/CollectionUtilsTest.h; sourceTree = SOURCE_ROOT; };
 		2F378E6815D18A70009D3495 /* CollectionUtilsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionUtilsTest.m; path = SmartTrailTests/CollectionUtilsTest.m; sourceTree = SOURCE_ROOT; };
-		2F5B1F0115E6B37500D9CA65 /* Trail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trail.h; path = "SmartTrail/Managed Objects/Trail.h"; sourceTree = "<group>"; };
-		2F5B1F0215E6B37500D9CA65 /* Trail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trail.m; path = "SmartTrail/Managed Objects/Trail.m"; sourceTree = "<group>"; };
 		2F71257715598D52008A8445 /* LinkingWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkingWebViewDelegate.h; sourceTree = "<group>"; };
 		2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkingWebViewDelegate.m; sourceTree = "<group>"; };
 		2F9A04E2150174A7001638BC /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
@@ -212,6 +211,7 @@
 		2FF17C2B1507DE9000881CCE /* NSFileManager+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Utils.h"; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CCF /* TrailConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailConditionsViewController.m; sourceTree = "<group>"; };
 		2FF17C2B1507DE9000881CD1 /* TrailConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailConditionsViewController.h; sourceTree = "<group>"; };
+		2FF9448D1617B1AE00AB0822 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		69B490A564DB82B9352DC534 /* KMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMLParser.h; sourceTree = "<group>"; };
 		69B49173CFDAFC70AE61BC77 /* TrailMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrailMapViewController.h; sourceTree = "<group>"; };
 		69B4927AE5907C0E9EE3BF9E /* TrailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrailInfoViewController.m; sourceTree = "<group>"; };
@@ -265,6 +265,7 @@
 		2F1F477A1524F9ED002B2828 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2FF9448D1617B1AE00AB0822 /* Default-568h@2x.png */,
 				2F1F47871524FD8B002B2828 /* Icon.png */,
 				2F1F478915254106002B2828 /* Icon@2x.png */,
 				2F1F477B1524F9ED002B2828 /* rating_dots_0.png */,
@@ -362,8 +363,6 @@
 		2FF002901493E23400BF3668 = {
 			isa = PBXGroup;
 			children = (
-				2F5B1F0115E6B37500D9CA65 /* Trail.h */,
-				2F5B1F0215E6B37500D9CA65 /* Trail.m */,
 				2F1C79D315C4863A00A64605 /* CoreLocation.framework */,
 				2FF002A51493E23400BF3668 /* SmartTrail */,
 				2F2D148B14EEA9A600E982C5 /* Utilities */,
@@ -564,6 +563,7 @@
 				2F1F47861524F9ED002B2828 /* rating_dots_5.png in Resources */,
 				2F1F47881524FD8B002B2828 /* Icon.png in Resources */,
 				2F1F478A15254106002B2828 /* Icon@2x.png in Resources */,
+				2FF9448E1617B1AE00AB0822 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
