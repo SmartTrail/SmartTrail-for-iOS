@@ -551,6 +551,10 @@ void deleteUsing(
 }
 
 
+/** A function that can substitute for functions like dispatch_async to NOT
+    do such a dispatch, but to just run the given block now. Returns when the
+    given block returns.
+*/
 void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk ) {
     blk();
 }
