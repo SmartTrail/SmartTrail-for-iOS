@@ -28,4 +28,13 @@
 @property (strong,nonatomic)          Trail*       trail;
 
 
+/** Checks to see that directory self.trail.kmlDir exists, downloading and
+    decompressing a KMZ file to create it if necessary. If so, then parses the
+    KML data as necessary to create a MKOverlay (and hence also MKAnnotation)
+    implementation for self.mapView to display. Returns YES iff all this was
+    successful and there is KML data to display.
+*/
+- (void) parseKMLDataIfOkDo:(void (^)())blk;
+
+
 @end

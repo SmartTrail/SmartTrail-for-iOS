@@ -13,14 +13,6 @@
 @implementation Trail (Mapping)
 
 
-- (BOOL) hasMapDimensions {
-    return  (
-        self.mapRectWidth.doubleValue  > 0.0  ||
-        self.mapRectHeight.doubleValue > 0.0
-    );
-}
-
-
 - (CLLocationCoordinate2D) mapCoordinate {
     return  CLLocationCoordinate2DMake(
         self.mapCoordLat.doubleValue, self.mapCoordLon.doubleValue

@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Trail.h"
+#import "CoreDataUtils.h"
 
+typedef void (^ActionWithTrails)(NSArray*,CoreDataUtils*);
 typedef void (^ActionWithURL)(NSURL*,BOOL);
 
 /** Seconds between downloads of areas and trails. */
@@ -98,8 +100,8 @@ static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
     given block is called with the directory's URL and YES as arguments. Here,
     the second argument indicates that the data in the directory is fresh.
 
-    In all cases, if the block is called, its first (NSURL) argument will not be
-    nil and the directory it designates is present.
+    In all cases, if the block is called, its first (NSURL) argument will not
+    be nil and the directory it designates will exist.
 
     It could happen that no such directory can be obtained. In this case, the
     given block will simply not be invoked. This would happen, for example, if
@@ -108,27 +110,35 @@ static const NSTimeInterval ExpiredEventLifespan = 86400.0; // One day.
     the downloaded KMZ file could not be unzipped because it was somehow
     corrupted in transmission.
 
-    If the async: argument is NO, then the download and the call of the block
+    If the thenOnQ: argument is nil, then the download and the call of the block
     is performed synchronously in the current thread, so this method doesn't
-    return until both are complete. If it is YES, then this method submits the
-    download to a serial dispatch queue for this purpose, then returns. When
-    the download completes, a block is submitted to the dispatch queue that was
-    current when this method was called. It simply calls the given block with
-    arguments as described above. This is handy when your block needs to do UI
-    work: Just call this method from the main queue.
+    return until both are complete. If it is a dispatch queue q, then this
+    method submits the download to a serial dispatch queue for this purpose,
+    then returns. When the download completes, a block is submitted to q. It
+    simply calls the given block with arguments as described above. This is
+    handy when your block needs to do UI work: Just pass the value from
+    dispatch_get_main_queue() and the block that does the work.
 
     The given trail is never modified, but you should probably update its
     kmlDirPath field (and maybe save its managed context) in the block using the
-    provided path argument.
+    provided URL argument. If you don't want to provide such an ActionWithURL,
+    just pass nil instead of a block that does nothing.
 */
-- (void) checkKMZForTrail:(Trail*)trail thenDo:(ActionWithURL)blk async:(BOOL)a;
+- (void)
+    checkKMZForTrail:(Trail*)trail
+             thenOnQ:(dispatch_queue_t)q
+                  do:(ActionWithURL)blk;
 
 
-/** Runs method checkKMZForTrail:thenDo:async: for every trail, updates any
+/** Runs method checkKMZForTrail:thenOnQ:do: for every trail, updates any
     Trail managed objects as needed, and saves the changes. Manages the
-    network activity indicator. Runs synchronously, so returns only when
-    finished.
+    network activity indicator. Runs asynchronously iff the first argument is
+    a non-nil queue, and when finished, a job is submitted to the queue, which
+    calls the given block with a BOOL arg indicating whether there were any
+    saved changes. If you don't want to provide such an ActionWithTrails, just
+    pass nil instead of a block that does nothing. (In this case, the value
+    of q doesn't matter, only whether or not it is nil.)
 */
-- (void) checkAllKMZs;
+- (void) checkAllKMZsThenOnQ:(dispatch_queue_t)q do:(ActionWithTrails)blk;
 
 @end

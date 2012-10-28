@@ -32,6 +32,7 @@
 		2F2D149D14EEA9A700E982C5 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149614EEA9A700E982C5 /* NSObject+Utils.m */; };
 		2F2D149E14EEA9A700E982C5 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D149814EEA9A700E982C5 /* NSString+Utils.m */; };
 		2F378E6915D18A70009D3495 /* CollectionUtilsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F378E6815D18A70009D3495 /* CollectionUtilsTest.m */; };
+		2F67A02D162771E00026C6A4 /* MapsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F67A02C162771E00026C6A4 /* MapsViewController.m */; };
 		2F71257915598D52008A8445 /* LinkingWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */; };
 		2F9A04E4150174A7001638BC /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E3150174A7001638BC /* Area.m */; };
 		2F9A04E7150174A7001638BC /* Condition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A04E6150174A7001638BC /* Condition.m */; };
@@ -136,6 +137,8 @@
 		2F2D14A914EEB0FC00E982C5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		2F378E6715D18A70009D3495 /* CollectionUtilsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionUtilsTest.h; path = SmartTrailTests/CollectionUtilsTest.h; sourceTree = SOURCE_ROOT; };
 		2F378E6815D18A70009D3495 /* CollectionUtilsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionUtilsTest.m; path = SmartTrailTests/CollectionUtilsTest.m; sourceTree = SOURCE_ROOT; };
+		2F67A02B162771E00026C6A4 /* MapsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapsViewController.h; sourceTree = "<group>"; };
+		2F67A02C162771E00026C6A4 /* MapsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapsViewController.m; sourceTree = "<group>"; };
 		2F71257715598D52008A8445 /* LinkingWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkingWebViewDelegate.h; sourceTree = "<group>"; };
 		2F71257815598D52008A8445 /* LinkingWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkingWebViewDelegate.m; sourceTree = "<group>"; };
 		2F9A04E2150174A7001638BC /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
@@ -421,6 +424,8 @@
 				69B49C6D5CE02F3161C420A2 /* TrailMapViewController.m */,
 				69B498FD1126E21B21358724 /* TrailPolylineOverlay.h */,
 				69B493A39B2D7E137663D1DC /* TrailPolylineOverlay.m */,
+				2F67A02B162771E00026C6A4 /* MapsViewController.h */,
+				2F67A02C162771E00026C6A4 /* MapsViewController.m */,
 				2F1F84E2151D3F59003D79A2 /* EventsTableViewController.h */,
 				2F1F84E3151D3F59003D79A2 /* EventsTableViewController.m */,
 				2F03AE88151FEC38000A5688 /* EventDetailViewController.h */,
@@ -647,6 +652,7 @@
 				69B49B675E645AC5CA42ADFA /* KMLParser.m in Sources */,
 				69B49357772D06142B7F6C7C /* TrailPolylineOverlay.m in Sources */,
 				69B49D359B143A975B161740 /* Trail+Mapping.m in Sources */,
+				2F67A02D162771E00026C6A4 /* MapsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

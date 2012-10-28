@@ -9,6 +9,7 @@
 #import "TrailDetailViewController.h"
 #import "AppDelegate.h"
 #import "CollectionUtils.h"
+#import "TrailMapViewController.h"
 
 @interface TrailDetailViewController ()
 - (void) transitionToVCNumber:(NSInteger)idx;
@@ -45,11 +46,23 @@
         [self.storyboard instantiateViewControllerWithIdentifier:@"TrailMap"],
         nil
     ];
+    [__viewControllersToSelect each:^(id vc){ [vc setTrail:self.trail]; }];
     __mapIndex = 2;
 
     //  Initial selected index of the segmented control can be set in IB.
     __selectedViewControllerIndex = self.segmentedControl.selectedSegmentIndex;
     [self transitionToVCNumber:__selectedViewControllerIndex];
+
+    //  Download (if necessary) and parse the KML data. This will ultimately
+    //  configure an MKPolyline displayed by the TrailMapViewController.
+    TrailMapViewController* mapController = [__viewControllersToSelect
+        objectAtIndex:__mapIndex
+    ];
+    [self setMapEnabled:NO];
+    [mapController parseKMLDataIfOkDo:^{ [self setMapEnabled:YES]; }];
+
+    //  Show trail name at top of screen.
+    self.navigationItem.title = self.trail.name;
 }
 
 
@@ -63,34 +76,9 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self setMapEnabled:NO];
-
-    //  Initiate download of trail's KMZ data, if necessary.
-    [THE(bmaController)
-        checkKMZForTrail:self.trail
-                  thenDo:^(NSURL* url, BOOL fresh) {
-            if (fresh) {
-                //  We have newly downloaded data, so we may need
-                //  to update the trail and persist it.
-                NSString* newPath = [[url absoluteURL] path];
-                if (![newPath isEqual:self.trail.kmlDirPath]) {
-                    self.trail.kmlDirPath = newPath;
-                    [THE(dataUtils) save];
-                }
-            }
-            [self setMapEnabled:YES];
-        }
-                   async:YES
-    ];
-
     //  Update the list of all conditions for trails in this trail's area,
     //  if they have not already been updated recently.
     [THE(bmaController) checkConditionsForArea:self.trail.area];
-
-    [__viewControllersToSelect each:^(id vc){ [vc setTrail:self.trail]; }];
-
-    //  Show trail name at top of screen.
-    self.navigationItem.title = self.trail.name;
 }
 
 

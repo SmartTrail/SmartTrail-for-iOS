@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="oIx-41-Jav">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="oIx-41-Jav">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller - Trails-->
         <scene sceneID="11">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
-                <navigationController id="3" sceneMemberID="viewController">
+                <navigationController title="Trails" definesPresentationContext="YES" id="3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Trails" id="Ccn-gF-4HJ"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="4">
                         <autoresizingMask key="autoresizingMask"/>
@@ -19,13 +17,13 @@
                         <segue destination="12" kind="relationship" relationship="rootViewController" id="Zrf-Ae-8Uc"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1031" y="118"/>
         </scene>
         <!--Trails Table View Controller - Master-->
         <scene sceneID="18">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="17" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="" title="Master" id="12" customClass="TrailsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="32" sectionHeaderHeight="22" sectionFooterHeight="22" id="13">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
@@ -67,6 +65,7 @@
                         <outlet property="fetchedResultsTableDataSource" destination="3RE-Ub-JTE" id="Jhm-6l-Pkw"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="17" sceneMemberID="firstResponder"/>
                 <customObject id="3RE-Ub-JTE" customClass="FetchedResultsTableDataSource">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="allTrails"/>
@@ -84,10 +83,53 @@
             </objects>
             <point key="canvasLocation" x="1549" y="118"/>
         </scene>
+        <!--Navigation Controller - Maps-->
+        <scene sceneID="vFd-Xe-6ly">
+            <objects>
+                <navigationController title="Maps" definesPresentationContext="YES" id="u8h-Gb-Awg" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Maps" id="Vyf-EM-vqi"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f0O-RQ-nWc">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.47058823529999999" green="0.63529411759999999" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8vc-87-txt" kind="relationship" relationship="rootViewController" id="QSp-uP-ryj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hqi-N8-w0e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1031" y="712"/>
+        </scene>
+        <!--Maps View Controller - Maps-->
+        <scene sceneID="roh-ya-CHc">
+            <objects>
+                <viewController id="8vc-87-txt" customClass="MapsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Amf-pQ-lhw">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="kPw-Ue-mfz">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8vc-87-txt" id="h3B-a8-6gN"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Maps" id="MpW-9x-oNu"/>
+                    <connections>
+                        <outlet property="mapView" destination="kPw-Ue-mfz" id="mI9-0c-kST"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Ht-yZ-QGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1548" y="712"/>
+        </scene>
         <!--Events Table View Controller - Events-->
         <scene sceneID="xjV-a5-Dva">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rOs-R4-w0s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="ezf-27-KOL" customClass="EventsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="G57-Qv-dQg">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
@@ -132,6 +174,7 @@
                         <outlet property="fetchedResultsTableDataSource" destination="b3Y-Op-tSG" id="jun-i8-Gfi"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rOs-R4-w0s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="b3Y-Op-tSG" customClass="FetchedResultsTableDataSource">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="allEvents"/>
@@ -145,12 +188,11 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="1549" y="761"/>
+            <point key="canvasLocation" x="1549" y="1305"/>
         </scene>
         <!--Event Detail View Controller-->
         <scene sceneID="itJ-eW-gYk">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jTy-Kr-Wma" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="xmh-kE-blh" customClass="EventDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ikA-2L-NLv">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
@@ -193,6 +235,7 @@ Long, Long, Long, Long, Long Title</string>
                         <segue destination="21" kind="push" identifier="TrailDetailSegue" id="mWf-m4-2he"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jTy-Kr-Wma" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="6Hb-Ph-0Br" customClass="LinkingWebViewDelegate">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="trailsForURL"/>
@@ -203,12 +246,11 @@ Long, Long, Long, Long, Long Title</string>
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="2054" y="761"/>
+            <point key="canvasLocation" x="2054" y="1305"/>
         </scene>
         <!--Trail Map View Controller-->
         <scene sceneID="boT-g0-Cow">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="K09-Ws-rvz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="TrailMap" id="8to-9M-odw" customClass="TrailMapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SCO-r7-6Id">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -216,7 +258,7 @@ Long, Long, Long, Long, Long Title</string>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" id="bvb-4A-Mjx">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -228,13 +270,13 @@ Long, Long, Long, Long, Long Title</string>
                         <outlet property="mapView" destination="bvb-4A-Mjx" id="vrl-T0-GC2"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K09-Ws-rvz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2426" y="139"/>
+            <point key="canvasLocation" x="2426" y="154"/>
         </scene>
         <!--Table View Controller - Favorites-->
         <scene sceneID="GLu-Wz-S3e">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7bc-hB-hjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="hL9-8Q-EEA" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="crS-kP-AaO">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
@@ -261,14 +303,14 @@ Long, Long, Long, Long, Long Title</string>
                     </tableView>
                     <navigationItem key="navigationItem" title="Favorites" id="Zjp-gL-pJG"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7bc-hB-hjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1549" y="1345"/>
+            <point key="canvasLocation" x="1549" y="1907"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Controller - Favorites-->
         <scene sceneID="S4b-Rx-dcr">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fod-v0-PoT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController definesPresentationContext="YES" id="z54-Qk-yIh" sceneMemberID="viewController">
+                <navigationController title="Favorites" definesPresentationContext="YES" id="z54-Qk-yIh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="jkV-ZV-tsI"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="JAc-yc-5ZM">
                         <autoresizingMask key="autoresizingMask"/>
@@ -278,14 +320,14 @@ Long, Long, Long, Long, Long Title</string>
                         <segue destination="hL9-8Q-EEA" kind="relationship" relationship="rootViewController" id="uOh-OA-m0C"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fod-v0-PoT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1031" y="1345"/>
+            <point key="canvasLocation" x="1031" y="1907"/>
         </scene>
         <!--Navigation Controller - Events-->
         <scene sceneID="WMo-Cl-L71">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="voA-l3-TJb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController definesPresentationContext="YES" id="vNu-Pn-VR1" sceneMemberID="viewController">
+                <navigationController title="Events" definesPresentationContext="YES" id="vNu-Pn-VR1" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Events" id="QnH-sZ-Bea"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0WB-YG-fKH">
                         <autoresizingMask key="autoresizingMask"/>
@@ -295,13 +337,13 @@ Long, Long, Long, Long, Long Title</string>
                         <segue destination="ezf-27-KOL" kind="relationship" relationship="rootViewController" id="X3k-hG-i0s"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="voA-l3-TJb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1031" y="761"/>
+            <point key="canvasLocation" x="1031" y="1305"/>
         </scene>
         <!--Trail Detail View Controller - Detail-->
         <scene sceneID="24">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="23" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="TrailDetail" title="Detail" id="21" customClass="TrailDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="22">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
@@ -334,13 +376,13 @@ Long, Long, Long, Long, Long Title</string>
                         <outlet property="segmentedControl" destination="Vsm-7X-mNt" id="url-yk-dAP"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="23" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2054" y="103"/>
+            <point key="canvasLocation" x="2054" y="118"/>
         </scene>
         <!--Trail Info View Controller-->
         <scene sceneID="MTl-8e-Dlo">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="R2O-z3-UYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="TrailInfo" id="EzO-ft-BDh" customClass="TrailInfoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="top" id="QXd-Iv-5MP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -412,6 +454,7 @@ Long, Long, Long, Long, Long Title</string>
                         <outlet property="techRatingImageView" destination="WJF-Mw-bbu" id="rgp-mo-tY4"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R2O-z3-UYy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="3lr-Ag-w9h" customClass="LinkingWebViewDelegate">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="trailsForURL"/>
@@ -422,12 +465,11 @@ Long, Long, Long, Long, Long Title</string>
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="2397" y="103"/>
+            <point key="canvasLocation" x="2397" y="118"/>
         </scene>
         <!--Trail Conditions View Controller-->
         <scene sceneID="AdF-nK-Klv">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ocY-kK-AGa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="TrailConditions" id="fT0-HN-oeU" customClass="TrailConditionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2eU-Q4-bue">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -498,6 +540,7 @@ Long, Long, Long, Long, Long Title</string>
                         <outlet property="tableView" destination="sB4-g0-0A5" id="BXa-fY-1Wi"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ocY-kK-AGa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="sZ3-AA-no9" customClass="FetchedResultsTableDataSource">
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="requestTemplateName" value="ConditionsForTrailId"/>
@@ -509,12 +552,11 @@ Long, Long, Long, Long, Long Title</string>
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="2411" y="118"/>
+            <point key="canvasLocation" x="2411" y="133"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="LKZ-bg-2lK">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t8L-p9-Kqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="oIx-41-Jav" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -523,10 +565,12 @@ Long, Long, Long, Long, Long Title</string>
                     </tabBar>
                     <connections>
                         <segue destination="3" kind="relationship" relationship="viewControllers" id="cE7-bX-gRB"/>
-                        <segue destination="vNu-Pn-VR1" kind="relationship" relationship="viewControllers" id="CAo-pa-mkx"/>
-                        <segue destination="z54-Qk-yIh" kind="relationship" relationship="viewControllers" id="1n1-la-hwA"/>
+                        <segue destination="u8h-Gb-Awg" kind="relationship" relationship="viewControllers" id="FIG-kB-h8d"/>
+                        <segue destination="vNu-Pn-VR1" kind="relationship" relationship="viewControllers" id="WbR-sn-XYe"/>
+                        <segue destination="z54-Qk-yIh" kind="relationship" relationship="viewControllers" id="5hG-wm-Uuc"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t8L-p9-Kqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="434" y="761"/>
         </scene>
@@ -566,6 +610,12 @@ Long, Long, Long, Long, Long Title</string>
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LinkingWebViewDelegate.h"/>
             <relationships>
                 <relationship kind="outlet" name="viewController" candidateClass="UIViewController"/>
+            </relationships>
+        </class>
+        <class className="MapsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
             </relationships>
         </class>
         <class className="TrailConditionsViewController" superclassName="UIViewController">

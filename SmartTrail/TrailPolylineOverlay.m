@@ -2,51 +2,101 @@
 // Created by tyler on 2012-08-21.
 //
 
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "TrailPolylineOverlay.h"
 #import "KMLParser.h"
 #import "Trail+Mapping.h"
+#import "Area.h"
 
 @interface TrailPolylineOverlay ()
 @property (strong,nonatomic) MKPolyline* polyline;
-- (void) checkTrailMapDimensions;
+- (BOOL) checkTrailMapDimensions;
 CLLocation* locationByInterpolatingBack(
     CLLocationDistance negPortion, CLLocation* beg, CLLocation* end
 );
 double interpolateBack( double portion, double beg, double end );
 @end
 
+CLLocationCoordinate2D EquatorAtPrimeMeridian = {(double)0.0, (double)0.0};
+
 
 @implementation TrailPolylineOverlay
 
 
 {
+    NSString* __trail_id;
+    NSString* __trail_kmlDirPath;
+    CLLocationCoordinate2D __trail_mapCoordinate;
+    MKMapRect __trail_boundingMapRect;
     NSObject* __dummy;
 }
-@synthesize trail = __trail;
 @synthesize trackLocations = __trackLocations;
 @synthesize trackLength = __trackLength;
+@synthesize title = __title;
+@synthesize subtitle = __subtitle;
 @synthesize polyline = __polyline;
-
 
 
 #pragma mark - Methods an NSProxy subclass must implement
 
 
 - (id) initWithTrail:(Trail*)t {
-    if ( self ) {
-        if ( t.kmlDirPath ) {
-            __trail = t;
-            __trackLength = -1.0;
-
-            //  __dummy just needs to implement methodSignatureForSelector:.
-            __dummy = [NSObject new];
-
-        } else {
-            NSAssert( t.kmlDirPath, @"The given Trail's kmlDirPath is nil." );
-            self = nil;
+    //  (Superclass NSProxy is abstract, so must not [super init] and self OK.)
+    if ( t.kmlDirPath ) {
+        __trail_id = t.id;
+        __trail_kmlDirPath = t.kmlDirPath;
+        __trail_mapCoordinate = t.mapCoordinate;
+        __trail_boundingMapRect = t.boundingMapRect;
+        if (
+            MKMapRectIsNull(__trail_boundingMapRect)    ||  // Check origin
+            __trail_boundingMapRect.size.width  <= 0.0  ||  //   and size.
+            __trail_boundingMapRect.size.height <= 0.0      //
+        ) {
+            __trail_boundingMapRect = MKMapRectNull;
         }
+
+        __title = t.name;
+        __subtitle = t.area.name;
+
+        __trackLength = -1.0;
+
+        //  __dummy just needs to implement methodSignatureForSelector:.
+        __dummy = [NSObject new];
+
+    } else {
+        NSAssert( t.kmlDirPath, @"The given Trail's kmlDirPath is nil." );
+        self = nil;
     }
     return  self;
+}
+
+
+- (BOOL) updateTrail:(Trail*)t {
+  BOOL mapOk = [self checkTrailMapDimensions];
+  if ( mapOk ) {
+
+    if ( ! [t.id isEqualToString:__trail_id] ) {
+        NSAssert(
+            NO,
+            @"The given Trail (id: %@) must refer to the same data given to the initializer (id: %@).",
+            t.id, __trail_id
+        );
+
+    } else{
+        if (
+            t.mapCoordLat.doubleValue   != __trail_mapCoordinate.latitude  ||
+            t.mapCoordLon.doubleValue   != __trail_mapCoordinate.longitude
+        )  t.mapCoordinate = __trail_mapCoordinate;
+        if (
+            t.mapRectX.doubleValue      != __trail_boundingMapRect.origin.x   ||
+            t.mapRectY.doubleValue      != __trail_boundingMapRect.origin.y   ||
+            t.mapRectWidth.doubleValue  != __trail_boundingMapRect.size.width ||
+            t.mapRectHeight.doubleValue != __trail_boundingMapRect.size.height
+        )  t.boundingMapRect = __trail_boundingMapRect;
+    }
+  }
+  return  mapOk;
 }
 
 
@@ -70,7 +120,7 @@ double interpolateBack( double portion, double beg, double end );
 - (NSArray*) trackLocations {
     if ( !__trackLocations ) {
         KMLParser* parser = [[KMLParser alloc]
-            initWithDirPath:self.trail.kmlDirPath
+            initWithDirPath:__trail_kmlDirPath
         ];
         __trackLocations = parser.locations;
     }
@@ -80,9 +130,11 @@ double interpolateBack( double portion, double beg, double end );
 
 - (CLLocationDistance) trackLength {
     if ( __trackLength < 0.0  &&  self.trackLocations ) {
-        CLLocation* lastLoc = [self.trackLocations objectAtIndex:0];
+        CLLocation* prevLoc = [self.trackLocations objectAtIndex:0];
+
         for ( CLLocation* loc in self.trackLocations ) {
-            __trackLength += [loc distanceFromLocation:lastLoc];
+            __trackLength += [loc distanceFromLocation:prevLoc];
+            prevLoc = loc;
         }
     }
     return  __trackLength;
@@ -92,31 +144,36 @@ double interpolateBack( double portion, double beg, double end );
 - (CLLocation*) trackInterpolate:(double)portionOfLength {
     CLLocation* interpLoc = nil;
 
-    if ( 0.0 <= portionOfLength  &&  portionOfLength <= 1.0 ) {
-        CLLocationDistance toGo = portionOfLength * self.trackLength;
-        CLLocation* lastLoc = [self.trackLocations objectAtIndex:0];
+    if ( self.trackLocations ) {        // Note: Cannot be empty if non-nil.
 
-        for ( CLLocation* loc in self.trackLocations ) {
-            CLLocationDistance distFromLast = [loc distanceFromLocation:lastLoc];
-            toGo -= distFromLast;
+        if ( 0.0 <= portionOfLength  &&  portionOfLength <= 1.0 ) {
+            CLLocationDistance toGo = portionOfLength * self.trackLength;
+            CLLocation* lastLoc = [self.trackLocations objectAtIndex:0];
 
-            if ( toGo <= 0.0 ) {
-                //  We've gone to or just past the portionOfLength point.
-                //  The amount we've gone past is just the negative toGo value.
-                interpLoc = locationByInterpolatingBack(
-                    toGo/distFromLast, lastLoc, loc
-                );
-                break;
+            for ( CLLocation* loc in self.trackLocations ) {
+                CLLocationDistance distFromLast = [loc
+                    distanceFromLocation:lastLoc
+                ];
+                toGo -= distFromLast;
+
+                if ( toGo <= 0.0 ) {
+                    //  We've gone to or just past the portionOfLength point.
+                    //  The amount we've gone past is just the negative toGo value.
+                    interpLoc = locationByInterpolatingBack(
+                        toGo/distFromLast, lastLoc, loc
+                    );
+                    break;
+                }
+                lastLoc = loc;
             }
-            lastLoc = loc;
-        }
 
-    } else {
-        NSAssert(
-            NO,
-            @"Portion argument must be between 0.0 and 1.0, inclusive, not %f",
-            portionOfLength
-        );
+        } else {
+            NSAssert(
+                NO,
+                @"Portion argument must be between 0.0 and 1.0, inclusive, not %f",
+                portionOfLength
+            );
+        }
     }
 
     return  interpLoc;
@@ -127,14 +184,16 @@ double interpolateBack( double portion, double beg, double end );
 
 
 - (CLLocationCoordinate2D) coordinate {
-    [self checkTrailMapDimensions];
-    return  self.trail.mapCoordinate;
+    return  [self checkTrailMapDimensions]
+    ?   __trail_mapCoordinate
+    :   EquatorAtPrimeMeridian;
 }
 
 
 - (MKMapRect) boundingMapRect {
-    [self checkTrailMapDimensions];
-    return  self.trail.boundingMapRect;
+    return  [self checkTrailMapDimensions]
+    ?   __trail_boundingMapRect
+    :   MKMapRectNull;
 }
 
 
@@ -149,10 +208,9 @@ double interpolateBack( double portion, double beg, double end );
     points to see whether it lies in the given mapRect.
 */
 - (BOOL) intersectsMapRect:(MKMapRect)mapRect {
-    [self checkTrailMapDimensions];
     return  (
-        self.trail.hasMapDimensions  &&
-        MKMapRectIntersectsRect( self.trail.boundingMapRect, mapRect )
+        [self checkTrailMapDimensions]  &&
+        MKMapRectIntersectsRect( __trail_boundingMapRect, mapRect )
     );
 }
 
@@ -186,21 +244,24 @@ double interpolateBack( double portion, double beg, double end );
 }
 
 
-/** Ensures that self.trail has values for field giving the rough dimensions of
-    the trail's track on the map. If it does, this method does nothing.
-    Otherwise, self.polyline is created, if necessary, and the dimensions are
-    assigned to the trail's fields.
+/** Ensures that we have values for the rough dimensions of the trail's track.
+    If we already do, this method does no parsing and just returns YES.
+    Otherwise, self.polyline is created, if necessary, causing the parse to be
+    done, and the dimensions are assigned to appropriate instance variables.
+    Returns NO if we don't already have the dimensions and the parse was
+    unsuccessful.
 */
-- (void) checkTrailMapDimensions {
-    if ( ! self.trail.hasMapDimensions  &&  self.polyline ) {
+- (BOOL) checkTrailMapDimensions {
+    if ( MKMapRectIsNull(__trail_boundingMapRect)  &&  self.polyline ) {
         //  We don't have trail map dimensions in the trail managed object, so
         //  we need to parse the KML file. Obtaining polyline does this.
-        self.trail.boundingMapRect = self.polyline.boundingMapRect;
+        __trail_boundingMapRect = self.polyline.boundingMapRect;
 
         //  Set the map coordinate. This is where the annotation view will be
         //  displayed. We make it the point midway along the track.
-        self.trail.mapCoordinate = [self trackInterpolate:0.5].coordinate;
+        __trail_mapCoordinate = [self trackInterpolate:0.5].coordinate;
     }
+    return  ! MKMapRectIsNull(__trail_boundingMapRect);
 }
 
 

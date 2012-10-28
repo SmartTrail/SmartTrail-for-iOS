@@ -21,7 +21,8 @@
 - (void) downloadTrailsEtc:(NSTimer*)timer;
 - (void) downloadConditions:(NSTimer*)timer;
 - (void) downloadEvents:(NSTimer*)timer;
-- (void) downloadKMZForTrail:(Trail*)t thenDo:(ActionWithURL)b async:(BOOL)a;
+- (void)
+  downloadKMZForTrail:(Trail*)t thenOnQ:(dispatch_queue_t)q do:(ActionWithURL)b;
 static NSURL* unzipDataForID( NSData* zipData, NSString* idStr );
 static void rescheduleTimerToNext( NSTimer* timer, NSTimeInterval anInterval );
 static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
@@ -30,7 +31,7 @@ static void deleteUsing( CoreDataUtils* u, NSString* f, NSDate* b );
 - (void) setServerTimeDeltaFromDate:(NSDate*)now;
 @end
 
-void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
+void maybeDispatch( dispatch_queue_t q, dispatch_block_t blk );
 
 
 @implementation BMAController
@@ -142,8 +143,8 @@ void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
 
 - (void)
     checkKMZForTrail:(Trail*)trail
-              thenDo:(ActionWithURL)blk
-               async:(BOOL)asynchronously
+             thenOnQ:(dispatch_queue_t)q
+                  do:(ActionWithURL)block
 {
     if ( trail.kmzURL ) {
         NSString* path = trail.kmlDirPath;
@@ -159,52 +160,63 @@ void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
             if ( [downloadDate isAfter:trail.updatedAt] ) {
                 //  The unzipped KMZ is current. Run the completion block
                 //  and indicate that the directory does not have new data.
-                blk( [NSURL fileURLWithPath:path isDirectory:YES], NO );
+                if ( block ) {
+                    block( [NSURL fileURLWithPath:path isDirectory:YES], NO );
+                }
 
             } else {
                 //  The unzipped KMZ is out of date or no longer exists. (It was
                 //  stored in the cache directory, after all.) Replace it and
                 //  run block.
-                [self downloadKMZForTrail:trail thenDo:blk async:asynchronously];
+NSLog(@"Re-downloading %@", trail.kmzURL);
+                [self downloadKMZForTrail:trail thenOnQ:q do:block];
             }
 
         } else {
             //  There is a KMZ we haven't downloaded yet.
-            [self downloadKMZForTrail:trail thenDo:blk async:asynchronously];
+NSLog(@"Downloading new %@", trail.kmzURL);
+            [self downloadKMZForTrail:trail thenOnQ:q do:block];
         }
     }
 }
 
 
-- (void) checkAllKMZs {
-    CoreDataUtils* utils = [[CoreDataUtils alloc]
-        initWithStoreCoordinator:[APP_DELEGATE persistentStoreCoordinator]
-    ];
-    utils.context.mergePolicy = NSOverwriteMergePolicy;
+- (void) checkAllKMZsThenOnQ:(dispatch_queue_t)q do:(ActionWithTrails)block {
+    maybeDispatch( (q ? __kmzQ : nil), ^(){
+        CoreDataUtils* utils = [[CoreDataUtils alloc]
+            initWithStoreCoordinator:[APP_DELEGATE persistentStoreCoordinator]
+        ];
+        utils.context.mergePolicy = NSOverwriteMergePolicy;
 
-    //  Wrap the sequence of downloads in the display of the network
-    //  activity spinner. Otherwise, it flashes as each KMZ is downloaded.
-    [NetActivityIndicatorController aNetActivityDidStart];
+        //  Wrap the sequence of downloads in the display of the network
+        //  activity spinner. Otherwise, it flashes as each KMZ is downloaded.
+        [NetActivityIndicatorController aNetActivityDidStart];
 
-    for ( Trail* trail in [utils find:@"allTrails"] ) {
-        [self checkKMZForTrail:trail
-                        thenDo:^(NSURL* url, BOOL fresh) {
-                if ( fresh ) {
-                    //  We have newly downloaded data, so we may need to update the
-                    //  trail and persist it.
-                    NSString* newPath = [[url absoluteURL] path];
-                    if (![newPath isEqual:trail.kmlDirPath]) {
-                        trail.kmlDirPath = newPath;
+        NSMutableArray* trailsWithMaps = [NSMutableArray new];
+        for ( Trail* trail in [utils find:@"allTrails"] ) {
+            [self checkKMZForTrail:trail
+                           thenOnQ:nil
+                                do:
+                ^(NSURL* url, BOOL fresh) {
+NSLog(@"Have%@ map %@", fresh ? @" new" : @"", [[url absoluteURL] path]);
+                    [trailsWithMaps addObject:trail];
+                    if ( fresh ) {
+                        //  We have newly downloaded data, so we may need to
+                        //  update the trail and persist it.
+                        NSString* newPath = [[url absoluteURL] path];
+                        if ( ! [newPath isEqual:trail.kmlDirPath] ) {
+                            trail.kmlDirPath = newPath;
+                        }
                     }
                 }
-            }
-                         async:NO
-        ];
-    }
+            ];
+        }
 
-    [NetActivityIndicatorController aNetActivityDidStop];
-
-    [utils save];
+        [NetActivityIndicatorController aNetActivityDidStop];
+        if ( block )  maybeDispatch( q, ^(){
+            block(trailsWithMaps, utils);
+        } );
+    } );
 }
 
 
@@ -297,7 +309,7 @@ void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
                 [self downloadConditionsInArea:nil];
 
                 //  Check each trail and download its KMZ file if necessary.
-                [self checkAllKMZs];
+//todo                [self checkAllKMZsAsync:YES thenDo:nil];
             }
         }
     } );
@@ -372,19 +384,17 @@ void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
 
 
 /** Performs the downloading and unzipping of a KMZ file required by method
-    checkKMZForTrail:thenDo:async:. This method returns immediately, doing its
-    work in the background on the __areaTrailQ serial queue. The given block is
-    executed on the main queue, so it can perform UI updates. The given Trail
+    checkKMZForTrail:thenOnQ:do:. If given a non-nil dispatch queue, this method
+    returns immediately, doing its work in the background on the __kmzQ serial
+    queue, then the given block is executed on the given queue. If the given
+    queue is nil, then this is all performed synchronously. The given Trail
     is not modified.
 */
 - (void)
     downloadKMZForTrail:(Trail*)trail
-                 thenDo:(ActionWithURL)block
-                  async:(BOOL)asynchronously
+                thenOnQ:(dispatch_queue_t)q
+                     do:(ActionWithURL)block
 {
-    void (*maybeDispatch)(dispatch_queue_t, dispatch_block_t) =
-        asynchronously ? &dispatch_async : &dontDispatchJustCall;
-    dispatch_queue_t queueForBlock = dispatch_get_current_queue();
     NSString* trailId = trail.id;
     WebClient* client = [WebClient new];
 
@@ -394,18 +404,16 @@ void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk );
     ];
     client.processData = ^( NSData* zipData ){
         NSURL* kmlDirURL = unzipDataForID( zipData, trailId );
-        if ( kmlDirURL ) {
+        if ( kmlDirURL && block ) {
             //  Succeeded in unzipping the downloaded data and moving the
             //  resulting dir. into the cache directory. Now call the given
             //  block in the original dispatch queue and indicate that the
             //  downloaded data is fresh.
-            maybeDispatch( queueForBlock, ^{
-                block( kmlDirURL, YES );
-            } );
+            maybeDispatch( q, ^{ block(kmlDirURL, YES); } );
         }
     };
 
-    maybeDispatch( __kmzQ, ^{
+    maybeDispatch( q ? __kmzQ : nil,  ^{
         [NetActivityIndicatorController aNetActivityDidStart];
         [client sendSynchronousGet];
         [NetActivityIndicatorController aNetActivityDidStop];
@@ -555,8 +563,9 @@ void deleteUsing(
     do such a dispatch, but to just run the given block now. Returns when the
     given block returns.
 */
-void dontDispatchJustCall( dispatch_queue_t q, dispatch_block_t blk ) {
-    blk();
+void maybeDispatch( dispatch_queue_t q, dispatch_block_t blk ) {
+    if ( q )  dispatch_async(q, blk);
+    else  blk();
 }
 
 

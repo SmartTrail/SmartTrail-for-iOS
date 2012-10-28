@@ -16,12 +16,6 @@
 @interface Trail (Mapping)
 
 
-/** Returns YES iff this trail has map data. The implementation actually just
-    checks that boundingMapRect has positive width and height.
-*/
-@property (readonly,nonatomic) BOOL                   hasMapDimensions;
-
-
 @property (nonatomic)          CLLocationCoordinate2D mapCoordinate;
 
 
