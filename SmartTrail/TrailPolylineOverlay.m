@@ -25,12 +25,12 @@ CLLocationCoordinate2D EquatorAtPrimeMeridian = {(double)0.0, (double)0.0};
 
 
 {
-    NSString* __trail_id;
     NSString* __trail_kmlDirPath;
     CLLocationCoordinate2D __trail_mapCoordinate;
     MKMapRect __trail_boundingMapRect;
     NSObject* __dummy;
 }
+@synthesize trailId = __trailId;
 @synthesize trackLocations = __trackLocations;
 @synthesize trackLength = __trackLength;
 @synthesize title = __title;
@@ -44,7 +44,7 @@ CLLocationCoordinate2D EquatorAtPrimeMeridian = {(double)0.0, (double)0.0};
 - (id) initWithTrail:(Trail*)t {
     //  (Superclass NSProxy is abstract, so must not [super init] and self OK.)
     if ( t.kmlDirPath ) {
-        __trail_id = t.id;
+        __trailId = t.id;
         __trail_kmlDirPath = t.kmlDirPath;
         __trail_mapCoordinate = t.mapCoordinate;
         __trail_boundingMapRect = t.boundingMapRect;
@@ -76,11 +76,11 @@ CLLocationCoordinate2D EquatorAtPrimeMeridian = {(double)0.0, (double)0.0};
   BOOL mapOk = [self checkTrailMapDimensions];
   if ( mapOk ) {
 
-    if ( ! [t.id isEqualToString:__trail_id] ) {
+    if ( ! [t.id isEqualToString:self.trailId] ) {
         NSAssert(
             NO,
             @"The given Trail (id: %@) must refer to the same data given to the initializer (id: %@).",
-            t.id, __trail_id
+            t.id, self.trailId
         );
 
     } else{

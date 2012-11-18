@@ -30,6 +30,11 @@
 @interface TrailPolylineOverlay : NSProxy<MKOverlay>
 
 
+/** Copy of the id property of the trail provided to the constructor.
+*/
+@property (readonly,copy,nonatomic)   NSString*          trailId;
+
+
 /** An array of CLLocation objects generated from the KML data.
 */
 @property (readonly,strong,nonatomic) NSMutableArray*    trackLocations;

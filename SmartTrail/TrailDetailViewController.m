@@ -24,16 +24,26 @@
     //  initially 0.
     NSArray*   __viewControllersToSelect;
     NSInteger  __selectedViewControllerIndex;
-    NSUInteger __mapIndex;
 }
 
 
 @synthesize segmentedControl = __segmentedControl;
 @synthesize contentView = __contentView;
 @synthesize trail = __trail;
+@synthesize initialSegmentIndex = _initialSegmentIndex;
 
 
 #pragma mark - View lifecycle
+
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.initialSegmentIndex = -1;
+    }
+    return self;
+}
 
 
 - (void) viewDidLoad {
@@ -47,19 +57,33 @@
         nil
     ];
     [__viewControllersToSelect each:^(id vc){ [vc setTrail:self.trail]; }];
-    __mapIndex = 2;
-
-    //  Initial selected index of the segmented control can be set in IB.
-    __selectedViewControllerIndex = self.segmentedControl.selectedSegmentIndex;
-    [self transitionToVCNumber:__selectedViewControllerIndex];
 
     //  Download (if necessary) and parse the KML data. This will ultimately
     //  configure an MKPolyline displayed by the TrailMapViewController.
     TrailMapViewController* mapController = [__viewControllersToSelect
-        objectAtIndex:__mapIndex
+        objectAtIndex:MAP_SEGMENT_IDX
     ];
-    [self setMapEnabled:NO];
-    [mapController parseKMLDataIfOkDo:^{ [self setMapEnabled:YES]; }];
+    [self.segmentedControl setEnabled:NO forSegmentAtIndex:MAP_SEGMENT_IDX];
+    [mapController parseKMLDataIfOkDo:^{
+        [self.segmentedControl setEnabled:YES forSegmentAtIndex:MAP_SEGMENT_IDX];
+    }];
+
+    //  Set the UISegmentedControl choice to display initially. Use the value
+    //  in self.initialSegmentIndex, but only if it has been set, and if it has
+    //  been set to MAP_SEGMENT_IDX, only if the trail has a map.
+    NSInteger initIndex = self.initialSegmentIndex;
+    if (
+        initIndex >= 0  &&  (
+            initIndex != MAP_SEGMENT_IDX ||
+            [self.segmentedControl isEnabledForSegmentAtIndex:MAP_SEGMENT_IDX]
+        )
+    ) {
+        self.segmentedControl.selectedSegmentIndex = initIndex;
+    }
+
+    //  If selectedSegmentIndex was not set, the value set in IB is used.
+    __selectedViewControllerIndex = self.segmentedControl.selectedSegmentIndex;
+    [self transitionToVCNumber:__selectedViewControllerIndex];
 
     //  Show trail name at top of screen.
     self.navigationItem.title = self.trail.name;
@@ -101,14 +125,6 @@
 
 
 #pragma mark - Private methods and functions
-
-
-- (void) setMapEnabled:(BOOL)enabled {
-    [self.segmentedControl
-               setEnabled:enabled
-        forSegmentAtIndex:__mapIndex
-     ];
-}
 
 
 /** Replace the existing child view controller and its view, if any, with the
